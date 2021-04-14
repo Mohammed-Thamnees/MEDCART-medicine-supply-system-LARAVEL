@@ -23,7 +23,8 @@
                         <ul class="list-main">
                         <!--  track order
 
-                            <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Track Order</a></li>
+                            {{--<li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Track Order</a></li>--}}
+
                             {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             
                         -->
@@ -55,7 +56,7 @@
                         @php
                             $settings=DB::table('settings')->get();
                         @endphp                    
-                        <a href="{{route('home')}}"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+                        <a href="{{route('home')}}"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo" width="130px" height="130px"></a>
                     </div>
                     <!--/ End Logo -->
                     <!-- Search Form -->

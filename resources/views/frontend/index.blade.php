@@ -62,6 +62,7 @@
 <!--/ End Slider Area -->
 
 <!-- Start Small Banner  -->
+{{-- 
 <section class="small-banner section">
     <div class="container-fluid">
         <div class="row">
@@ -92,6 +93,7 @@
         </div>
     </div>
 </section>
+--}}
 <!-- End Small Banner -->
 
 <!-- Start Product Area -->
@@ -194,6 +196,7 @@
     $featured=DB::table('products')->where('is_featured',1)->where('status','active')->orderBy('id','DESC')->limit(1)->get();
 @endphp --}}
 <!-- Start Midium Banner  -->
+{{--
 <section class="midium-banner">
     <div class="container">
         <div class="row">
@@ -219,6 +222,7 @@
         </div>
     </div>
 </section>
+--}}
 <!-- End Midium Banner -->
 
 <!-- Start Most Popular -->

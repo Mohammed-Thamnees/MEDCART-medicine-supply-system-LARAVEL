@@ -12,7 +12,7 @@
 							$settings=DB::table('settings')->get();
 						@endphp
 							<div class="logo">
-								<a href="index.html"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+								<a href="{{ route('home') }}"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo" width="250px" height="250px"></a>
 							</div>
 							<p class="text">@foreach($settings as $data) {{$data->short_des}} @endforeach</p>
 							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">@foreach($settings as $data) {{$data->phone}} @endforeach</a></span></p>

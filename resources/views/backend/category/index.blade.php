@@ -28,7 +28,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <!--
+          {{--
             <tfoot>
             <tr>
               <th>S.N.</th>
@@ -41,7 +41,7 @@
               <th>Action</th>
             </tr>
           </tfoot>
-          -->
+          --}}
           <tbody>
            
             @foreach($categories as $category)   
