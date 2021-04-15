@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || PRODUCT PAGE')
+@section('title','MEDCART || PRODUCT PAGE')
 
 @section('main-content')
 	<!-- Breadcrumbs -->
@@ -121,6 +121,7 @@
                                 </div>
                                 <!--/ End Single Widget -->
                                 <!-- Single Widget -->
+                                {{--
                                 <div class="single-widget category">
                                     <h3 class="title">Brands</h3>
                                     <ul class="categor-list">
@@ -132,6 +133,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
+                                --}}
                                 <!--/ End Single Widget -->
                         </div>
                     </div>
@@ -158,7 +160,7 @@
                                                 <option value="title" @if(!empty($_GET['sortBy']) && $_GET['sortBy']=='title') selected @endif>Name</option>
                                                 <option value="price" @if(!empty($_GET['sortBy']) && $_GET['sortBy']=='price') selected @endif>Price</option>
                                                 <option value="category" @if(!empty($_GET['sortBy']) && $_GET['sortBy']=='category') selected @endif>Category</option>
-                                                <option value="brand" @if(!empty($_GET['sortBy']) && $_GET['sortBy']=='brand') selected @endif>Brand</option>
+                                                {{--<option value="brand" @if(!empty($_GET['sortBy']) && $_GET['sortBy']=='brand') selected @endif>Brand</option>--}}
                                             </select>
                                         </div>
                                     </div>
@@ -299,6 +301,7 @@
                                             <div class="quickview-peragraph">
                                                 <p>{!! html_entity_decode($product->summary) !!}</p>
                                             </div>
+                                            {{--
                                             @if($product->size)
                                                 <div class="size">
                                                     <h4>Size</h4>
@@ -327,7 +330,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    {{-- <div class="col-lg-6 col-12">
+                                                    <div class="col-lg-6 col-12">
                                                         <h5 class="title">Color</h5>
                                                         <select>
                                                             <option selected="selected">orange</option>
@@ -335,9 +338,10 @@
                                                             <option>black</option>
                                                             <option>pink</option>
                                                         </select>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                             </div>
+                                            --}}
                                             <form action="{{route('single-add-to-cart')}}" method="POST">
                                                 @csrf 
                                                 <div class="quantity">

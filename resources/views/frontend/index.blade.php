@@ -411,7 +411,7 @@
                 <div class="single-service">
                     <i class="ti-rocket"></i>
                     <h4>Free shiping</h4>
-                    <p>Orders over $100</p>
+                    <p>Free shipping to all branches</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -419,8 +419,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-reload"></i>
-                    <h4>Free Return</h4>
-                    <p>Within 30 days returns</p>
+                    <h4>Easy Purchase</h4>
+                    <p>User friendly UI</p>
                 </div>
                 <!-- End Single Service -->
             </div>
