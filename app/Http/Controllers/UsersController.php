@@ -132,10 +132,10 @@ class UsersController extends Controller
         
         $status=$user->fill($data)->save();
         if($status){
-            request()->session()->flash('success','Successfully updated');
+            request()->session()->flash('success','Successfully approved user');
         }
         else{
-            request()->session()->flash('error','Error occured while updating');
+            request()->session()->flash('error','Error occured while approving user');
         }
         return redirect()->route('users.index');
 

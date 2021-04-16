@@ -226,6 +226,7 @@
 <!-- End Midium Banner -->
 
 <!-- Start Most Popular -->
+{{--
 <div class="product-area most-popular section">
     <div class="container">
         <div class="row">
@@ -250,7 +251,8 @@
                                     @endphp
                                     <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                     <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    {{-- <span class="out-of-stock">Hot</span> --}}
+
+                                    // <span class="out-of-stock">Hot</span> 
                                 </a>
                                 <div class="button-head">
                                     <div class="product-action">
@@ -281,6 +283,7 @@
         </div>
     </div>
 </div>
+--}}
 <!-- End Most Popular Area -->
 
 <!-- Start Shop Home List  -->

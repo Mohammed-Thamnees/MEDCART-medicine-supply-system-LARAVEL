@@ -3,7 +3,7 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Edit Post</h5>
+    <h5 class="card-header">Edit Site Settings</h5>
     <div class="card-body">
     <form method="post" action="{{route('settings.update')}}">
         @csrf 
@@ -41,6 +41,7 @@
           @enderror
         </div>
 
+        {{--
         <div class="form-group">
           <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -57,6 +58,7 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+        --}}
 
         <div class="form-group">
           <label for="address" class="col-form-label">Address <span class="text-danger">*</span></label>

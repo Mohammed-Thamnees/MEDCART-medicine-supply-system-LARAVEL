@@ -14,7 +14,7 @@ class SettingTableSeeder extends Seeder
         $data=array(
             'description'=>"Kottakkal arya vaidya sala medicine supply center",
             'short_des'=>"Tirur branch",
-            'photo'=>"image.jpg",
+            //'photo'=>"image.jpg",
             'logo'=>'logo.jpg',
             'address'=>"kottakkal avs",
             'email'=>"avs@gmail.com",

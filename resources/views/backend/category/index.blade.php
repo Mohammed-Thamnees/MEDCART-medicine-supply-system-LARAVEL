@@ -18,7 +18,7 @@
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
+              {{--<th>S.N.</th>--}}
               <th>Title</th>
               <!--<th>Slug</th>-->
               <th>Is Parent</th>
@@ -51,7 +51,9 @@
 
               @endphp
                 <tr>
+                    {{--
                     <td>{{$category->id}}</td>
+                    --}}
                     <td>{{$category->title}}</td>
                     <!--<td>{{$category->slug}}</td>-->
                     <td>{{(($category->is_parent==1)? 'Yes': 'No')}}</td>
