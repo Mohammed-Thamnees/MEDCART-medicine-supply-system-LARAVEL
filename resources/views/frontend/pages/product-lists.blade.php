@@ -119,7 +119,8 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>                                                
+                                                <p class="price"><del class="text-muted">RS {{number_format($product->price,2)}}</del></p>   
+												<p>RS {{number_format($org,2)}}  </p>                                                
                                             </div>
                                         </div>
                                         <!-- End Single Post -->
@@ -214,14 +215,17 @@
 																@php
 																	$after_discount=($product->price-($product->price*$product->discount)/100);
 																@endphp
-																<span>${{number_format($after_discount,2)}}</span>
-																<del>${{number_format($product->price,2)}}</del>
+																<span>RS {{number_format($after_discount,2)}}</span>
+																<del>RS {{number_format($product->price,2)}}</del>
 															</div>
 															<h3 class="title"><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
 														{{-- <p>{!! html_entity_decode($product->summary) !!}</p> --}}
 														</div>
 														<p class="des pt-2">{!! html_entity_decode($product->summary) !!}</p>
+														{{--
 														<a href="javascript:void(0)" class="btn cart" data-id="{{$product->id}}">Buy Now!</a>
+														--}}
+														<a href="{{route('product-detail',$product->slug)}}" class="btn cart" data-id="{{$product->id}}">Buy Now!</a>
 													</div>
 												</div>
 											</div>
@@ -271,6 +275,7 @@
 												</div>
 											<!-- End Product slider -->
 										</div>
+										
 										<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 											<div class="quickview-content">
 												<h2>{{$product->title}}</h2>
@@ -286,15 +291,20 @@
 																$rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate');
 																$rate_count=DB::table('product_reviews')->where('product_id',$product->id)->count();
 															@endphp
+															
 															@for($i=1; $i<=5; $i++)
+															{{--
 																@if($rate>=$i)
 																	<i class="yellow fa fa-star"></i>
 																@else 
 																<i class="fa fa-star"></i>
 																@endif
+																--}}
 															@endfor
 														</div>
+														{{--
 														<a href="#"> ({{$rate_count}} customer review)</a>
+														--}}
 													</div>
 													<div class="quickview-stock">
 														@if($product->stock >0)
@@ -307,7 +317,7 @@
 												@php
 													$after_discount=($product->price-($product->price*$product->discount)/100);
 												@endphp
-												<h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3>
+												<h3><small><del class="text-muted">RS {{number_format($product->price,2)}}</del></small>    RS {{number_format($after_discount,2)}}  </h3>
 												<div class="quickview-peragraph">
 													<p>{!! html_entity_decode($product->summary) !!}</p>
 												</div>
@@ -355,6 +365,7 @@
 												</div>
 											</div>
 										</div>
+										
 									</div>
 								</div>
 							</div>

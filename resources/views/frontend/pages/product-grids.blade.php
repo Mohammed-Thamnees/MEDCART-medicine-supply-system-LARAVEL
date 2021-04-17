@@ -112,7 +112,8 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>
+                                                <p class="price"><del class="text-muted">RS {{number_format($product->price,2)}}</del> </p>     
+                                                <p>RS {{number_format($org,2)}}  </p>
                                                 
                                             </div>
                                         </div>
@@ -204,8 +205,8 @@
                                                 @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <span>RS {{number_format($after_discount,2)}}</span>
+                                                <del style="padding-left:4%;">RS {{number_format($product->price,2)}}</del>
                                             </div>
                                         </div>
                                     </div>
@@ -261,6 +262,7 @@
                                             </div>
                                         <!-- End Product slider -->
                                     </div>
+                                    
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                         <div class="quickview-content">
                                             <h2>{{$product->title}}</h2>
@@ -277,14 +279,18 @@
                                                             $rate_count=DB::table('product_reviews')->where('product_id',$product->id)->count();
                                                         @endphp
                                                         @for($i=1; $i<=5; $i++)
+                                                        {{--
                                                             @if($rate>=$i)
                                                                 <i class="yellow fa fa-star"></i>
                                                             @else 
                                                             <i class="fa fa-star"></i>
                                                             @endif
+                                                        --}}
                                                         @endfor
                                                     </div>
+                                                    {{--
                                                     <a href="#"> ({{$rate_count}} customer review)</a>
+                                                    --}}
                                                 </div>
                                                 <div class="quickview-stock">
                                                     @if($product->stock >0)
@@ -297,7 +303,7 @@
                                             @php
                                                 $after_discount=($product->price-($product->price*$product->discount)/100);
                                             @endphp
-                                            <h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3>
+                                            <h3><small><del class="text-muted">RS {{number_format($product->price,2)}}</del></small>    RS {{number_format($after_discount,2)}}  </h3>
                                             <div class="quickview-peragraph">
                                                 <p>{!! html_entity_decode($product->summary) !!}</p>
                                             </div>
@@ -372,6 +378,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
