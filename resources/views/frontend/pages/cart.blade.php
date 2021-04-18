@@ -123,6 +123,16 @@
 								<div class="right">
 									<ul>
 										<li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>RS {{number_format(Helper::totalCartPrice(),2)}}</span></li>
+										<!-- GST calculation start -->
+										@php
+											$amount=Helper::totalCartPrice();
+											$gst=$amount*(6/100);
+											$gst_total=2*$gst;
+											$total_pay=$gst_total+$amount;
+										@endphp
+										<!-- GST calculation end -->
+										<li class="sgst">SGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} </span> </li>
+										<li class="cgst">CGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} </span> </li>
 										{{-- <div id="shipping" style="display:none;">
 											<li class="shipping">
 												Shipping {{session('shipping_price')}}
@@ -148,7 +158,7 @@
 										<li class="coupon_price" data-price="{{Session::get('coupon')['value']}}">You Save<span>RS {{number_format(Session::get('coupon')['value'],2)}}</span></li>
 										@endif
 										@php
-											$total_amount=Helper::totalCartPrice();
+											$total_amount=$total_pay;
 											if(session()->has('coupon')){
 												$total_amount=$total_amount-Session::get('coupon')['value'];
 											}

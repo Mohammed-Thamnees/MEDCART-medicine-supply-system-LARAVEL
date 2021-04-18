@@ -45,14 +45,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'address1'=>'string|required',
+            'first_name'=>'required|string',
+            'last_name'=>'required|string',
+            'address1'=>'required|string',
             'address2'=>'string|nullable',
             'coupon'=>'nullable|numeric',
-            'phone'=>'numeric|required',
+            'phone'=>'required|numeric',
             'post_code'=>'string|nullable',
-            'email'=>'string|required'
+            'email'=>'required|string'
         ]);
         // return $request->all();
 
