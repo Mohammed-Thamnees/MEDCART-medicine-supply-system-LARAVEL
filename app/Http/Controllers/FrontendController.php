@@ -388,6 +388,7 @@ class FrontendController extends Controller
         // return $request->all();
         $this->validate($request,[
             'name'=>'required|alpha_dash|min:2',
+            'owner_name'=>'required|alpha|min:2',
             'place'=>'required|alpha|min:2',
             'email'=>'required|email|unique:users,email',
             'number'=>'required|numeric|digits:10|unique:users,number',
@@ -421,6 +422,7 @@ class FrontendController extends Controller
     public function create(array $data){
         return User::create([
             'name'=>$data['name'],
+            'owner_name'=>$data['owner_name'],
             'place'=>$data['place'],
             'email'=>$data['email'],
             'number'=>$data['number'],

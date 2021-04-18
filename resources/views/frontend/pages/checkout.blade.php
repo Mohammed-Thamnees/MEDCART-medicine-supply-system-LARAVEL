@@ -31,19 +31,30 @@
                         <div class="col-lg-8 col-12">
                             <div class="checkout-form">
                                 <h2>Make Your Checkout Here</h2>
-                                <p>Please register in order to checkout more quickly</p>
+                                <p>Please confirm the shipping address</p>
                                 <!-- Form -->
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Name<span>*</span></label>
-                                            <input type="text" name="first_name" placeholder="" value="{{$user->name}}">
-                                            @error('first_name')
+                                            <label>Shop Name<span>*</span></label>
+                                            <input type="text" name="name" placeholder="" value="{{$user->name}}">
+                                            @error('name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                   
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Owner Name<span>*</span></label>
+                                            <input type="text" name="Owner_name" placeholder="" value="{{$user->owner_name}}">
+                                            @error('Owner_name')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                   {{--
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Email Address<span>*</span></label>
@@ -53,6 +64,8 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    --}}
+
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Phone Number <span>*</span></label>

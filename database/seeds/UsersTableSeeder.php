@@ -14,6 +14,7 @@ class UsersTableSeeder extends Seeder
         $data=array(
             array(
                 'name'=>'Admin',
+                'owner_name'=>'Admin',
                 'place'=>'Tirur',
                 'email'=>'admin@gmail.com',
                 'number'=>'9895157065',
@@ -27,6 +28,7 @@ class UsersTableSeeder extends Seeder
             ),
             array(
                 'name'=>'User',
+                'owner_name'=>'User',
                 'place'=>'Test-User',
                 'email'=>'user@gmail.com',
                 'number'=>'test-User',

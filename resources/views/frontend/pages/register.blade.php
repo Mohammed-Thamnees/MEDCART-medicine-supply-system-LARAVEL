@@ -43,6 +43,15 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label>Owner Name<span>*</span></label>
+                                        <input type="text" name="owner_name" placeholder=""  value="{{old('owner_name')}}">
+                                        @error('owner_name')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
                                         <label>Place<span>*</span></label>
                                         <input type="text" name="place" placeholder=""  value="{{old('place')}}">
                                         @error('place')
