@@ -62,7 +62,7 @@ class DeliveryBoyController extends Controller
         else{
             request()->session()->flash('error','Error occurred while adding delivery boy');
         }
-        return redirect()->route('deliveryboy.index');
+        return redirect()->route('deliveryboys.index');
     }
 
     /**
@@ -103,8 +103,8 @@ class DeliveryBoyController extends Controller
             'name'=>'required|alpha_dash|max:30',
             'place'=>'required|alpha|min:2',
             'address'=>'required|min:2',
-            'email'=>'required|email|unique:delivery_boys,email',
-            'number'=>'required|numeric|digits:10',
+            //'email'=>'required|email|unique:delivery_boys,email',
+            'number'=>'required|numeric|digits:10|unique:delivery_boys,phone',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',
@@ -119,7 +119,7 @@ class DeliveryBoyController extends Controller
         else{
             request()->session()->flash('error','Error occurred while updating delivery boy');
         }
-        return redirect()->route('deliveryboy.index');
+        return redirect()->route('deliveryboys.index');
     }
 
     /**
@@ -138,6 +138,6 @@ class DeliveryBoyController extends Controller
         else{
             request()->session()->flash('error','Error occurred while deleting delivery boy');
         }
-        return redirect()->route('deliveryboy.index');
+        return redirect()->route('deliveryboys.index');
     }
 }

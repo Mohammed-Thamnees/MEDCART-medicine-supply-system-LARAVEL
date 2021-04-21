@@ -46,7 +46,7 @@
           @error('number')
           <span class="text-danger">{{$message}}</span>
           @enderror
-          </div>
+        </div>
 
           <div class="form-group">
             <label for="inputPin" class="col-form-label">Pin</label>

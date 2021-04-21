@@ -55,7 +55,9 @@
             @endforeach
           </tbody>
         </table>
+        {{--
         <span style="float:right">{{$boy->links()}}</span>
+        --}}
       </div>
     </div>
 </div>

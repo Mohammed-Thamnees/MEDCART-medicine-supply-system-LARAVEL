@@ -199,6 +199,13 @@
     <div class="sidebar-heading">
         General Settings
     </div>
+    <!-- delivery boy -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('deliveryboys.index')}}">
+          <i class="fas fa-table"></i>
+          <span>Delivery Boy</span></a>
+    </li>
+    <!-- coupens -->
     <li class="nav-item">
       <a class="nav-link" href="{{route('coupon.index')}}">
           <i class="fas fa-table"></i>
