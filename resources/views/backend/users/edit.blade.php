@@ -64,31 +64,7 @@
         @enderror
         </div>
 
-        {{-- <div class="form-group">
-            <label for="inputPassword" class="col-form-label">Password</label>
-          <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{$user->password}}" class="form-control">
-          @error('password')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div> --}}
-
-        <!--
-        <div class="form-group">
-        <label for="inputPhoto" class="col-form-label">Photo</label>
-        <div class="input-group">
-            <span class="input-group-btn">
-                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                <i class="fa fa-picture-o"></i> Choose
-                </a>
-            </span>
-            <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$user->photo}}">
-        </div>
-        <img id="holder" style="margin-top:15px;max-height:100px;">
-          @error('photo')
-          <span class="text-danger">{{$message}}</span>
-          @enderror
-        </div>
-        -->
+       
         
         @php 
         $roles=DB::table('users')->select('role')->where('id',$user->id)->get();

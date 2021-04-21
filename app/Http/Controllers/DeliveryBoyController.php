@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Http\Request;
+use App\Models\DeliveryBoy;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use App\User;
-class UsersController extends Controller
+
+class DeliveryBoyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users=User::orderBy('id','ASC')->paginate(10);
-        return view('backend.users.index')->with('users',$users);
+        $boy=DeliveryBoy::orderBy('id','ASC')->paginate(10);
+        return view('backend.deliveryboy.index')->with('boy',$boy);
     }
 
     /**
@@ -25,7 +27,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        return view('backend.deliveryboy.create');
     }
 
     /**
@@ -40,26 +42,27 @@ class UsersController extends Controller
         [
 
             'name'=>'required|alpha_dash|max:30',
-            'email'=>'required|email|unique:users,email',
+            'place'=>'required|alpha|min:2',
+            'address'=>'required|min:2',
+            'email'=>'required|email|unique:delivery_boys,email',
+            'number'=>'required|numeric|digits:10|unique:delivery_boys,phone',
+            'post'=>'required|alpha|min:2',
+            'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',
-            'role'=>'required|in:admin,user',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
-        // dd($request->all());
+
         $data=$request->all();
         $data['password']=Hash::make($request->password);
-        // dd($data);
-        $status=User::create($data);
-        // dd($status);
+        $status=DeliveryBoy::create($data);
         if($status){
-            request()->session()->flash('success','Successfully added user');
+            request()->session()->flash('success','successfully added delivery boy');
         }
         else{
-            request()->session()->flash('error','Error occurred while adding user');
+            request()->session()->flash('error','Error occurred while adding delivery boy');
         }
-        return redirect()->route('users.index');
-
+        return redirect()->route('deliveryboy.index');
     }
 
     /**
@@ -81,8 +84,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user=User::findOrFail($id);
-        return view('backend.users.edit')->with('user',$user);
+        $boy=DeliveryBoy::findOrFail($id);
+        return view('backend.deliveryboy.edit')->with('boy',$boy);
     }
 
     /**
@@ -94,40 +97,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::findOrFail($id);
         $this->validate($request,
         [
 
-            /*'name'=>'required|alpha_dash|max:30',
+            'name'=>'required|alpha_dash|max:30',
             'place'=>'required|alpha|min:2',
+            'address'=>'required|min:2',
+            'email'=>'required|email|unique:delivery_boys,email',
             'number'=>'required|numeric|digits:10',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
-            'mark'=>'required|alpha|min:3',*/
-            'status'=>'required|in:active,inactive',
-
-
-
-            /*'name'=>'required|alpha_dash|max:30',
-            'email'=>'required|email|unique:users,email',
             'password'=>'required|string',
-            'role'=>'required|in:admin,user',
             'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string',*/
+            'photo'=>'nullable|string',
         ]);
-        // dd($request->all());
         $data=$request->all();
-        //dd($data);
-        
-        $status=$user->fill($data)->save();
+        $status=$boy->fill($data)->save();
         if($status){
-            request()->session()->flash('success','Successfully approved user');
+            request()->session()->flash('success','successfully updated delivery boy');
         }
         else{
-            request()->session()->flash('error','Error occured while approving user');
+            request()->session()->flash('error','Error occurred while updating delivery boy');
         }
-        return redirect()->route('users.index');
-
+        return redirect()->route('deliveryboy.index');
     }
 
     /**
@@ -138,14 +130,14 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $delete=User::findorFail($id);
+        $delete=DeliveryBoy::findorFail($id);
         $status=$delete->delete();
         if($status){
-            request()->session()->flash('success','User Successfully deleted');
+            request()->session()->flash('success','successfully deleted delivery boy');
         }
         else{
-            request()->session()->flash('error','There is an error while deleting users');
+            request()->session()->flash('error','Error occurred while deleting delivery boy');
         }
-        return redirect()->route('users.index');
+        return redirect()->route('deliveryboy.index');
     }
 }
