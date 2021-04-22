@@ -10,16 +10,14 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
-      {{--
       <a href="{{route('users.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
-      --}}
     </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-            {{--<th>S.N.</th>--}}
+              <th>User id</th>
               <th>Name</th>
               <th>Email</th>
               <th>Photo</th>
@@ -29,26 +27,13 @@
               <th>Action</th>
             </tr>
           </thead>
-          {{--
-          <tfoot>
-            <tr>
-                <th>S.N.</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Photo</th>
-                <th>Join Date</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-          </tfoot>
-          --}}
+          
           <tbody>
+            
             @foreach($users as $user)   
-                <tr>
-                  {{--
+                    
                     <td>{{$user->id}}</td>
-                  --}}
+                    
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
@@ -78,6 +63,7 @@
                     
                 </tr>  
             @endforeach
+
           </tbody>
         </table>
         <span style="float:right">{{$users->links()}}</span>
