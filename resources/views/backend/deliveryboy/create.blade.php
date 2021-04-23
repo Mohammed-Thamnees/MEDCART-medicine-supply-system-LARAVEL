@@ -108,9 +108,21 @@
 
 @endsection
 
+@push('styles')
+<link rel="stylesheet" href="{{asset('backend/summernote/summernote.min.css')}}">
+@endpush
 @push('scripts')
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+<script src="{{asset('backend/summernote/summernote.min.js')}}"></script>
 <script>
-    $('#lfm').filemanager('image');
+  $('#lfm').filemanager('image');
+
+  $(document).ready(function() {
+    $('#address').summernote({
+      placeholder: "Write address.....",
+        tabsize: 2,
+        height: 120
+    });
+  });
 </script>
 @endpush

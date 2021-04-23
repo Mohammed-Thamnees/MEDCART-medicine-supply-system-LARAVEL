@@ -73,7 +73,8 @@ class DeliveryBoyController extends Controller
      */
     public function show($id)
     {
-        //
+        $boy=DeliveryBoy::find($id);
+        return view('backend.deliveryboy.show')->with('boy',$boy);
     }
 
     /**
