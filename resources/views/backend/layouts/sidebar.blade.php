@@ -203,7 +203,7 @@
     <!-- delivery boy -->
     <li class="nav-item">
       <a class="nav-link" href="{{route('deliveryboys.index')}}">
-          <i class="fas fa-table"></i>
+          <i class="fas fa-truck"></i>
           <span>Delivery Boy</span></a>
     </li>
     

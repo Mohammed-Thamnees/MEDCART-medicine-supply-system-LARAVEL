@@ -45,7 +45,7 @@ class DeliveryBoyController extends Controller
             'place'=>'required|alpha|min:2',
             'address'=>'required|min:2',
             'email'=>'required|email|unique:delivery_boys,email',
-            'number'=>'required|numeric|digits:10|unique:delivery_boys,phone',
+            'number'=>'required|numeric|digits:10|unique:delivery_boys,number',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',
@@ -97,14 +97,15 @@ class DeliveryBoyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $boy=DeliveryBoy::findOrFail($id);
         $this->validate($request,
         [
-
+            
             'name'=>'required|alpha_dash|max:30',
             'place'=>'required|alpha|min:2',
             'address'=>'required|min:2',
-            //'email'=>'required|email|unique:delivery_boys,email',
-            'number'=>'required|numeric|digits:10|unique:delivery_boys,phone',
+            'email'=>'required|email',
+            'number'=>'required|numeric|digits:10',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',

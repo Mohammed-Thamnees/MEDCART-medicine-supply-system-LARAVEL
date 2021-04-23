@@ -3,7 +3,7 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Edit User</h5>
+    <h5 class="card-header">Edit Delivery Boy</h5>
     <div class="card-body">
       <form method="post" action="{{route('deliveryboys.update',$boy->id)}}">
         @csrf 
@@ -35,12 +35,12 @@
   
           <div class="form-group">
               <label for="inputEmail" class="col-form-label">Email</label>
-            <input id="inputEmail" type="email" disabled name="email" placeholder="Enter email"  value="{{$boy->email}}" class="form-control">
+            <input id="inputEmail" type="email" name="email" placeholder="Enter email"  value="{{$boy->email}}" class="form-control">
             @error('email')
             <span class="text-danger">{{$message}}</span>
             @enderror
           </div>
-  
+          
           <div class="form-group">
               <label for="inputNumber" class="col-form-label">Phone Number</label>
             <input id="inputNumber" type="number" name="number"  placeholder="Enter number"  value="{{$boy->number}}" class="form-control">

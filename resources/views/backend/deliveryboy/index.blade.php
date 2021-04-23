@@ -9,32 +9,35 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Boys List</h6>
-      
-      <a href="{{route('deliveryboys.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add Deliveryboy"><i class="fas fa-plus"></i> Add Delivery Boy</a>
-      
+      <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Boys Lists</h6>
+      <a href="{{route('deliveryboys.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Delivery Boy</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="deliveryboy-dataTable" width="100%" cellspacing="0">
+        @if(count($boy)>0)
+        <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Place</th>
-              <th>Email</th>
-              <th>phone number</th>
-              <th>Join Date</th>
-              <th>Status</th>
+              
+                <th>Name</th>
+                <th>Place</th>
+                <th>Email</th>
+                <th>phone number</th>
+                <th>Join Date</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
           </thead>
-    
+          
           <tbody>
+           
             @foreach($boy as $boy)   
                 <tr>
+                    
                     <td>{{$boy->name}}</td>
                     <td>{{$boy->place}}</td>
                     <td>{{$boy->email}}</td>
-                    <td>{{$boy->phone}}</td>
+                    <td>{{$boy->number}}</td>
                     <td>{{(($boy->created_at)? $boy->created_at->diffForHumans() : '')}}</td>
                     <td>
                         @if($boy->status=='active')
@@ -51,13 +54,15 @@
                           <button class="btn btn-danger btn-sm dltBtn" data-id={{$boy->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
+                    
                 </tr>  
             @endforeach
           </tbody>
         </table>
-        {{--
-        <span style="float:right">{{$boy->links()}}</span>
-        --}}
+        
+        @else
+          <h6 class="text-center">No delivery boys found!!! Please add delivery boys</h6>
+        @endif
       </div>
     </div>
 </div>
@@ -84,11 +89,11 @@
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
       
-      $('#deliveryboy-dataTable').DataTable( {
+      $('#banner-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[6,7]
+                    "targets":[3,4,5]
                 }
             ]
         } );
