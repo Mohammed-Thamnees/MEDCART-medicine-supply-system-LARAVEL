@@ -45,22 +45,48 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'shop_name'=>'required|string',
-            'owner_name'=>'required|string',
-            'coupon'=>'nullable|numeric',
+            'name'=>'required|alpha_dash|max:30',
+            'owner_name'=>'required|alpha_dash|max:30',
+            'email'=>'required|email',
             'number'=>'required|numeric|digits:10',
             'post'=>'required|string',
             'pin'=>'required|numeric|digits:6',
             'mark'=>'required|string',
-            'email'=>'required|email'
+            'coupon'=>'nullable|numeric'
         ]);
-         //return $request->all();
+         return $request->all();
 
         if(empty(Cart::where('user_id',auth()->user()->id)->where('order_id',null)->first())){
             request()->session()->flash('error','Cart is Empty !');
             return back();
         }
-        
+        // $cart=Cart::get();
+        // // return $cart;
+        // $cart_index='ORD-'.strtoupper(uniqid());
+        // $sub_total=0;
+        // foreach($cart as $cart_item){
+        //     $sub_total+=$cart_item['amount'];
+        //     $data=array(
+        //         'cart_id'=>$cart_index,
+        //         'user_id'=>$request->user()->id,
+        //         'product_id'=>$cart_item['id'],
+        //         'quantity'=>$cart_item['quantity'],
+        //         'amount'=>$cart_item['amount'],
+        //         'status'=>'new',
+        //         'price'=>$cart_item['price'],
+        //     );
+
+        //     $cart=new Cart();
+        //     $cart->fill($data);
+        //     $cart->save();
+        // }
+
+        // $total_prod=0;
+        // if(session('cart')){
+        //         foreach(session('cart') as $cart_items){
+        //             $total_prod+=$cart_items['quantity'];
+        //         }
+        // }
 
         $order=new Order();
         $order_data=$request->all();
@@ -70,39 +96,31 @@ class OrderController extends Controller
         $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
         // return session('coupon')['value'];
         $order_data['sub_total']=Helper::totalCartPrice();
-        //return $order_data['sub_total'];
         $order_data['quantity']=Helper::cartCount();
-
-        //gst 12% add with amound
-        $gst=$order_data['sub_total']+($order_data['sub_total']*(12/100));
-        //return $gst;
-
-
         if(session('coupon')){
             $order_data['coupon']=session('coupon')['value'];
         }
         if($request->shipping){
             if(session('coupon')){
-                $order_data['total_amount']=$gst+$shipping[0]-session('coupon')['value'];
+                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0]-session('coupon')['value'];
             }
             else{
-                $order_data['total_amount']=$gst+$shipping[0];
+                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0];
             }
         }
         else{
             if(session('coupon')){
-                $order_data['total_amount']=$gst-session('coupon')['value'];
+                $order_data['total_amount']=Helper::totalCartPrice()-session('coupon')['value'];
             }
             else{
-                $order_data['total_amount']=$gst;
+                $order_data['total_amount']=Helper::totalCartPrice();
             }
         }
-        
-
-        //$order_data['total_amount']=Helper::totalGstPrice();
-         //return $order_data['total_amount'];
-
+        // return $order_data['total_amount'];
         $order_data['status']="new";
+        //$order_data['payment_status']="unpaid";
+        
+        /*
         if(request('payment_method')=='paypal'){
             $order_data['payment_method']='paypal';
             $order_data['payment_status']='paid';
@@ -111,9 +129,18 @@ class OrderController extends Controller
             $order_data['payment_method']='cod';
             $order_data['payment_status']='Unpaid';
         }
+        */
+
+        if(request('payment_method')=='razorpay'){
+            $order_data['payment_method']='razorpay';
+            $order_data['payment_status']='Unpaid';
+        }
+        else{
+            $order_data['payment_method']='cod';
+            $order_data['payment_status']='Unpaid';
+        }
+
         $order->fill($order_data);
-        return $order;
-        //dd($order);
         $status=$order->save();
         if($order)
         // dd($order->id);

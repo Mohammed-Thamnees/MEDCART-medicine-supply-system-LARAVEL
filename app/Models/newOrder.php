@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable=['user_id','order_number','sub_total','quantity','delivery_charge','status','total_amount','shop_name','owner_name','post','pin','mark','number','email','payment_method','payment_status','shipping_id','coupon'];
+    protected $fillable=['user_id','order_number','sub_total','quantity','razorpay_id','status','total_amount','name','owner_name','post','pin','mark','number','email','payment_status','coupon','payment_method'];
 
     public function cart_info(){
         return $this->hasMany('App\Models\Cart','order_id','id');

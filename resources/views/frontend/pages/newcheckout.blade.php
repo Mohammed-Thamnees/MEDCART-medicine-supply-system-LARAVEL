@@ -30,28 +30,31 @@
 
                         <div class="col-lg-8 col-12">
                             <div class="checkout-form">
-                                <h2>Make Your Checkout Here</h2>
-                                <p>Please register in order to checkout more quickly</p>
+                                <h2>Your Shipping Address</h2>
+                                <p>Please confirm the shipping address</p>
                                 <!-- Form -->
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Shop Name<span>*</span></label>
-                                            <input type="text" name="shop_name" placeholder="" value="{{$user->name}}">
-                                            @error('shop_name')
+                                            <input type="text" name="name" placeholder="" value="{{$user->name}}">
+                                            @error('name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Owner Name<span>*</span></label>
-                                            <input type="text" name="owner_name" placeholder="" value="{{$user->owner_name}}">
-                                            @error('owner_name')
+                                            <input type="text" name="Owner_name" placeholder="" value="{{$user->owner_name}}">
+                                            @error('Owner_name')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
+
+                                   
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Email Address<span>*</span></label>
@@ -61,6 +64,8 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    
+
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Phone Number <span>*</span></label>
@@ -70,9 +75,10 @@
                                             @enderror
                                         </div>
                                     </div>
+                                
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Post Office</label>
+                                            <label>Post Office<span>*</span></label>
                                             <input type="text" name="post" placeholder="" value="{{$user->post}}">
                                             @error('post')
                                                 <span class='text-danger'>{{$message}}</span>
@@ -88,6 +94,7 @@
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Land Mark<span>*</span></label>
@@ -154,19 +161,21 @@
                                 </div>
                                 <!--/ End Order Widget -->
                                 <!-- Order Widget -->
+                                
                                 <div class="single-widget">
                                     <h2>Payments</h2>
                                     <div class="content">
                                         <div class="checkbox">
-                                            {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
+                                             
                                             <form-group>
                                                 <input name="payment_method"  type="radio" value="cod"> <label> Cash On Delivery</label><br>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label> 
+                                                <input name="payment_method"  type="radio" value="razorpay"> <label> razorpay </label> 
                                             </form-group>
                                             
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <!--/ End Order Widget -->
                                 <!-- Payment Method Widget -->
                                 <div class="single-widget payement">
@@ -201,7 +210,7 @@
                     <div class="single-service">
                         <i class="ti-rocket"></i>
                         <h4>Free shiping</h4>
-                        <p>Orders over $100</p>
+                        <p>Free shipping to all branches</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
@@ -209,8 +218,8 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-reload"></i>
-                        <h4>Free Return</h4>
-                        <p>Within 30 days returns</p>
+                        <h4>Easy Purchase</h4>
+                        <p>User friendly UI</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
@@ -227,7 +236,7 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-tag"></i>
-                        <h4>Best Peice</h4>
+                        <h4>Best Price</h4>
                         <p>Guaranteed price</p>
                     </div>
                     <!-- End Single Service -->
@@ -235,8 +244,10 @@
             </div>
         </div>
     </section>
+    
     <!-- End Shop Services -->
     
+    {{--
     <!-- Start Shop Newsletter  -->
     <section class="shop-newsletter section">
         <div class="container">
@@ -259,6 +270,8 @@
         </div>
     </section>
     <!-- End Shop Newsletter -->
+    --}}
+
 @endsection
 @push('styles')
 	<style>
