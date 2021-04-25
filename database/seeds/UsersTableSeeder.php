@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'owner_name'=>'User',
                 'place'=>'Test-User',
                 'email'=>'user@gmail.com',
-                'number'=>'test-User',
+                'number'=>'9895157066',
                 'post'=>'Tirur',
                 'pin'=>'676552',
                 'mark'=>'Tirur',

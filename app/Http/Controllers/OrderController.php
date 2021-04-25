@@ -99,20 +99,12 @@ class OrderController extends Controller
         }
         
 
-        //$order_data['total_amount']=Helper::totalGstPrice();
-         //return $order_data['total_amount'];
-
         $order_data['status']="new";
-        if(request('payment_method')=='paypal'){
-            $order_data['payment_method']='paypal';
-            $order_data['payment_status']='paid';
-        }
-        else{
-            $order_data['payment_method']='cod';
-            $order_data['payment_status']='Unpaid';
-        }
+        $order_data['payment_status']='Unpaid';
+        
+
         $order->fill($order_data);
-        return $order;
+        //return $order;
         //dd($order);
         $status=$order->save();
         if($order)
