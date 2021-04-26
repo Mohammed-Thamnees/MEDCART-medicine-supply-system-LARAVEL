@@ -54,6 +54,10 @@
                 <th>Number</th>
                 <td>{{ $boy->number }}</td>
             </tr>
+            <tr>
+                <th>Join Date</th>
+                <td>{{ $boy->created_at->format('D d M, Y')}} at {{$boy->created_at->format('g : i a') }}</td>
+            </tr>
 
         @else
         <h6 class="text-center">No delivery boys found!!!</h6>

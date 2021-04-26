@@ -19,7 +19,7 @@ class CreateDeliveryBoysTable extends Migration
             $table->string('place');
             $table->text('address');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('number')->unique();
             $table->string('post');
             $table->integer('pin');
             $table->text('photo')->nullable();

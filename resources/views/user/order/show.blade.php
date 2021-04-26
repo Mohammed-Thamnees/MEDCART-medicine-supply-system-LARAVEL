@@ -13,10 +13,10 @@
         <tr>
             <th>S.N.</th>
             <th>Order No.</th>
-            <th>Name</th>
+            <th>Shop Name</th>
+            <th>Owner Name</th>
             <th>Email</th>
             <th>Quantity</th>
-            <th>Charge</th>
             <th>Total Amount</th>
             <th>Status</th>
             <th>Action</th>
@@ -29,11 +29,11 @@
             @endphp 
             <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
-            <td>{{$order->first_name}} {{$order->last_name}}</td>
+            <td>{{$order->shop_name}}</td>
+            <td>{{$order->owner_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>@foreach($shipping_charge as $data) $ {{number_format($data,2)}} @endforeach</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>RS {{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
                   <span class="badge badge-primary">{{$order->status}}</span>
@@ -41,8 +41,6 @@
                   <span class="badge badge-warning">{{$order->status}}</span>
                 @elseif($order->status=='delivered')
                   <span class="badge badge-success">{{$order->status}}</span>
-                @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
                 @endif
             </td>
             <td>
@@ -80,21 +78,12 @@
                         <td>Order Status</td>
                         <td> : {{$order->status}}</td>
                     </tr>
-                    <tr>
-                      @php
-                          $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-                      @endphp
-                        <td>Shipping Charge</td>
-                        <td> : $ {{number_format($shipping_charge[0],2)}}</td>
-                    </tr>
+                    
                     <tr>
                         <td>Total Amount</td>
                         <td> : $ {{number_format($order->total_amount,2)}}</td>
                     </tr>
-                    <tr>
-                      <td>Payment Method</td>
-                      <td> : @if($order->payment_method=='cod') Cash on Delivery @else Paypal @endif</td>
-                    </tr>
+                    
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
@@ -108,28 +97,32 @@
               <h4 class="text-center pb-4">SHIPPING INFORMATION</h4>
               <table class="table">
                     <tr class="">
-                        <td>Full Name</td>
-                        <td> : {{$order->first_name}} {{$order->last_name}}</td>
+                        <td>Shop Name</td>
+                        <td> : {{$order->shop_name}}</td>
                     </tr>
+                    <tr class="">
+                      <td>Owner Name</td>
+                      <td> : {{$order->owner_name}}</td>
+                  </tr>
                     <tr>
                         <td>Email</td>
                         <td> : {{$order->email}}</td>
                     </tr>
                     <tr>
                         <td>Phone No.</td>
-                        <td> : {{$order->phone}}</td>
+                        <td> : {{$order->number}}</td>
                     </tr>
                     <tr>
-                        <td>Address</td>
-                        <td> : {{$order->address1}}, {{$order->address2}}</td>
+                        <td>Post Office</td>
+                        <td> : {{$order->post}}</td>
                     </tr>
                     <tr>
-                        <td>Country</td>
-                        <td> : {{$order->country}}</td>
+                        <td>Pin</td>
+                        <td> : {{$order->pin}}</td>
                     </tr>
                     <tr>
-                        <td>Post Code</td>
-                        <td> : {{$order->post_code}}</td>
+                        <td>Land Mark</td>
+                        <td> : {{$order->mark}}</td>
                     </tr>
               </table>
             </div>

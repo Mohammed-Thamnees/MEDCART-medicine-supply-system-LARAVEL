@@ -8,13 +8,17 @@
       <form method="post" action="{{route('deliveryboys.update',$boy->id)}}">
         @csrf 
         @method('PATCH')
-        <div class="form-group">
+
+       
+          <div class="form-group">
             <label for="inputTitle" class="col-form-label">Name</label>
           <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{$boy->name}}" class="form-control">
           @error('name')
           <span class="text-danger">{{$message}}</span>
           @enderror
           </div>
+
+          
   
           <div class="form-group">
               <label for="inputPlace" class="col-form-label">Place</label>
@@ -74,13 +78,15 @@
                       <i class="fa fa-picture-o"></i> Choose
                       </a>
                   </span>
-              <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+              <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$boy->photo}}">
             </div>
             <div id="holder" style="margin-top:15px;max-height:100px;"></div>
               @error('photo')
               <span class="text-danger">{{$message}}</span>
               @enderror
             </div>
+
+            
   
             <div class="form-group">
               <label for="status" class="col-form-label">Status</label>
@@ -92,6 +98,8 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
             </div>
+
+        
         <div class="form-group mb-3">
            <button class="btn btn-success" type="submit">Update</button>
         </div>

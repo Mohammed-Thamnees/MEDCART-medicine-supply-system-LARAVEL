@@ -109,11 +109,11 @@ class DeliveryBoyController extends Controller
             'number'=>'required|numeric|digits:10',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
-            'password'=>'required|string',
             'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string',
+            'photo'=>'nullable|string'
         ]);
         $data=$request->all();
+        //return $data;
         $status=$boy->fill($data)->save();
         if($status){
             request()->session()->flash('success','successfully updated delivery boy');
