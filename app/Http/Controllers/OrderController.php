@@ -13,6 +13,11 @@ use Helper;
 use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
 
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
+use Monolog\SignalHandler;
+use Session;
+
 class OrderController extends Controller
 {
     /**
@@ -60,11 +65,15 @@ class OrderController extends Controller
             request()->session()->flash('error','Cart is Empty !');
             return back();
         }
+
+
         
+
 
         $order=new Order();
         $order_data=$request->all();
         $order_data['order_number']='ORD-'.strtoupper(Str::random(10));
+        
         $order_data['user_id']=$request->user()->id;
         $order_data['shipping_id']=$request->shipping;
         $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
@@ -101,12 +110,31 @@ class OrderController extends Controller
 
         $order_data['status']="new";
         $order_data['payment_status']='Unpaid';
+
+        //$api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+        //$create  = $api->order->create(array('receipt' => '123', 'amount' => $order_data['total_amount'] * 100 , 'currency' => 'INR')); // Creates order
+        //$orderId = $create['id'];
+
+
+        
         
 
         $order->fill($order_data);
         //return $order;
         //dd($order);
         $status=$order->save();
+
+        $data = array(
+            'order_id' => $order_data['order_number'],
+            'amount' => $order_data['total_amount']
+        );
+
+        //return $data;
+        //Session::put('data', $data);
+        //Session::put('order_id', $order_data['order_number']);
+        //Session::put('amount' , $order_data['total_amount']);
+
+
         if($order)
         // dd($order->id);
         $users=User::where('role','admin')->first();
@@ -116,6 +144,7 @@ class OrderController extends Controller
             'fas'=>'fa-file-alt'
         ];
         Notification::send($users, new StatusNotification($details));
+        
         if(request('payment_method')=='paypal'){
             return redirect()->route('payment')->with(['id'=>$order->id]);
         }
@@ -123,11 +152,16 @@ class OrderController extends Controller
             session()->forget('cart');
             session()->forget('coupon');
         }
+        
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
 
-        // dd($users);        
-        request()->session()->flash('success','Your product successfully placed in order');
-        return redirect()->route('home');
+        // dd($users);       
+        
+
+        //request()->session()->flash('success','Your product successfully placed in order');
+        request()->session()->flash('success','Click on the SECURE PAY NOW button to pay amound');
+        //return redirect()->route('start')->with('data',$data);
+        return view('frontend.pages.payment')->with('data',$data);
     }
 
     /**
@@ -166,7 +200,7 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered,cancel'
+            'status'=>'required|in:new,process,delivered'
         ]);
         $data=$request->all();
         // return $request->status;
@@ -252,7 +286,7 @@ class OrderController extends Controller
     public function pdf(Request $request){
         $order=Order::getAllOrder($request->id);
         // return $order;
-        $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
+        $file_name=$order->order_number.'-'.$order->shop_name.'.pdf';
         // return $file_name;
         $pdf=PDF::loadview('backend.order.pdf',compact('order'));
         return $pdf->download($file_name);

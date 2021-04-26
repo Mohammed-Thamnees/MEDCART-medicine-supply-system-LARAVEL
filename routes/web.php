@@ -51,6 +51,26 @@ Route::get('/cart',function(){
     return view('frontend.pages.cart');
 })->name('cart');
 Route::get('/checkout','CartController@checkout')->name('checkout')->middleware('user');
+
+
+
+
+
+
+//razorpay
+Route::get('/start', 'PaymentController@index')->name('start');
+Route::get('/success', 'PaymentController@success');
+Route::post('/payments', 'PaymentController@payment')->name('payments');
+Route::post('/pay' , 'PaymentController@pay');
+Route::get('/error' , 'PaymentController@error');
+
+
+
+
+
+
+
+
 // Wishlist
 Route::get('/wishlist',function(){
     return view('frontend.pages.wishlist');
@@ -88,9 +108,9 @@ Route::resource('/comment','PostCommentController');
 // Coupon
 Route::post('/coupon-store','CouponController@couponStore')->name('coupon-store');
 // Payment
-Route::get('payment', 'PayPalController@payment')->name('payment');
-Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+//Route::get('payment', 'PayPalController@payment')->name('payment');
+//Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+//Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 
 
 

@@ -84,17 +84,17 @@
   <div class="invoice-description">
     <div class="invoice-left-top float-left">
       <h6>Invoice to</h6>
-       <h3>{{$order->first_name}} {{$order->last_name}}</h3>
+       <h3>{{$order->shop_name}}</h3>
        <div class="address">
         <p>
-          <strong>Country: </strong>
-          {{$order->country}}
+          <strong>Owner: </strong>
+          {{$order->owner_name}}
         </p>
         <p>
           <strong>Address: </strong>
-          {{ $order->address1 }} OR {{ $order->address2}}
+          {{ $order->post }} OR {{ $order->pin}}
         </p>
-         <p><strong>Phone:</strong> {{ $order->phone }}</p>
+         <p><strong>Phone:</strong> {{ $order->number }}</p>
          <p><strong>Email:</strong> {{ $order->email }}</p>
        </div>
     </div>
@@ -129,7 +129,7 @@
               @endforeach
             </span></td>
           <td>x{{$cart->quantity}}</td>
-          <td><span>${{number_format($cart->price,2)}}</span></td>
+          <td><span>RS {{number_format($cart->price,2)}}</span></td>
         </tr>
       @endforeach
       </tbody>
@@ -137,7 +137,7 @@
         <tr>
           <th scope="col" class="empty"></th>
           <th scope="col" class="text-right">Subtotal:</th>
-          <th scope="col"> <span>${{number_format($order->sub_total,2)}}</span></th>
+          <th scope="col"> <span>RS {{number_format($order->sub_total,2)}}</span></th>
         </tr>
       {{-- @if(!empty($order->coupon))
         <tr>
@@ -148,18 +148,10 @@
       @endif --}}
         <tr>
           <th scope="col" class="empty"></th>
-          @php
-            $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-          @endphp
-          <th scope="col" class="text-right ">Shipping:</th>
-          <th><span>${{number_format($shipping_charge[0],2)}}</span></th>
-        </tr>
-        <tr>
-          <th scope="col" class="empty"></th>
           <th scope="col" class="text-right">Total:</th>
           <th>
             <span>
-                ${{number_format($order->total_amount,2)}}
+                RS {{number_format($order->total_amount,2)}}
             </span>
           </th>
         </tr>

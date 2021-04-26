@@ -18,6 +18,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1||^3.0",
         "pusher/pusher-php-server": "^4.1",
+        "razorpay/razorpay": "^2.6",
         "spatie/laravel-newsletter": "^4.8",
         "srmklive/paypal": "~1.0",
         "unisharp/laravel-filemanager": "^2.1"
