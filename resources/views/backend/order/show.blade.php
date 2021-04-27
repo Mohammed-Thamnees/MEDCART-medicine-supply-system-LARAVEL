@@ -13,26 +13,34 @@
       
       <thead>
         <tr>
-            <th>S.N.</th>
+            
             <th>Order No.</th>
             <th>Shop Name</th>
             <th>Owner Name</th>
             <th>Email</th>
-            <th>Quantity</th>
+            <th>Total quantity of products</th>
             <th>Total Amount</th>
+            <th>Payment Status</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-            <td>{{$order->id}}</td>
+           
             <td>{{$order->order_number}}</td>
             <td>{{$order->shop_name}}</td>
             <td>{{$order->owner_name}}</td>
             <td>{{$order->email}}</td>
-            <td>{{$order->quantity}}</td>
+            <td align="center">{{$order->quantity}}</td>
             <td>RS {{number_format($order->total_amount,2)}}</td>
+            <td>
+              @if($order->payment_status=='paid')
+                <span class="badge badge-success">{{$order->payment_status}}</span>
+              @elseif($order->payment_status=='unpaid')
+                <span class="badge badge-danger">{{$order->payment_status}}</span>
+              @endif
+            </td>
             <td>
                 @if($order->status=='new')
                   <span class="badge badge-primary">{{$order->status}}</span>
@@ -44,6 +52,7 @@
             </td>
             <td>
                 <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                <br><br>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">
                   @csrf 
                   @method('delete')
@@ -71,21 +80,21 @@
                         <td> : {{$order->created_at->format('D d M, Y')}} at {{$order->created_at->format('g : i a')}} </td>
                     </tr>
                     <tr>
-                        <td>Quantity</td>
+                        <td>Total quantity of products</td>
                         <td> : {{$order->quantity}}</td>
                     </tr>
                     <tr>
-                        <td>Order Status</td>
-                        <td> : {{$order->status}}</td>
-                    </tr>
-                    
-                    <tr>
                       <td>Coupon</td>
-                      <td> : $ {{number_format($order->coupon,2)}}</td>
+                      <td> : RS {{number_format($order->coupon,2)}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : RS {{number_format($order->total_amount,2)}}</td>
+                    </tr>
+
+                    <tr>
+                      <td>Order Status</td>
+                      <td> : {{$order->status}}</td>
                     </tr>
                     
                     <tr>
@@ -134,6 +143,52 @@
         </div>
       </div>
     </section>
+
+    <br><br>
+    
+    <h3 class="text-center pb-4"><u>Ordered Product Information</u></h3>
+    <table class="table table-striped table-hover">
+      
+      <thead>
+        <tr>
+            
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>Sub Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @php
+        $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount')
+                    ->where('carts.order_id','=',$order->id)->get();
+    @endphp
+    @foreach ($product as $product)
+        <tr>
+           
+            <td>{{$product->title}}</td>
+            <td>{{ $product->quantity }}</td>
+            <td>RS {{number_format($product->price,2)}}</td>
+                  @php
+                    $amount=$product->amount;
+                    $gst=$amount*(6/100);
+                    //$gst_total=2*$gst;
+                    //$total_pay=$gst_total+$amount;
+                  @endphp
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($product->amount,2)}}</td>
+          
+        </tr>
+      @endforeach
+      </tbody>
+    </table>
+
+
+
     @endif
 
   </div>

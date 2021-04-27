@@ -17,13 +17,12 @@
         <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
+              
               <th>Order No.</th>
               <th>Shop Name</th>
               <th>Owner Name</th>
-              
-              <th>Quantity</th>
               <th>Total Amount</th>
+              <th>Payment Status</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -32,13 +31,18 @@
           <tbody>
             @foreach($orders as $order)  
                 <tr>
-                    <td>{{$order->id}}</td>
+                    
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->shop_name}}</td>
                     <td>{{$order->owner_name}}</td>
-                    
-                    <td>{{$order->quantity}}</td>
                     <td>RS {{number_format($order->total_amount,2)}}</td>
+                    <td>
+                      @if($order->payment_status=='paid')
+                        <span class="badge badge-success">{{$order->payment_status}}</span>
+                      @elseif($order->payment_status=='unpaid')
+                        <span class="badge badge-danger">{{$order->payment_status}}</span>
+                      @endif
+                    </td>
                     <td>
                         @if($order->status=='new')
                           <span class="badge badge-primary">{{$order->status}}</span>
@@ -97,7 +101,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[7]
+                    "targets":[6]
                 }
             ]
         } );

@@ -172,8 +172,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order=Order::find($id);
-        // return $order;
+        //$order=Order::find($id);
+        $order=Order::getAllOrder($id);
+        //return $order;
         return view('backend.order.show')->with('order',$order);
     }
 
@@ -285,7 +286,7 @@ class OrderController extends Controller
     // PDF generate
     public function pdf(Request $request){
         $order=Order::getAllOrder($request->id);
-        // return $order;
+        //return $order;
         $file_name=$order->order_number.'-'.$order->shop_name.'.pdf';
         // return $file_name;
         $pdf=PDF::loadview('backend.order.pdf',compact('order'));

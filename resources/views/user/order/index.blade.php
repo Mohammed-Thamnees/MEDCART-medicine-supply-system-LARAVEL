@@ -17,10 +17,10 @@
         <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
               <th>Order No.</th>
-              <th>Quantity</th>
+              <th>Total quantity of products</th>
               <th>Total Amount</th>
+              <th>Order Date</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -32,10 +32,10 @@
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
             @endphp  
                 <tr>
-                    <td>{{$order->id}}</td>
                     <td>{{$order->order_number}}</td>
-                    <td>{{$order->quantity}}</td>
+                    <td align="center">{{$order->quantity}}</td>
                     <td>RS {{number_format($order->total_amount,2)}}</td>
+                    <td>{{$order->created_at->format('d/m/Y')}}</td>
                     <td>
                         @if($order->status=='new')
                           <span class="badge badge-primary">{{$order->status}}</span>

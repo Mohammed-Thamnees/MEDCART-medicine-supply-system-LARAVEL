@@ -11,12 +11,11 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-            <th>S.N.</th>
             <th>Order No.</th>
             <th>Shop Name</th>
             <th>Owner Name</th>
             <th>Email</th>
-            <th>Quantity</th>
+            <th>Total quantity of products</th>
             <th>Total Amount</th>
             <th>Status</th>
             <th>Action</th>
@@ -27,12 +26,11 @@
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
             @endphp 
-            <td>{{$order->id}}</td>
             <td>{{$order->order_number}}</td>
             <td>{{$order->shop_name}}</td>
             <td>{{$order->owner_name}}</td>
             <td>{{$order->email}}</td>
-            <td>{{$order->quantity}}</td>
+            <td align="center">{{$order->quantity}}</td>
             <td>RS {{number_format($order->total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
@@ -71,7 +69,7 @@
                         <td> : {{$order->created_at->format('D d M, Y')}} at {{$order->created_at->format('g : i a')}} </td>
                     </tr>
                     <tr>
-                        <td>Quantity</td>
+                        <td>Total quantity of products</td>
                         <td> : {{$order->quantity}}</td>
                     </tr>
                     <tr>
@@ -81,7 +79,7 @@
                     
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : RS {{number_format($order->total_amount,2)}}</td>
                     </tr>
                     
                     <tr>
@@ -130,6 +128,50 @@
         </div>
       </div>
     </section>
+
+    <br><br>
+    
+    <h3 class="text-center pb-4"><u>Ordered Product Information</u></h3>
+    <table class="table table-striped table-hover">
+      
+      <thead>
+        <tr>
+            
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>Sub Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @php
+        $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount')
+                    ->where('carts.order_id','=',$order->id)->get();
+    @endphp
+    @foreach ($product as $product)
+        <tr>
+           
+            <td>{{$product->title}}</td>
+            <td>{{ $product->quantity }}</td>
+            <td>RS {{number_format($product->price,2)}}</td>
+                  @php
+                    $amount=$product->amount;
+                    $gst=$amount*(6/100);
+                    //$gst_total=2*$gst;
+                    //$total_pay=$gst_total+$amount;
+                  @endphp
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($product->amount,2)}}</td>
+          
+        </tr>
+      @endforeach
+      </tbody>
+    </table>
+
     @endif
 
   </div>
