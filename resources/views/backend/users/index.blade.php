@@ -17,7 +17,6 @@
         <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>User id</th>
               <th>Name</th>
               <th>Email</th>
               <th>Photo</th>
@@ -31,9 +30,6 @@
           <tbody>
             
             @foreach($users as $user)   
-                    
-                    <td>{{$user->id}}</td>
-                    
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
@@ -97,7 +93,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[6,7]
+                    "targets":[5,6]
                 }
             ]
         } );

@@ -11,9 +11,8 @@ How to settup the project in your local system, follow the steps:-
 	3) Rename or copy .env.example file to .env
 	4) php artisan key:generate
 	5) Set your database credentials in your .env file
-	6) Import db file(database/e-shop.sql) into your database (mysql,sql)
-				OR
-		php artisan migrate    //run the command
+	6) Run the command to get db
+			php artisan migrate    //run the command
 	7) Run command   :
 		npm install
 	8) and	

@@ -8,7 +8,7 @@
       <form method="post" action="{{route('deliveryboys.store')}}">
         {{csrf_field()}}
         <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Name</label>
+          <label for="inputTitle" class="col-form-label">Name<span class="text-danger">*</span></label>
         <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{old('name')}}" class="form-control">
         @error('name')
         <span class="text-danger">{{$message}}</span>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-            <label for="inputPlace" class="col-form-label">Place</label>
+            <label for="inputPlace" class="col-form-label">Place<span class="text-danger">*</span></label>
           <input id="inputPlace" type="text" name="place" placeholder="Enter place"  value="{{old('place')}}" class="form-control">
           @error('place')
           <span class="text-danger">{{$message}}</span>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="form-group">
-            <label for="address" class="col-form-label">Address</label>
+            <label for="address" class="col-form-label">Address<span class="text-danger">*</span></label>
             <textarea class="form-control" id="address" name="address">{{old('address')}}</textarea>
             @error('address')
             <span class="text-danger">{{$message}}</span>
@@ -33,7 +33,7 @@
 
 
         <div class="form-group">
-            <label for="inputEmail" class="col-form-label">Email</label>
+            <label for="inputEmail" class="col-form-label">Email<span class="text-danger">*</span></label>
           <input id="inputEmail" type="email" name="email" placeholder="Enter email"  value="{{old('email')}}" class="form-control">
           @error('email')
           <span class="text-danger">{{$message}}</span>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            <label for="inputNumber" class="col-form-label">Phone Number</label>
+            <label for="inputNumber" class="col-form-label">Phone Number<span class="text-danger">*</span></label>
           <input id="inputNumber" type="number" name="number" placeholder="Enter number"  value="{{old('number')}}" class="form-control">
           @error('number')
           <span class="text-danger">{{$message}}</span>
@@ -49,7 +49,7 @@
         </div>
 
           <div class="form-group">
-            <label for="inputPin" class="col-form-label">Pin</label>
+            <label for="inputPin" class="col-form-label">Pin<span class="text-danger">*</span></label>
           <input id="inputPin" type="number" name="pin" placeholder="Enter pin"  value="{{old('pin')}}" class="form-control">
           @error('pin')
           <span class="text-danger">{{$message}}</span>
@@ -57,7 +57,7 @@
           </div>
 
           <div class="form-group">
-            <label for="inputPost" class="col-form-label">Post Office</label>
+            <label for="inputPost" class="col-form-label">Post Office<span class="text-danger">*</span></label>
           <input id="inputPin" type="text" name="post" placeholder="Enter post office"  value="{{old('post')}}" class="form-control">
           @error('post')
           <span class="text-danger">{{$message}}</span>
@@ -65,7 +65,7 @@
           </div>
 
         <div class="form-group">
-            <label for="inputPassword" class="col-form-label">Password</label>
+            <label for="inputPassword" class="col-form-label">Password<span class="text-danger">*</span></label>
           <input id="inputPassword" type="password" name="password" placeholder="Enter password"  value="{{old('password')}}" class="form-control">
           @error('password')
           <span class="text-danger">{{$message}}</span>

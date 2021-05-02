@@ -396,7 +396,7 @@ class FrontendController extends Controller
             'pin'=>'required|numeric|digits:6',
             'mark'=>'required|alpha_dash|min:3', 
             //'file' => 'required|mimes:pdf,xlx,csv|max:2048',
-            'password'=>'required|min:6|confirmed',
+            'password'=>'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|confirmed',
         ]);
         $data=$request->all();
         // dd($data);

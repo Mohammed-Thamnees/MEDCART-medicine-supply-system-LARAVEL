@@ -4,7 +4,8 @@
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">Order       <a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>
+<h5 class="card-header">Order       
+  <!--<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>-->
   </h5>
   <div class="card-body">
     @if($order)
@@ -18,7 +19,6 @@
             <th>Total quantity of products</th>
             <th>Total Amount</th>
             <th>Status</th>
-            <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -41,13 +41,7 @@
                   <span class="badge badge-success">{{$order->status}}</span>
                 @endif
             </td>
-            <td>
-                <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                  @csrf 
-                  @method('delete')
-                      <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                </form>
-            </td>
+            
           
         </tr>
       </tbody>
@@ -150,7 +144,7 @@
         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
                     ->select('products.title','carts.quantity','carts.price','carts.amount')
                     ->where('carts.order_id','=',$order->id)->get();
-    @endphp
+        @endphp
     @foreach ($product as $product)
         <tr>
            

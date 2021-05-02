@@ -129,11 +129,11 @@
   <script>
       
       $('#product-dataTable').DataTable( {
-        "scrollX": false
+        
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[10,11,12]
+                    "targets":[8]
                 }
             ]
         } );

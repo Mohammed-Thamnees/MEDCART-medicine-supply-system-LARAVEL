@@ -15,7 +15,7 @@ class CouponSeeder extends Seeder
             array(
                 'code'=>'abc123',
                 'type'=>'fixed',
-                'value'=>'300',
+                'value'=>'100',
                 'status'=>'active'
             ),
             array(

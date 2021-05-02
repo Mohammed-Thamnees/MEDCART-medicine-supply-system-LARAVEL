@@ -17,7 +17,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                                <input  id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -38,6 +38,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                <br><span style="color:rgb(150, 140, 140)">Your password must be minimum 8 characters long, Should contain atleast 1 Uppercase, 1 Lowecase, 1 Numeric and 1 Special character.</span>
                             </div>
                         </div>
 

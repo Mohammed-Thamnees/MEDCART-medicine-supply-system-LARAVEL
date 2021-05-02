@@ -37,7 +37,7 @@ class CouponController extends Controller
     {
         // return $request->all();
         $this->validate($request,[
-            'code'=>'string|required',
+            'code'=>'required|string',
             'type'=>'required|in:fixed,percent',
             'value'=>'required|numeric',
             'status'=>'required|in:active,inactive'
@@ -91,13 +91,13 @@ class CouponController extends Controller
     {
         $coupon=Coupon::find($id);
         $this->validate($request,[
-            'code'=>'string|required',
+            'code'=>'required|string',
             'type'=>'required|in:fixed,percent',
             'value'=>'required|numeric',
             'status'=>'required|in:active,inactive'
         ]);
         $data=$request->all();
-        
+
         $status=$coupon->fill($data)->save();
         if($status){
             request()->session()->flash('success','Coupon Successfully updated');
@@ -106,7 +106,7 @@ class CouponController extends Controller
             request()->session()->flash('error','Please try again!!');
         }
         return redirect()->route('coupon.index');
-        
+
     }
 
     /**

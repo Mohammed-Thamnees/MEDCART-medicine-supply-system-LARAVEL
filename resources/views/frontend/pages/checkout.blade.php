@@ -20,13 +20,13 @@
         </div>
     </div>
     <!-- End Breadcrumbs -->
-            
+
     <!-- Start Checkout -->
     <section class="shop checkout section">
         <div class="container">
                 <form class="form" method="POST" action="{{route('cart.order')}}">
                     @csrf
-                    <div class="row"> 
+                    <div class="row">
 
                         <div class="col-lg-8 col-12">
                             <div class="checkout-form">
@@ -97,7 +97,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <!--/ End Form -->
                             </div>
@@ -109,21 +109,21 @@
                                     <h2>CART  TOTALS</h2>
                                     <div class="content">
                                         <ul>
-										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>RS {{number_format(Helper::totalCartPrice(),2)}}</span></li>
+										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>RS {{number_format(Helper::totalCartPrice(),2)}} + </span></li>
                                             <li class="shipping">
                                                 Shipping Cost
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
                                                     <select name="shipping" class="nice-select">
                                                         <option value="">Select your address</option>
                                                         @foreach(Helper::shipping() as $shipping)
-                                                        <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: RS {{$shipping->price}}</option>
+                                                        <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: RS {{$shipping->price}} + </option>
                                                         @endforeach
                                                     </select>
-                                                @else 
+                                                @else
                                                     <span>Free</span>
                                                 @endif
                                             </li>
-                                            
+
                                             <!-- GST calculation start -->
 										@php
                                         $amount=Helper::totalCartPrice();
@@ -132,11 +132,11 @@
                                         $total_pay=$gst_total+$amount;
                                         @endphp
                                         <!-- GST calculation end -->
-                                            <li class="sgst">SGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} </span> </li>
-                                            <li class="cgst">CGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} </span> </li>
+                                            <li class="sgst">SGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} + </span> </li>
+                                            <li class="cgst">CGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} + </span> </li>
 
                                             @if(session('coupon'))
-                                            <li class="coupon_price" data-price="{{session('coupon')['value']}}">You Save<span>RS {{number_format(session('coupon')['value'],2)}}</span></li>
+                                            <li class="coupon_price" data-price="{{session('coupon')['value']}}">You Save<span>RS {{number_format(session('coupon')['value'],2)}} - </span></li>
                                             @endif
                                             @php
                                                 $total_amount=$total_pay;
@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                                 <!--/ End Order Widget -->
-                                
+
                                 <!-- Payment Method Widget -->
                                 <div class="single-widget payement">
                                     <div class="content">
@@ -177,7 +177,7 @@
         </div>
     </section>
     <!--/ End Checkout -->
-    
+
     <!-- Start Shop Services Area  -->
     <section class="shop-services section home">
         <div class="container">
@@ -222,7 +222,7 @@
         </div>
     </section>
     <!-- End Shop Services -->
-    
+
 
 @endsection
 @push('styles')
@@ -293,8 +293,8 @@
 		$(document).ready(function(){
 			$('.shipping select[name=shipping]').change(function(){
 				let cost = parseFloat( $(this).find('option:selected').data('price') ) || 0;
-				let subtotal = parseFloat( $('.order_subtotal').data('price') ); 
-				let coupon = parseFloat( $('.coupon_price').data('price') ) || 0; 
+				let subtotal = parseFloat( $('.order_subtotal').data('price') );
+				let coupon = parseFloat( $('.coupon_price').data('price') ) || 0;
 				// alert(coupon);
 				$('#order_total_price span').text('$'+(subtotal + cost-coupon).toFixed(2));
 			});

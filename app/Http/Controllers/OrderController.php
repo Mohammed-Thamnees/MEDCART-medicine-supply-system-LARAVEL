@@ -13,6 +13,7 @@ use Helper;
 use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
 
+//newly added
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use Monolog\SignalHandler;
@@ -65,9 +66,6 @@ class OrderController extends Controller
             request()->session()->flash('error','Cart is Empty !');
             return back();
         }
-
-
-        
 
 
         $order=new Order();
@@ -159,9 +157,10 @@ class OrderController extends Controller
         
 
         //request()->session()->flash('success','Your product successfully placed in order');
-        request()->session()->flash('success','Click on the SECURE PAY NOW button to pay amound');
+        request()->session()->flash('success','Order successfully placed');
         //return redirect()->route('start')->with('data',$data);
-        return view('frontend.pages.payment')->with('data',$data);
+        //return view('frontend.pages.payment')->with('data',$data);
+        return redirect()->route('home');
     }
 
     /**

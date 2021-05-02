@@ -105,34 +105,20 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <!--
-                                    <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Upload Documents<span>*</span></label>
-                                        <input type="file" name="file" placeholder="" value="{{old('file')}}">
-                                        @error('file')
-                                            <span class="text-danger">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                -->
-
-
-
-                                
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Your Password<span>*</span></label>
-                                        <input type="password" name="password" placeholder="" value="{{old('password')}}">
+                                        <input type="password" name="password" placeholder="" value="">
                                         @error('password')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
+                                        <br><span style="color:rgb(150, 140, 140)">Your password must be minimum 8 characters long, Should contain atleast 1 Uppercase, 1 Lowecase, 1 Numeric and 1 Special character.</span>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Confirm Password<span>*</span></label>
-                                        <input type="password" name="password_confirmation" placeholder="" value="{{old('password_confirmation')}}">
+                                        <input type="password" name="password_confirmation" placeholder="" value="">
                                         @error('password_confirmation')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -142,11 +128,11 @@
                                     <div class="form-group login-btn">
                                         <button class="btn" type="submit">Register</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="{{route('login.form')}}" class="btn">Login</a>
-                                        <!--  OR
+                                        {{--  OR
                                         <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
                                         <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
                                         <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
-                                        -->
+                                        --}}
                                     </div>
                                 </div>
                             </div>
