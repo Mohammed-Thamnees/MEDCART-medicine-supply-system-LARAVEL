@@ -17,32 +17,26 @@
         <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              
+
               <th>Order No.</th>
               <th>Shop Name</th>
               <th>Owner Name</th>
               <th>Total Amount</th>
-              <th>Payment Status</th>
+              <th>Order date</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
-  
+
           <tbody>
-            @foreach($orders as $order)  
+            @foreach($orders as $order)
                 <tr>
-                    
+
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->shop_name}}</td>
                     <td>{{$order->owner_name}}</td>
                     <td>RS {{number_format($order->total_amount,2)}}</td>
-                    <td>
-                      @if($order->payment_status=='paid')
-                        <span class="badge badge-success">{{$order->payment_status}}</span>
-                      @elseif($order->payment_status=='unpaid')
-                        <span class="badge badge-danger">{{$order->payment_status}}</span>
-                      @endif
-                    </td>
+                    <td>{{ $order->created_at->format('d/m/Y') }}</td>
                     <td>
                         @if($order->status=='new')
                           <span class="badge badge-primary">{{$order->status}}</span>
@@ -56,14 +50,16 @@
                     </td>
                     <td>
                         <a href="{{route('order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                        @if($order->status=='new')
+                            <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                        @endif
                         <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                          @csrf 
+                          @csrf
                           @method('delete')
                               <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
-                </tr>  
+                </tr>
             @endforeach
           </tbody>
         </table>
@@ -96,7 +92,7 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#order-dataTable').DataTable( {
             "columnDefs":[
                 {
@@ -109,7 +105,7 @@
         // Sweet alert
 
         function deleteData(id){
-            
+
         }
   </script>
   <script>

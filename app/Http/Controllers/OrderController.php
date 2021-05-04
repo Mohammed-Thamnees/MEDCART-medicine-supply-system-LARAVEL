@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeliveryBoy;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
+use App\Models\DeliveryWork;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use Notification;
 use Helper;
@@ -28,7 +31,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=Order::orderBy('id','DESC')->paginate(10);
+        $orders=Order::orderBy('created_at','ASC')->paginate(10);
         return view('backend.order.index')->with('orders',$orders);
     }
 
@@ -71,7 +74,7 @@ class OrderController extends Controller
         $order=new Order();
         $order_data=$request->all();
         $order_data['order_number']='ORD-'.strtoupper(Str::random(10));
-        
+
         $order_data['user_id']=$request->user()->id;
         $order_data['shipping_id']=$request->shipping;
         $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
@@ -104,7 +107,7 @@ class OrderController extends Controller
                 $order_data['total_amount']=$gst;
             }
         }
-        
+
 
         $order_data['status']="new";
         $order_data['payment_status']='Unpaid';
@@ -114,8 +117,8 @@ class OrderController extends Controller
         //$orderId = $create['id'];
 
 
-        
-        
+
+
 
         $order->fill($order_data);
         //return $order;
@@ -142,7 +145,7 @@ class OrderController extends Controller
             'fas'=>'fa-file-alt'
         ];
         Notification::send($users, new StatusNotification($details));
-        
+
         if(request('payment_method')=='paypal'){
             return redirect()->route('payment')->with(['id'=>$order->id]);
         }
@@ -150,11 +153,11 @@ class OrderController extends Controller
             session()->forget('cart');
             session()->forget('coupon');
         }
-        
+
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
 
-        // dd($users);       
-        
+        // dd($users);
+
 
         //request()->session()->flash('success','Your product successfully placed in order');
         request()->session()->flash('success','Order successfully placed');
@@ -200,18 +203,26 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered'
+            'status'=>'required|in:new,process'
         ]);
         $data=$request->all();
         // return $request->status;
-        if($request->status=='delivered'){
+        if($request->status=='process'){
             foreach($order->cart as $cart){
                 $product=$cart->product;
                 // return $product;
                 $product->stock -=$cart->quantity;
                 $product->save();
             }
+
+            //automatically assign a random delivery boy
+            $boy=DeliveryBoy::where('status','active')->inRandomOrder()->first();
+            $work['boy_id']=$boy->id;
+            $work['order_id']=$order->id;
+            $insert=DeliveryWork::create($work);
+
         }
+
         $status=$order->fill($data)->save();
         if($status){
             request()->session()->flash('success','Successfully updated order');
@@ -263,17 +274,17 @@ class OrderController extends Controller
             elseif($order->status=="process"){
                 request()->session()->flash('success','Your order is under processing please wait.');
                 return redirect()->route('home');
-    
+
             }
             elseif($order->status=="delivered"){
                 request()->session()->flash('success','Your order is successfully delivered.');
                 return redirect()->route('home');
-    
+
             }
             else{
                 request()->session()->flash('error','Your order canceled. please try again');
                 return redirect()->route('home');
-    
+
             }
         }
         else{

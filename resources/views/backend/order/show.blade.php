@@ -4,16 +4,16 @@
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">Order       
+<h5 class="card-header">Order
   <!--<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>-->
   </h5>
   <div class="card-body">
     @if($order)
     <table class="table table-striped table-hover">
-      
+
       <thead>
         <tr>
-            
+
             <th>Order No.</th>
             <th>Shop Name</th>
             <th>Owner Name</th>
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr>
-           
+
             <td>{{$order->order_number}}</td>
             <td>{{$order->shop_name}}</td>
             <td>{{$order->owner_name}}</td>
@@ -51,15 +51,17 @@
                 @endif
             </td>
             <td>
+                @if($order->status=='new')
                 <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                 <br><br>
+                @endif
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                  @csrf 
+                  @csrf
                   @method('delete')
                       <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                 </form>
             </td>
-          
+
         </tr>
       </tbody>
     </table>
@@ -96,7 +98,7 @@
                       <td>Order Status</td>
                       <td> : {{$order->status}}</td>
                     </tr>
-                    
+
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
@@ -145,13 +147,13 @@
     </section>
 
     <br><br>
-    
+
     <h3 class="text-center pb-4"><u>Ordered Product Information</u></h3>
     <table class="table table-striped table-hover">
-      
+
       <thead>
         <tr>
-            
+
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Unit Price</th>
@@ -168,7 +170,7 @@
     @endphp
     @foreach ($product as $product)
         <tr>
-           
+
             <td>{{$product->title}}</td>
             <td>{{ $product->quantity }}</td>
             <td>RS {{number_format($product->price,2)}}</td>
@@ -181,7 +183,7 @@
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($product->amount,2)}}</td>
-          
+
         </tr>
       @endforeach
       </tbody>

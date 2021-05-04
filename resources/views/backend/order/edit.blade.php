@@ -15,7 +15,7 @@
           <option value="">--Select Status--</option>
           <option value="new" {{(($order->status=='new')? 'selected' : '')}}>New</option>
           <option value="process" {{(($order->status=='process')? 'selected' : '')}}>process</option>
-          <option value="delivered" {{(($order->status=='delivered')? 'selected' : '')}}>Delivered</option>
+          {{--<option value="delivered" {{(($order->status=='delivered')? 'selected' : '')}}>Delivered</option>--}}
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
