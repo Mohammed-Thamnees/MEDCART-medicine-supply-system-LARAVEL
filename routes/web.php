@@ -128,6 +128,10 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::resource('/deliveryboys','DeliveryBoyController');
     //delivery work
     Route::resource('/deliveryworks','DeliveryWorkController');
+    //Shops purchase history
+    Route::get('/shopview','UserHistoryController@index')->name('userhistory');
+    Route::get('/shoporder/{id}','UserHistoryController@orders')->name('userorders');
+    Route::get('/shopproduct/{id}','UserHistoryController@products')->name('userproducts');
     // Profile
     Route::get('/profile','AdminController@profile')->name('admin-profile');
     Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');

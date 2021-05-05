@@ -60,17 +60,17 @@
           </div>
         </div>
     </li>
-    {{-- Products --}}
+    {{-- medicines --}}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
-          <i class="fas fa-cubes"></i>
-          <span>Products</span>
+          <i class="fas fa-medkit"></i>
+          <span>Medicines</span>
         </a>
         <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Product Options:</h6>
-            <a class="collapse-item" href="{{route('product.index')}}">Products</a>
-            <a class="collapse-item" href="{{route('product.create')}}">Add Product</a>
+            <h6 class="collapse-header">Medicine Options:</h6>
+            <a class="collapse-item" href="{{route('product.index')}}">Medicines</a>
+            <a class="collapse-item" href="{{route('product.create')}}">Add Medicine</a>
           </div>
         </div>
     </li>
@@ -187,6 +187,12 @@
       <a class="nav-link" href="{{route('coupon.index')}}">
           <i class="fas fa-table"></i>
           <span>Coupon</span></a>
+    </li>
+    <!-- Users Purchase History -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('userhistory')}}">
+            <i class="fas fa-history"></i>
+            <span>Shops Purchase History</span></a>
     </li>
      <!-- Users -->
      <li class="nav-item">

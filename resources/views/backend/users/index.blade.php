@@ -10,14 +10,14 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
-      <a href="{{route('users.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Shop Name</th>
+              <th>Owner Name</th>
               <th>Email</th>
               <th>Photo</th>
               <th>Join Date</th>
@@ -26,11 +26,12 @@
               <th>Action</th>
             </tr>
           </thead>
-          
+
           <tbody>
-            
-            @foreach($users as $user)   
+
+            @foreach($users as $user)
                     <td>{{$user->name}}</td>
+                    <td>{{$user->owner_name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
                         @if($user->photo)
@@ -51,13 +52,13 @@
                     <td>
                         <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                     <form method="POST" action="{{route('users.destroy',[$user->id])}}">
-                      @csrf 
+                      @csrf
                       @method('delete')
                           <button class="btn btn-danger btn-sm dltBtn" data-id={{$user->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
-                    
-                </tr>  
+
+                </tr>
             @endforeach
 
           </tbody>
@@ -88,12 +89,12 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#user-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[5,6]
+                    "targets":[6,7]
                 }
             ]
         } );
@@ -101,7 +102,7 @@
         // Sweet alert
 
         function deleteData(id){
-            
+
         }
   </script>
   <script>

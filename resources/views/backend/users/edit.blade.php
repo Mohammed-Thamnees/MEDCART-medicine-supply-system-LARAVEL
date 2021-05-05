@@ -6,7 +6,7 @@
     <h5 class="card-header">Edit User</h5>
     <div class="card-body">
       <form method="post" action="{{route('users.update',$user->id)}}">
-        @csrf 
+        @csrf
         @method('PATCH')
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Shop Name</label>
@@ -14,6 +14,14 @@
         @error('name')
         <span class="text-danger">{{$message}}</span>
         @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="inputName" class="col-form-label">Owner Name</label>
+            <input id="inputName" disabled type="text" name="owner_name" placeholder="Enter Owner name"  value="{{$user->owner_name}}" class="form-control">
+            @error('owner_name')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -64,9 +72,9 @@
         @enderror
         </div>
 
-       
-        
-        @php 
+
+
+        @php
         $roles=DB::table('users')->select('role')->where('id',$user->id)->get();
         // dd($roles);
         //dd($user->status);
@@ -84,7 +92,7 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
           </div>
-          
+
 
          <div class="form-group">
             <label for="status" class="col-form-label">Status</label>

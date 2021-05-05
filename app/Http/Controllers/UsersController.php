@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users=User::orderBy('id','ASC')->paginate(10);
+        $users=User::where('role','user')->orderBy('id','ASC')->paginate(10);
         return view('backend.users.index')->with('users',$users);
     }
 
@@ -36,30 +36,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
-        [
-
-            'name'=>'required|alpha_dash|max:30',
-            'email'=>'required|email|unique:users,email',
-            'password'=>'required|string',
-            'role'=>'required|in:admin,user',
-            'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string',
-        ]);
-        // dd($request->all());
-        $data=$request->all();
-        $data['password']=Hash::make($request->password);
-        // dd($data);
-        $status=User::create($data);
-        // dd($status);
-        if($status){
-            request()->session()->flash('success','Successfully added user');
-        }
-        else{
-            request()->session()->flash('error','Error occurred while adding user');
-        }
-        return redirect()->route('users.index');
-
+        //
     }
 
     /**
@@ -98,27 +75,12 @@ class UsersController extends Controller
         $this->validate($request,
         [
 
-            /*'name'=>'required|alpha_dash|max:30',
-            'place'=>'required|alpha|min:2',
-            'number'=>'required|numeric|digits:10',
-            'post'=>'required|alpha|min:2',
-            'pin'=>'required|numeric|digits:6',
-            'mark'=>'required|alpha|min:3',*/
             'status'=>'required|in:active,inactive',
-
-
-
-            /*'name'=>'required|alpha_dash|max:30',
-            'email'=>'required|email|unique:users,email',
-            'password'=>'required|string',
-            'role'=>'required|in:admin,user',
-            'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string',*/
         ]);
         // dd($request->all());
         $data=$request->all();
         //dd($data);
-        
+
         $status=$user->fill($data)->save();
         if($status){
             request()->session()->flash('success','Successfully approved user');

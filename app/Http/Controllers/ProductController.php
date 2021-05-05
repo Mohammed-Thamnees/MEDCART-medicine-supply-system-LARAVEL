@@ -51,14 +51,10 @@ class ProductController extends Controller
             'summary'=>'required|string',
             'description'=>'string|nullable',
             'photo'=>'required|string',
-            //'size'=>'nullable',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
-            //'brand_id'=>'nullable|exists:brands,id',
             'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
             'status'=>'required|in:active,inactive',
-            //'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
             'discount'=>'numeric|nullable'
         ]);
@@ -70,17 +66,7 @@ class ProductController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
-        /*
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
-        }
-        else{
-            $data['size']='';
-        }
-        */
-        // return $size;
+
         // return $data;
         $status=Product::create($data);
         if($status){
@@ -137,29 +123,15 @@ class ProductController extends Controller
             'summary'=>'required|string',
             'description'=>'string|nullable',
             'photo'=>'required|string',
-            //'size'=>'nullable',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
             'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            //'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
-            //'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
             'discount'=>'numeric|nullable'
         ]);
 
         $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
-        /*
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
-        }
-        else{
-            $data['size']='';
-        }
-        */
         // return $data;
         $status=$product->fill($data)->save();
         if($status){
@@ -181,7 +153,7 @@ class ProductController extends Controller
     {
         $product=Product::findOrFail($id);
         $status=$product->delete();
-        
+
         if($status){
             request()->session()->flash('success','Product successfully deleted');
         }
