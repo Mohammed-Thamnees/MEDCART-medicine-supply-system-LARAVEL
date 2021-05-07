@@ -18,7 +18,7 @@
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              
+                <th>S.N.</th>
                 <th>Name</th>
                 <th>Place</th>
                 <th>Email</th>
@@ -28,12 +28,12 @@
                 <th>Action</th>
             </tr>
           </thead>
-          
+
           <tbody>
-           
-            @foreach($boy as $boy)   
+
+            @foreach($boy as $boy)
                 <tr>
-                    
+                    <td>{{ $loop->index +1 }}</td>
                     <td>{{$boy->name}}</td>
                     <td>{{$boy->place}}</td>
                     <td>{{$boy->email}}</td>
@@ -50,17 +50,17 @@
                         <a href="{{route('deliveryboys.show',$boy->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
                         <a href="{{route('deliveryboys.edit',$boy->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                     <form method="POST" action="{{route('deliveryboys.destroy',[$boy->id])}}">
-                      @csrf 
+                      @csrf
                       @method('delete')
                           <button class="btn btn-danger btn-sm dltBtn" data-id={{$boy->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
-                    
-                </tr>  
+
+                </tr>
             @endforeach
           </tbody>
         </table>
-        
+
         @else
           <h6 class="text-center">No delivery boys found!!! Please add delivery boys</h6>
         @endif
@@ -89,12 +89,12 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#banner-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4,5]
+                    "targets":[4,5,6]
                 }
             ]
         } );
@@ -102,7 +102,7 @@
         // Sweet alert
 
         function deleteData(id){
-            
+
         }
   </script>
   <script>

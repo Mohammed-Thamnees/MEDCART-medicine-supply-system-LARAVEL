@@ -14,7 +14,7 @@ class DeliveryWorkController extends Controller
      */
     public function index()
     {
-        $work=DeliveryWork::orderBy('id','ASC')->paginate(10);
+        $work=DeliveryWork::orderBy('created_at','DESC')->paginate(10);
         return view('backend.deliverywork.index')->with('work',$work);
     }
 

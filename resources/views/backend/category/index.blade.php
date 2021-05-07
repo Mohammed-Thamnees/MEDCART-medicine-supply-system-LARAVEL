@@ -18,7 +18,7 @@
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              
+              <th>S.N.</th>
               <th>Title</th>
               <th>Is Parent</th>
               <th>Parent Category</th>
@@ -27,17 +27,17 @@
               <th>Action</th>
             </tr>
           </thead>
-          
+
           <tbody>
-           
-            @foreach($categories as $category)   
-              @php 
+
+            @foreach($categories as $category)
+              @php
               $parent_cats=DB::table('categories')->select('title')->where('id',$category->parent_id)->get();
               // dd($parent_cats);
 
               @endphp
                 <tr>
-                    
+                    <td>{{ $loop->index +1 }}</td>
                     <td>{{$category->title}}</td>
                     <td>{{(($category->is_parent==1)? 'Yes': 'No')}}</td>
                     <td>
@@ -62,13 +62,13 @@
                     <td>
                         <a href="{{route('category.edit',$category->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                     <form method="POST" action="{{route('category.destroy',[$category->id])}}">
-                      @csrf 
+                      @csrf
                       @method('delete')
                           <button class="btn btn-danger btn-sm dltBtn" data-id={{$category->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
-                    
-                </tr>  
+
+                </tr>
             @endforeach
           </tbody>
         </table>
@@ -101,12 +101,12 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#banner-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4,5]
+                    "targets":[4,5,6]
                 }
             ]
         } );
@@ -114,7 +114,7 @@
         // Sweet alert
 
         function deleteData(id){
-            
+
         }
   </script>
   <script>

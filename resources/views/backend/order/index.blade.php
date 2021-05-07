@@ -17,10 +17,9 @@
         <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-
+              <th>S.N.</th>
               <th>Order No.</th>
               <th>Shop Name</th>
-              <th>Owner Name</th>
               <th>Total Amount</th>
               <th>Order date</th>
               <th>Status</th>
@@ -32,9 +31,9 @@
             @foreach($orders as $order)
                 <tr>
 
+                    <td>{{$loop->index +1}}</td>
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->shop_name}}</td>
-                    <td>{{$order->owner_name}}</td>
                     <td>RS {{number_format($order->total_amount,2)}}</td>
                     <td>{{ $order->created_at->format('d/m/Y') }}</td>
                     <td>

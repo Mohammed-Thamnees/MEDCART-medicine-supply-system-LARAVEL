@@ -14,7 +14,7 @@ class PostCategoryController extends Controller
      */
     public function index()
     {
-        $postCategory=PostCategory::orderBy('id','DESC')->paginate(10);
+        $postCategory=PostCategory::orderBy('created_at','DESC')->paginate(10);
         return view('backend.postcategory.index')->with('postCategories',$postCategory);
     }
 
@@ -116,9 +116,9 @@ class PostCategoryController extends Controller
     public function destroy($id)
     {
         $postCategory=PostCategory::findOrFail($id);
-       
+
         $status=$postCategory->delete();
-        
+
         if($status){
             request()->session()->flash('success','Post Category successfully deleted');
         }

@@ -16,6 +16,7 @@
                 <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
+                        <th>S.N.</th>
                         <th>Order Number</th>
                         <th>Order Date</th>
                         <th>Total product Quantity</th>
@@ -27,6 +28,7 @@
                     <tbody>
 
                     @foreach($orders as $order)
+                        <td>{{ $loop->index +1 }}</td>
                         <td>{{ $order->order_number }}</td>
                         <td>{{ $order->created_at->format('d/m/Y') }}</td>
                         <td>{{ $order->quantity }}</td>
@@ -66,5 +68,16 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
 
+    <script>
 
+        $('#order-dataTable').DataTable( {
+            "columnDefs":[
+                {
+                    "orderable":false,
+                    "targets":[5]
+                }
+            ]
+        } );
+
+    </script>
 @endpush

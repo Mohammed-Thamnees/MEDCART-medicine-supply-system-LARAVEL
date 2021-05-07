@@ -16,7 +16,7 @@ class DeliveryBoyController extends Controller
      */
     public function index()
     {
-        $boy=DeliveryBoy::orderBy('id','ASC')->paginate(10);
+        $boy=DeliveryBoy::orderBy('created_at','DESC')->paginate(10);
         return view('backend.deliveryboy.index')->with('boy',$boy);
     }
 
@@ -101,7 +101,7 @@ class DeliveryBoyController extends Controller
         $boy=DeliveryBoy::findOrFail($id);
         $this->validate($request,
         [
-            
+
             'name'=>'required|alpha_dash|max:30',
             'place'=>'required|alpha|min:2',
             'address'=>'required|min:2',

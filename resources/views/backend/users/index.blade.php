@@ -16,6 +16,7 @@
         <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th>S.N.</th>
               <th>Shop Name</th>
               <th>Owner Name</th>
               <th>Email</th>
@@ -30,6 +31,7 @@
           <tbody>
 
             @foreach($users as $user)
+                    <td>{{ $loop->index +1 }}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->owner_name}}</td>
                     <td>{{$user->email}}</td>
@@ -94,7 +96,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[6,7]
+                    "targets":[7,8]
                 }
             ]
         } );

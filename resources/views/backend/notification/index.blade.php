@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','E-SHOP || All Notifications')
+@section('title','MEDCART || All Notifications')
 @section('main-content')
 <div class="card">
     <div class="row">
@@ -13,7 +13,7 @@
     <table class="table  table-hover admin-table" id="notification-dataTable">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">No</th>
           <th scope="col">Time</th>
           <th scope="col">Title</th>
           <th scope="col">Action</th>

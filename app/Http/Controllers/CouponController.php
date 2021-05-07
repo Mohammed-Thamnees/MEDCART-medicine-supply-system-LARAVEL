@@ -13,7 +13,7 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupon=Coupon::orderBy('id','DESC')->paginate('10');
+        $coupon=Coupon::orderBy('created_at','DESC')->paginate('10');
         return view('backend.coupon.index')->with('coupons',$coupon);
     }
 

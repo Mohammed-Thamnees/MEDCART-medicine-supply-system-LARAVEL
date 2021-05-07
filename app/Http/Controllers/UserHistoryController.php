@@ -10,13 +10,13 @@ class UserHistoryController extends Controller
 {
     public function index()
     {
-        $user=User::where('status','active')->where('role','user')->orderBy('id','ASC')->paginate(10);
+        $user=User::where('status','active')->where('role','user')->orderBy('created_at','DESC')->paginate(10);
         return view('backend.shophistory.index')->with('user',$user);
     }
 
     public function orders($id)
     {
-        $orders=Order::where('user_id',$id)->orderBy('id','DESC')->get();
+        $orders=Order::where('user_id',$id)->orderBy('created_at','DESC')->get();
         //return $orders;
         return view('backend.shophistory.orders')->with('orders',$orders);
     }

@@ -18,6 +18,7 @@
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th>S.N.</th>
               <th>Coupon Code</th>
               <th>Type</th>
               <th>Value</th>
@@ -28,6 +29,7 @@
           <tbody>
             @foreach($coupons as $coupon)
                 <tr>
+                    <td>{{ $loop->index +1 }}</td>
                     <td>{{$coupon->code}}</td>
                     <td>
                         @if($coupon->type=='fixed')
@@ -102,7 +104,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4]
+                    "targets":[4,5]
                 }
             ]
         } );

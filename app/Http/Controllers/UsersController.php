@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users=User::where('role','user')->orderBy('id','ASC')->paginate(10);
+        $users=User::where('role','user')->orderBy('created_at','DESC')->paginate(10);
         return view('backend.users.index')->with('users',$users);
     }
 

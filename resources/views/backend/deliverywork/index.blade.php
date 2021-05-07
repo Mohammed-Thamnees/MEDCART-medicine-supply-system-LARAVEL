@@ -18,7 +18,7 @@
                     <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-
+                            <th>S.N.</th>
                             <th>Order Number</th>
                             <th>Shop Name</th>
                             <th>Shop Address</th>
@@ -46,7 +46,7 @@
                                 @foreach($query as $query)
 
                              <tr>
-
+                                <td>{{ $loop->index +1 }}</td>
                                 <td>{{ $query->order_number }}</td>
                                 <td>{{ $query->shop_name }}</td>
                                  <td> Owner Name : {{ $query->owner_name }}<br> Post : {{ $query->post }} <br>Pin : {{ $query->pin }} <br>Land Mark : {{ $query->mark }}</td>
@@ -98,7 +98,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[3,4,5]
+                    "targets":[4,5,6]
                 }
             ]
         } );
