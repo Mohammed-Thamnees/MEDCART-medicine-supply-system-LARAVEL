@@ -115,7 +115,9 @@
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
                                                 <span>RS {{number_format($after_discount,2)}}</span>
+                                                @if($product->discount)
                                                 <del style="padding-left:4%;">RS {{number_format($product->price,2)}}</del>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

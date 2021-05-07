@@ -32,7 +32,7 @@
 								<th class="text-center">UNIT PRICE</th>
 								<th class="text-center">QUANTITY</th>
 								<th class="text-center">TOTAL</th>
-								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
+								<th class="text-center">DELETE</th>
 							</tr>
 						</thead>
 						<tbody id="cart_item_list">
@@ -111,12 +111,6 @@
 											<button class="btn">Apply</button>
 										</form>
 									</div>
-									{{-- <div class="checkbox">`
-										@php
-											$shipping=DB::table('shippings')->where('status','active')->limit(1)->get();
-										@endphp
-										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox" onchange="showMe('shipping');"> Shipping</label>
-									</div> --}}
 								</div>
 							</div>
 							<div class="col-lg-4 col-md-7 col-12">
@@ -133,27 +127,7 @@
 										<!-- GST calculation end -->
 										<li class="sgst">SGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} + </span> </li>
 										<li class="cgst">CGST<small>(6% of total)</small> <span> RS {{ number_format($gst,2) }} + </span> </li>
-										{{-- <div id="shipping" style="display:none;">
-											<li class="shipping">
-												Shipping {{session('shipping_price')}}
-												@if(count(Helper::shipping())>0 && Helper::cartCount()>0)
-													<div class="form-select">
-														<select name="shipping" class="nice-select">
-															<option value="">Select</option>
-															@foreach(Helper::shipping() as $shipping)
-															<option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: ${{$shipping->price}}</option>
-															@endforeach
-														</select>
-													</div>
-												@else
-													<div class="form-select">
-														<span>Free</span>
-													</div>
-												@endif
-											</li>
-										</div>
-										 --}}
-										 {{-- {{dd(Session::get('coupon')['value'])}} --}}
+
 										@if(session()->has('coupon'))
 										<li class="coupon_price" data-price="{{Session::get('coupon')['value']}}">You Save<span>RS {{number_format(Session::get('coupon')['value'],2)}} - </span></li>
 										@endif

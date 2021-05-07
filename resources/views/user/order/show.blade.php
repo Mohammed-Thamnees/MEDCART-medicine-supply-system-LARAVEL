@@ -1,10 +1,10 @@
-@extends('user.layouts.master')
+@extends('frontend.layouts.master')
 
 @section('title','Order Detail')
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">Order       
+<h5 class="card-header">Orders
   <!--<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>-->
   </h5>
   <div class="card-body">
@@ -25,7 +25,7 @@
         <tr>
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-            @endphp 
+            @endphp
             <td>{{$order->order_number}}</td>
             <td>{{$order->shop_name}}</td>
             <td>{{$order->owner_name}}</td>
@@ -41,8 +41,8 @@
                   <span class="badge badge-success">{{$order->status}}</span>
                 @endif
             </td>
-            
-          
+
+
         </tr>
       </tbody>
     </table>
@@ -70,12 +70,12 @@
                         <td>Order Status</td>
                         <td> : {{$order->status}}</td>
                     </tr>
-                    
+
                     <tr>
                         <td>Total Amount</td>
                         <td> : RS {{number_format($order->total_amount,2)}}</td>
                     </tr>
-                    
+
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
@@ -124,13 +124,13 @@
     </section>
 
     <br><br>
-    
+
     <h3 class="text-center pb-4"><u>Ordered Product Information</u></h3>
     <table class="table table-striped table-hover">
-      
+
       <thead>
         <tr>
-            
+
             <th>Product Name</th>
             <th>Quantity</th>
             <th>Unit Price</th>
@@ -147,7 +147,7 @@
         @endphp
     @foreach ($product as $product)
         <tr>
-           
+
             <td>{{$product->title}}</td>
             <td>{{ $product->quantity }}</td>
             <td>RS {{number_format($product->price,2)}}</td>
@@ -160,7 +160,7 @@
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($product->amount,2)}}</td>
-          
+
         </tr>
       @endforeach
       </tbody>

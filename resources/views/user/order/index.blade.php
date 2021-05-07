@@ -1,4 +1,4 @@
-@extends('user.layouts.master')
+@extends('frontend.layouts.master')
 
 @section('main-content')
  <!-- DataTales Example -->
@@ -25,12 +25,12 @@
               <th>Action</th>
             </tr>
           </thead>
-          
+
           <tbody>
-            @foreach($orders as $order)  
+            @foreach($orders as $order)
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-            @endphp  
+            @endphp
                 <tr>
                     <td>{{$order->order_number}}</td>
                     <td align="center">{{$order->quantity}}</td>
@@ -46,16 +46,10 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        {{--
-                        <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
-                          @csrf 
-                          @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </form>
-                        --}}
+                        <a href="{{route('user.order.show',$order->id)}}" class="btn-warning btn-sm float-left mr-1" style="height:20px; width:20px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+
                     </td>
-                </tr>  
+                </tr>
             @endforeach
           </tbody>
         </table>
@@ -88,7 +82,7 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#order-dataTable').DataTable( {
             "columnDefs":[
                 {
@@ -100,9 +94,6 @@
 
         // Sweet alert
 
-        function deleteData(id){
-            
-        }
   </script>
   <script>
       $(document).ready(function(){
@@ -111,26 +102,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-          $('.dltBtn').click(function(e){
-            var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
-              e.preventDefault();
-              swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                       form.submit();
-                    } else {
-                        swal("Your data is safe!");
-                    }
-                });
-          })
       })
   </script>
 @endpush

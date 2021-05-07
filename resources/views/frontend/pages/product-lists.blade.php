@@ -3,7 +3,7 @@
 @section('title','MEDCART || PRODUCT PAGE')
 
 @section('main-content')
-	
+
 		<!-- Breadcrumbs -->
 		<div class="breadcrumbs">
 			<div class="container">
@@ -53,11 +53,6 @@
 											@endforeach
 										</li>
 										@endif
-                                        {{-- @foreach(Helper::productCategoryList('products') as $cat)
-                                            @if($cat->is_parent==1)
-												<li><a href="{{route('product-cat',$cat->slug)}}">{{$cat->title}}</a></li>
-											@endif
-                                        @endforeach --}}
                                     </ul>
                                 </div>
                                 <!--/ End Single Widget -->
@@ -66,13 +61,6 @@
 									<h3 class="title">Shop by Price</h3>
 									<div class="price-filter">
 										<div class="price-filter-inner">
-											{{-- <div id="slider-range" data-min="10" data-max="2000" data-currency="%"></div>
-												<div class="price_slider_amount">
-												<div class="label-input">
-													<span>Range:</span>
-													<input type="text" id="amount" name="price_range" value='@if(!empty($_GET['price'])) {{$_GET['price']}} @endif' placeholder="Add Your Price"/>
-												</div>
-											</div> --}}
 											@php
 												$max=DB::table('products')->max('price');
 												// dd($max);
@@ -88,17 +76,6 @@
 											</div>
 										</div>
 									</div>
-									{{-- <ul class="check-box-list">
-										<li>
-											<label class="checkbox-inline" for="1"><input name="news" id="1" type="checkbox">$20 - $50<span class="count">(3)</span></label>
-										</li>
-										<li>
-											<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">$50 - $100<span class="count">(5)</span></label>
-										</li>
-										<li>
-											<label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">$100 - $250<span class="count">(8)</span></label>
-										</li>
-									</ul> --}}
 								</div>
 								<!--/ End Shop By Price -->
                                 <!-- Single Widget -->
@@ -107,7 +84,7 @@
                                     {{-- {{dd($recent_products)}} --}}
                                     @foreach($recent_products as $product)
                                         <!-- Single Post -->
-                                        @php 
+                                        @php
                                             $photo=explode(',',$product->photo);
                                         @endphp
                                         <div class="single-post first">
@@ -119,29 +96,17 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">RS {{number_format($product->price,2)}}</del></p>   
-												<p>RS {{number_format($org,2)}}  </p>                                                
+                                                @if($product->discount)
+                                                <p class="price"><del class="text-muted">RS {{number_format($product->price,2)}}</del></p>
+                                                @endif
+												<p>RS {{number_format($org,2)}}  </p>
                                             </div>
                                         </div>
                                         <!-- End Single Post -->
                                     @endforeach
                                 </div>
                                 <!--/ End Single Widget -->
-                                <!-- Single Widget -->
-								{{--
-                                <div class="single-widget category">
-                                    <h3 class="title">Brands</h3>
-                                    <ul class="categor-list">
-                                        @php
-                                            $brands=DB::table('brands')->orderBy('title','ASC')->where('status','active')->get();
-                                        @endphp
-                                        @foreach($brands as $brand)
-                                            <li><a href="{{route('product-brand',$brand->slug)}}">{{$brand->title}}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-								--}}
-                                <!--/ End Single Widget -->
+
                         	</div>
 						</div>
 						<div class="col-lg-9 col-md-8 col-12">
@@ -190,7 +155,7 @@
 													<div class="single-product">
 														<div class="product-img">
 															<a href="{{route('product-detail',$product->slug)}}">
-															@php 
+															@php
 																$photo=explode(',',$product->photo);
 															@endphp
 															<img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
@@ -216,15 +181,14 @@
 																	$after_discount=($product->price-($product->price*$product->discount)/100);
 																@endphp
 																<span>RS {{number_format($after_discount,2)}}</span>
+                                                                @if($product->discount)
 																<del>RS {{number_format($product->price,2)}}</del>
+                                                                @endif
 															</div>
 															<h3 class="title"><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
 														{{-- <p>{!! html_entity_decode($product->summary) !!}</p> --}}
 														</div>
 														<p class="des pt-2">{!! html_entity_decode($product->summary) !!}</p>
-														{{--
-														<a href="javascript:void(0)" class="btn cart" data-id="{{$product->id}}">Buy Now!</a>
-														--}}
 														<a href="{{route('product-detail',$product->slug)}}" class="btn cart" data-id="{{$product->id}}">Buy Now!</a>
 													</div>
 												</div>
@@ -245,7 +209,7 @@
 					</div>
 				</div>
 			</section>
-			<!--/ End Product Style 1  -->	
+			<!--/ End Product Style 1  -->
 		</form>
 		<!-- Modal -->
 		@if($products)
@@ -262,7 +226,7 @@
 											<!-- Product Slider -->
 												<div class="product-gallery">
 													<div class="quickview-slider-active">
-														@php 
+														@php
 															$photo=explode(',',$product->photo);
 														// dd($photo);
 														@endphp
@@ -275,41 +239,15 @@
 												</div>
 											<!-- End Product slider -->
 										</div>
-										
+
 										<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 											<div class="quickview-content">
 												<h2>{{$product->title}}</h2>
 												<div class="quickview-ratting-review">
-													<div class="quickview-ratting-wrap">
-														<div class="quickview-ratting">
-															{{-- <i class="yellow fa fa-star"></i>
-															<i class="yellow fa fa-star"></i>
-															<i class="yellow fa fa-star"></i>
-															<i class="yellow fa fa-star"></i>
-															<i class="fa fa-star"></i> --}}
-															@php
-																$rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate');
-																$rate_count=DB::table('product_reviews')->where('product_id',$product->id)->count();
-															@endphp
-															
-															@for($i=1; $i<=5; $i++)
-															{{--
-																@if($rate>=$i)
-																	<i class="yellow fa fa-star"></i>
-																@else 
-																<i class="fa fa-star"></i>
-																@endif
-																--}}
-															@endfor
-														</div>
-														{{--
-														<a href="#"> ({{$rate_count}} customer review)</a>
-														--}}
-													</div>
 													<div class="quickview-stock">
 														@if($product->stock >0)
 														<span><i class="fa fa-check-circle-o"></i> {{$product->stock}} in stock</span>
-														@else 
+														@else
 														<span><i class="fa fa-times-circle-o text-danger"></i> {{$product->stock}} out stock</span>
 														@endif
 													</div>
@@ -317,7 +255,10 @@
 												@php
 													$after_discount=($product->price-($product->price*$product->discount)/100);
 												@endphp
-												<h3><small><del class="text-muted">RS {{number_format($product->price,2)}}</del></small>    RS {{number_format($after_discount,2)}}  </h3>
+                                                @if($product->discount)
+                                                <h3><small><del class="text-muted">RS {{number_format($product->price,2)}}</del></small></h3>
+                                                @endif
+                                                    <h3>RS {{number_format($after_discount,2)}}  </h3>
 												<div class="quickview-peragraph">
 													<p>{!! html_entity_decode($product->summary) !!}</p>
 												</div>
@@ -325,7 +266,7 @@
 													<div class="size">
 														<h4>Size</h4>
 														<ul>
-															@php 
+															@php
 																$sizes=explode(',',$product->size);
 																// dd($sizes);
 															@endphp
@@ -336,7 +277,7 @@
 													</div>
 												@endif
 												<form action="{{route('single-add-to-cart')}}" method="POST">
-													@csrf 
+													@csrf
 													<div class="quantity">
 														<!-- Input Order -->
 														<div class="input-group">
@@ -365,7 +306,7 @@
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
@@ -393,37 +334,6 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-    {{-- <script>
-        $('.cart').click(function(){
-            var quantity=1;
-            var pro_id=$(this).data('id');
-            $.ajax({
-                url:"{{route('add-to-cart')}}",
-                type:"POST",
-                data:{
-                    _token:"{{csrf_token()}}",
-                    quantity:quantity,
-                    pro_id:pro_id
-                },
-                success:function(response){
-                    console.log(response);
-					if(typeof(response)!='object'){
-						response=$.parseJSON(response);
-					}
-					if(response.status){
-						swal('success',response.msg,'success').then(function(){
-							document.location.href=document.location.href;
-						});
-					}
-					else{
-                        swal('error',response.msg,'error').then(function(){
-							// document.location.href=document.location.href;
-						}); 
-                    }
-                }
-            })
-        });
-	</script> --}}
 	<script>
         $(document).ready(function(){
         /*----------------------------------------------------*/
@@ -437,7 +347,7 @@
             if($("#price_range").length > 0 && $("#price_range").val()){
                 price_range = $("#price_range").val().trim();
             }
-            
+
             let price = price_range.split('-');
             $("#slider-range").slider({
                 range: true,
