@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
-   
+
     public function index(Request $request){
         return redirect()->route($request->user()->role);
     }
@@ -38,7 +38,7 @@ class FrontendController extends Controller
                 ->with('banners',$banners)
                 ->with('product_lists',$products)
                 ->with('category_lists',$category);
-    }   
+    }
 
     public function aboutUs(){
         return view('frontend.pages.about-us');
@@ -56,7 +56,7 @@ class FrontendController extends Controller
 
     public function productGrids(){
         $products=Product::query();
-        
+
         if(!empty($_GET['category'])){
             $slug=explode(',',$_GET['category']);
             // dd($slug);
@@ -85,7 +85,7 @@ class FrontendController extends Controller
             // return $price;
             // if(isset($price[0]) && is_numeric($price[0])) $price[0]=floor(Helper::base_amount($price[0]));
             // if(isset($price[1]) && is_numeric($price[1])) $price[1]=ceil(Helper::base_amount($price[1]));
-            
+
             $products->whereBetween('price',$price);
         }
 
@@ -99,12 +99,12 @@ class FrontendController extends Controller
         }
         // Sort by name , price, category
 
-      
+
         return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
     }
     public function productLists(){
         $products=Product::query();
-        
+
         if(!empty($_GET['category'])){
             $slug=explode(',',$_GET['category']);
             // dd($slug);
@@ -133,7 +133,7 @@ class FrontendController extends Controller
             // return $price;
             // if(isset($price[0]) && is_numeric($price[0])) $price[0]=floor(Helper::base_amount($price[0]));
             // if(isset($price[1]) && is_numeric($price[1])) $price[1]=ceil(Helper::base_amount($price[1]));
-            
+
             $products->whereBetween('price',$price);
         }
 
@@ -147,7 +147,7 @@ class FrontendController extends Controller
         }
         // Sort by name , price, category
 
-      
+
         return view('frontend.pages.product-lists')->with('products',$products)->with('recent_products',$recent_products);
     }
     public function productFilter(Request $request){
@@ -251,21 +251,13 @@ class FrontendController extends Controller
 
     public function blog(){
         $post=Post::query();
-        
+
         if(!empty($_GET['category'])){
             $slug=explode(',',$_GET['category']);
             // dd($slug);
             $cat_ids=PostCategory::select('id')->whereIn('slug',$slug)->pluck('id')->toArray();
             return $cat_ids;
             $post->whereIn('post_cat_id',$cat_ids);
-            // return $post;
-        }
-        if(!empty($_GET['tag'])){
-            $slug=explode(',',$_GET['tag']);
-            // dd($slug);
-            $tag_ids=PostTag::select('id')->whereIn('slug',$slug)->pluck('id')->toArray();
-            // return $tag_ids;
-            $post->where('post_tag_id',$tag_ids);
             // return $post;
         }
 
@@ -291,8 +283,6 @@ class FrontendController extends Controller
         // return $request->all();
         $rcnt_post=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         $posts=Post::orwhere('title','like','%'.$request->search.'%')
-            ->orwhere('quote','like','%'.$request->search.'%')
-            ->orwhere('summary','like','%'.$request->search.'%')
             ->orwhere('description','like','%'.$request->search.'%')
             ->orwhere('slug','like','%'.$request->search.'%')
             ->orderBy('id','DESC')
@@ -315,20 +305,8 @@ class FrontendController extends Controller
             }
         }
 
-        $tagURL="";
-        if(!empty($data['tag'])){
-            foreach($data['tag'] as $tag){
-                if(empty($tagURL)){
-                    $tagURL .='&tag='.$tag;
-                }
-                else{
-                    $tagURL .=','.$tag;
-                }
-            }
-        }
-        // return $tagURL;
             // return $catURL;
-        return redirect()->route('blog',$catURL.$tagURL);
+        return redirect()->route('blog',$catURL);
     }
 
     public function blogByCategory(Request $request){
@@ -337,13 +315,6 @@ class FrontendController extends Controller
         return view('frontend.pages.blog')->with('posts',$post->post)->with('recent_posts',$rcnt_post);
     }
 
-    public function blogByTag(Request $request){
-        // dd($request->slug);
-        $post=Post::getBlogByTag($request->slug);
-        // return $post;
-        $rcnt_post=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        return view('frontend.pages.blog')->with('posts',$post)->with('recent_posts',$rcnt_post);
-    }
 
     // Login
     public function login(){
@@ -394,7 +365,7 @@ class FrontendController extends Controller
             'number'=>'required|numeric|digits:10|unique:users,number',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
-            'mark'=>'required|alpha_dash|min:3', 
+            'mark'=>'required|alpha_dash|min:3',
             //'file' => 'required|mimes:pdf,xlx,csv|max:2048',
             'password'=>'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|confirmed',
         ]);
@@ -402,7 +373,7 @@ class FrontendController extends Controller
         // dd($data);
 
         /*
-        $fileName = time().'.'.$request->file->extension();  
+        $fileName = time().'.'.$request->file->extension();
         $request->file->move(public_path('uploads'), $fileName);
         */
 
@@ -458,5 +429,5 @@ class FrontendController extends Controller
                 return back();
             }
     }
-    
+
 }

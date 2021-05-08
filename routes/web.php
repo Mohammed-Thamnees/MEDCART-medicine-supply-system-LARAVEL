@@ -78,27 +78,17 @@ Route::group(['middleware'=>['user']],function() {
     Route::get('/product-grids', 'FrontendController@productGrids')->name('product-grids');
     Route::get('/product-lists', 'FrontendController@productLists')->name('product-lists');
     Route::match(['get', 'post'], '/filter', 'FrontendController@productFilter')->name('shop.filter');
-// Order Track
-    Route::get('/product/track', 'OrderController@orderTrack')->name('order.track');
-    Route::post('product/track/order', 'OrderController@productTrackOrder')->name('product.track.order');
+
 // Blog
     Route::get('/blog', 'FrontendController@blog')->name('blog');
     Route::get('/blog-detail/{slug}', 'FrontendController@blogDetail')->name('blog.detail');
     Route::get('/blog/search', 'FrontendController@blogSearch')->name('blog.search');
     Route::post('/blog/filter', 'FrontendController@blogFilter')->name('blog.filter');
     Route::get('blog-cat/{slug}', 'FrontendController@blogByCategory')->name('blog.category');
-    Route::get('blog-tag/{slug}', 'FrontendController@blogByTag')->name('blog.tag');
 
 // NewsLetter
     Route::post('/subscribe', 'FrontendController@subscribe')->name('subscribe');
 
-// Product Review
-    Route::resource('/review', 'ProductReviewController');
-    Route::post('product/{slug}/review', 'ProductReviewController@store')->name('review.store');
-
-// Post Comment
-    Route::post('post/{slug}/comment', 'PostCommentController@store')->name('post-comment.store');
-    Route::resource('/comment', 'PostCommentController');
 // Coupon
     Route::post('/coupon-store', 'CouponController@couponStore')->name('coupon-store');
 // Payment
@@ -143,8 +133,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::post('/category/{id}/child','CategoryController@getChildByParent');
     // POST category
     Route::resource('/post-category','PostCategoryController');
-    // Post tag
-    Route::resource('/post-tag','PostTagController');
     // Post
     Route::resource('/post','PostController');
     // Message
