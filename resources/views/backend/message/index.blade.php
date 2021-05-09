@@ -12,8 +12,9 @@
     <table class="table message-table" id="message-dataTable">
       <thead>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
+          <th scope="col">S.N.</th>
+          <th scope="col">Shop Name</th>
+          <th scope="col">Owner Name</th>
           <th scope="col">Subject</th>
           <th scope="col">Date</th>
           <th scope="col">Action</th>
@@ -24,13 +25,23 @@
 
         <tr class="@if($message->read_at) border-left-success @else bg-light border-left-warning @endif">
           <td scope="row">{{$loop->index +1}}</td>
-          <td>{{$message->name}} {{$message->read_at}}</td>
+
+              @php
+                $user=DB::table('messages')->join('users','messages.user_id','=','users.id')
+                            ->select('users.name','users.owner_name')->where('messages.id',$message->id)->get();
+
+              @endphp
+              @foreach($user as $user)
+                <td> {{$user->name}}</td>
+                <td>{{$user->owner_name}}</td>
+              @endforeach
+
           <td>{{$message->subject}}</td>
-          <td>{{$message->created_at->format('F d, Y h:i A')}}</td>
+          <td>{{$message->created_at->format('d/m/Y')}}</td>
           <td>
             <a href="{{route('message.show',$message->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
             <form method="POST" action="{{route('message.destroy',[$message->id])}}">
-              @csrf 
+              @csrf
               @method('delete')
                   <button class="btn btn-danger btn-sm dltBtn" data-id={{$message->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
             </form>
@@ -73,12 +84,12 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
+
       $('#message-dataTable').DataTable( {
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[4]
+                    "targets":[5]
                 }
             ]
         } );
@@ -86,7 +97,7 @@
         // Sweet alert
 
         function deleteData(id){
-            
+
         }
   </script>
   <script>

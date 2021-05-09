@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
             array(
                 'name'=>'User',
                 'owner_name'=>'User',
-                'place'=>'Test-User',
+                'place'=>'Tirur',
                 'email'=>'user@gmail.com',
                 'number'=>'9895157066',
                 'post'=>'Tirur',

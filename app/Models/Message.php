@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    public $fillable=['name','message','email','phone','read_at','photo','subject'];
+    public $fillable=['message','read_at','subject','user_id','reply'];
 }

@@ -13,7 +13,7 @@ class MessageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $messages=Message::paginate(20);
+        $messages=Message::orderBy('created_at','DESC')->paginate(20);
         return view('backend.message.index')->with('messages',$messages);
     }
     public function messageFive()
@@ -41,28 +41,17 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'string|required|min:2',
-            'email'=>'email|required',
             'message'=>'required|min:20|max:200',
-            'subject'=>'string|required',
-            'phone'=>'numeric|required'
+            'subject'=>'required|string'
         ]);
-        // return $request->all();
 
-        $message=Message::create($request->all());
+        $data=$request->all();
+        $data['user_id']=Auth()->user()->id;
+
+         //return $data;
+
+        $message=Message::create($data);
             // return $message;
-        $data=array();
-        $data['url']=route('message.show',$message->id);
-        $data['date']=$message->created_at->format('F d, Y h:i A');
-        $data['name']=$message->name;
-        $data['email']=$message->email;
-        $data['phone']=$message->phone;
-        $data['message']=$message->message;
-        $data['subject']=$message->subject;
-        $data['photo']=Auth()->user()->photo;
-        // return $data;    
-        event(new MessageSent($data));
-        exit();
     }
 
     /**
@@ -92,7 +81,8 @@ class MessageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $message=Message::find($id);
+        return view('backend.message.reply')->with('message',$message);
     }
 
     /**
@@ -104,7 +94,19 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $message=Message::findOrFail($id);
+        $this->validate($request,[
+            'reply'=>'required|String'
+        ]);
+        $data=$request->all();
+        $status=$message->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','successfully replied');
+        }
+        else{
+            request()->session()->flash('error','Error occurred while replying');
+        }
+        return redirect()->route('message.index');
     }
 
     /**
@@ -124,5 +126,11 @@ class MessageController extends Controller
             request()->session()->flash('error','Error occurred please try again');
         }
         return back();
+    }
+
+    public function reply(){
+        $reply=Message::where('id',Auth()->user()->id)->get();
+        //return $reply;
+        return view('frontend.pages.view-reply')->with('reply',$reply);
     }
 }

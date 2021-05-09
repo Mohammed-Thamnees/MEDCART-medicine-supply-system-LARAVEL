@@ -63,7 +63,7 @@
                         <!--/ End Single Widget -->
                         <!-- Single Widget -->
                         <div class="single-widget category">
-                            <h3 class="title">Blog Categories</h3>
+                            <h3 class="title">Post Categories</h3>
                             <ul class="categor-list">
                                 @if(!empty($_GET['category']))
                                     @php
