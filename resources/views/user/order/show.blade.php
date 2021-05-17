@@ -19,6 +19,7 @@
             <th>Total quantity of products</th>
             <th>Total Amount</th>
             <th>Status</th>
+            <th>Order Cancel</th>
         </tr>
       </thead>
       <tbody>
@@ -39,10 +40,20 @@
                   <span class="badge badge-warning">{{$order->status}}</span>
                 @elseif($order->status=='delivered')
                   <span class="badge badge-success">{{$order->status}}</span>
+                @elseif($order->status=='cancelled')
+                  <span class="badge badge-danger">{{$order->status}}</span>
                 @endif
             </td>
-
-
+            <td>
+                @if($order->status=='new' || $order->status=='process')
+                    <form method="post" action="{{ route('user.order.cancel',$order->id) }}">
+                        @csrf
+                    <button class="btn-danger btn-sm float-left mr-1" >Order Cancel</button>
+                    </form>
+                @else
+                    No Options Available
+                @endif
+            </td>
         </tr>
       </tbody>
     </table>
@@ -137,12 +148,13 @@
             <th>CGST</th>
             <th>SGST</th>
             <th>Sub Total</th>
+            <th>Return Product</th>
         </tr>
       </thead>
       <tbody>
         @php
         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
                     ->where('carts.order_id','=',$order->id)->get();
         @endphp
     @foreach ($product as $product)
@@ -160,6 +172,17 @@
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($product->amount,2)}}</td>
+
+            <td>
+                @if($product->status=='new' && $order->status=='delivered')
+                    <form method="post" action="{{ route('user.order.return',$product->id) }}">
+                        @csrf
+                        <button class="btn-primary btn-sm float-left mr-1" >Return Product</button>
+                    </form>
+                @else
+                    Product Returned
+                @endif
+            </td>
 
         </tr>
       @endforeach

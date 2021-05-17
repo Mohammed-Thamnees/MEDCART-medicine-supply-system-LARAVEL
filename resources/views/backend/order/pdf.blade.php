@@ -1,91 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Order @if($order)- {{$order->order_number}} @endif</title>
 </head>
 <body>
-    @if($order)
-    <style type="text/css">
-      .invoice-header {
-        background: #f7f7f7;
-        padding: 10px 20px 10px 20px;
-        border-bottom: 1px solid gray;
-      }
-      .site-logo {
-        margin-top: 20px;
-      }
-      .invoice-right-top h3 {
-        padding-right: 20px;
-        margin-top: 20px;
-        color: green;
-        font-size: 30px!important;
-        font-family: serif;
-      }
-      .invoice-left-top {
-        border-left: 4px solid green;
-        padding-left: 20px;
-        padding-top: 20px;
-      }
-      .invoice-left-top p {
-        margin: 0;
-        line-height: 20px;
-        font-size: 16px;
-        margin-bottom: 3px;
-      }
-      thead {
-        background: green;
-        color: #FFF;
-      }
-      .authority h5 {
-        margin-top: -10px;
-        color: green;
-      }
-      .thanks h4 {
-        color: green;
-        font-size: 25px;
-        font-weight: normal;
-        font-family: serif;
-        margin-top: 20px;
-      }
-      .site-address p {
-        line-height: 6px;
-        font-weight: 300;
-      }
-      .table tfoot .empty {
-        border: none;
-      }
-      .table-bordered {
-        border: none;
-      }
-      .table-header {
-        padding: .75rem 1.25rem;
-        margin-bottom: 0;
-        background-color: rgba(0,0,0,.03);
-        border-bottom: 1px solid rgba(0,0,0,.125);
-      }
-      .table td, .table th {
-        padding: .30rem;
-      }
-    </style>
-        <div class="invoice-header">
-            <div class="float-left site-logo">
-              <img src="{{asset('backend/img/logo.png')}}" alt="">
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Detail</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Invoices</a></li>
+                                <li class="breadcrumb-item active">Detail</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="float-right site-address">
-              <h4>{{env('APP_NAME')}}</h4>
-              <p>{{env('APP_ADDRESS')}}</p>
-              <p>Phone: <a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></p>
-              <p>Email: <a href="mailto:{{env('APP_EMAIL')}}">{{env('APP_EMAIL')}}</a></p>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="invoice-title">
+                                <h4 class="float-end font-size-16">Order # 12345</h4>
+                                <div class="mb-4">
+                                    <img src="assets/images/logo-dark.png" alt="logo" height="20"/>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <address>
+                                        <strong>Billed To:</strong><br>
+                                        John Smith<br>
+                                        1234 Main<br>
+                                        Apt. 4B<br>
+                                        Springfield, ST 54321
+                                    </address>
+                                </div>
+                                <div class="col-sm-6 text-sm-end">
+                                    <address class="mt-2 mt-sm-0">
+                                        <strong>Shipped To:</strong><br>
+                                        Kenny Rigdon<br>
+                                        1234 Main<br>
+                                        Apt. 4B<br>
+                                        Springfield, ST 54321
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 mt-3">
+                                    <address>
+                                        <strong>Payment Method:</strong><br>
+                                        Visa ending **** 4242<br>
+                                        jsmith@email.com
+                                    </address>
+                                </div>
+                                <div class="col-sm-6 mt-3 text-sm-end">
+                                    <address>
+                                        <strong>Order Date:</strong><br>
+                                        October 16, 2019<br><br>
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="py-2 mt-3">
+                                <h3 class="font-size-15 font-weight-bold">Order summary</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 70px;">No.</th>
+                                        <th>Item</th>
+                                        <th class="text-end">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>01</td>
+                                        <td>Skote - Admin Dashboard Template</td>
+                                        <td class="text-end">$499.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>02</td>
+                                        <td>Skote - Landing Template</td>
+                                        <td class="text-end">$399.00</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>03</td>
+                                        <td>Veltrix - Admin Dashboard Template</td>
+                                        <td class="text-end">$499.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Sub Total</td>
+                                        <td class="text-end">$1397.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="border-0 text-end">
+                                            <strong>Shipping</strong></td>
+                                        <td class="border-0 text-end">$13.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="border-0 text-end">
+                                            <strong>Total</strong></td>
+                                        <td class="border-0 text-end"><h4 class="m-0">$1410.00</h4></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-print-none">
+                                <div class="float-end">
+                                    <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light me-1"><i class="fa fa-print"></i></a>
+                                    <a href="invoices-detail.html#" class="btn btn-primary w-md waves-effect waves-light">Send</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="clearfix"></div>
+            <!-- end row -->
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Skote.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
-
-@else
-  <h5 class="text-danger">Invalid</h5>
-@endif
-
+    </footer>
+</div>
 </body>
 </html>

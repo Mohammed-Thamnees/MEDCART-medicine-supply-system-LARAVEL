@@ -9,8 +9,7 @@
             </div>
         </div>
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Shop's Purchase History</h6>
-            <a href="{{ route('report') }}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-sm text-white-50"></i> Sales Report</a>
+            <h6 class="m-0 font-weight-bold text-primary float-left">Sales Report</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -18,34 +17,21 @@
                     <thead>
                     <tr>
                         <th>S.N.</th>
+                        <th>Order Date</th>
+                        <th>Order No</th>
                         <th>Shop Name</th>
-                        <th>Owner Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Photo</th>
-                        <th>Action</th>
+                        <th>Total Amound</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
-                    @foreach($user as $user)
-                        <td>{{ $loop->index +1 }}</td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->owner_name}}</td>
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->number}}</td>
-                        <td>
-                            @if($user->photo)
-                                <img src="{{$user->photo}}" class="img-fluid rounded-circle" style="max-width:50px" alt="{{$user->photo}}">
-                            @else
-                                <img src="{{asset('backend/img/avatar.png')}}" class="img-fluid rounded-circle" style="max-width:50px" alt="avatar.png">
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{route('userorders',$user->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        </td>
-
+                    @foreach($order as $order)
+                        <td>{{$loop->index +1}}</td>
+                        <td>{{$order->created_at->format('d/m/Y')}}</td>
+                        <td>{{$order->order_number}}</td>
+                        <td>{{$order->shop_name}}</td>
+                        <td>{{$order->total_amount}}</td>
                         </tr>
                     @endforeach
 

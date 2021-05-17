@@ -123,6 +123,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::get('/shopview','UserHistoryController@index')->name('userhistory');
     Route::get('/shoporder/{id}','UserHistoryController@orders')->name('userorders');
     Route::get('/shopproduct/{id}','UserHistoryController@products')->name('userproducts');
+    //Sales Report
+    Route::get('/report','UserHistoryController@report')->name('report');
     // Profile
     Route::get('/profile','AdminController@profile')->name('admin-profile');
     Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');
@@ -142,6 +144,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
     // Order
     Route::resource('/order','OrderController');
+    Route::get('/order/return','OrderController@return')->name('order.return');
     // Shipping
     Route::resource('/shipping','ShippingController');
     // Coupon
@@ -178,6 +181,8 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     Route::get('/order',"HomeController@orderIndex")->name('user.order.index');
     Route::get('/order/show/{id}',"HomeController@orderShow")->name('user.order.show');
     Route::delete('/order/delete/{id}','HomeController@userOrderDelete')->name('user.order.delete');
+    Route::post('/order/cancel/{id}','HomeController@userOrderCancel')->name('user.order.cancel');
+    Route::post('/order/return/{id}','HomeController@userOrderReturn')->name('user.order.return');
     // Product Review
     Route::get('/user-review','HomeController@productReviewIndex')->name('user.productreview.index');
     Route::delete('/user-review/delete/{id}','HomeController@productReviewDelete')->name('user.productreview.delete');

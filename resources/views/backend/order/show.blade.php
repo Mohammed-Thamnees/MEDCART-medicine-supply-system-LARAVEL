@@ -5,8 +5,9 @@
 @section('main-content')
 <div class="card">
 <h5 class="card-header">Order
-  <!--<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>-->
-  </h5>
+  <!--<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>
+  <a href="javascript:window.print()" class="btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i>  Print Bill</a>-->
+</h5>
   <div class="card-body">
     @if($order)
     <table class="table table-striped table-hover">
@@ -48,6 +49,8 @@
                   <span class="badge badge-warning">{{$order->status}}</span>
                 @elseif($order->status=='delivered')
                   <span class="badge badge-success">{{$order->status}}</span>
+                @elseif($order->status=='cancelled')
+                  <span class="badge badge-danger">{{$order->status}}</span>
                 @endif
             </td>
             <td>
@@ -207,5 +210,55 @@
         text-decoration: underline;
     }
 
+    function deleteData(id){
+
+    }
+
 </style>
 @endpush
+
+@push('scripts')
+
+    <!-- Page level plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script>
+
+        // Sweet alert
+
+        function deleteData(id){
+
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.dltBtn').click(function(e){
+                var form=$(this).closest('form');
+                var dataID=$(this).data('id');
+                // alert(dataID);
+                e.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            form.submit();
+                        } else {
+                            swal("Your data is safe!");
+                        }
+                    });
+            })
+        })
+    </script>
+@endpush
+

@@ -3,11 +3,6 @@
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
-     <div class="row">
-         <div class="col-md-12">
-            @include('user.layouts.notification')
-         </div>
-     </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
     </div>
@@ -43,6 +38,8 @@
                           <span class="badge badge-warning">{{$order->status}}</span>
                         @elseif($order->status=='delivered')
                           <span class="badge badge-success">{{$order->status}}</span>
+                        @elseif($order->status=='cancelled')
+                          <span class="badge badge-danger">{{$order->status}}</span>
                         @endif
                     </td>
                     <td>

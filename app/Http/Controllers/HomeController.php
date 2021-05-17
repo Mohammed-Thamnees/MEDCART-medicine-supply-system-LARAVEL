@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\DeliveryWork;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Order;
@@ -63,7 +65,7 @@ class HomeController extends Controller
         $order=Order::find($id);
         if($order){
            if($order->status=="process" || $order->status=='delivered' || $order->status=='cancel'){
-                return redirect()->back()->with('error','You can not delete this order now');
+                return redirect()->back()->with('error','You cannot delete this order now');
            }
            else{
                 $status=$order->delete();
@@ -71,13 +73,66 @@ class HomeController extends Controller
                     request()->session()->flash('success','Order Successfully deleted');
                 }
                 else{
-                    request()->session()->flash('error','Order can not deleted');
+                    request()->session()->flash('error','Order cannot deleted');
                 }
                 return redirect()->route('user.order.index');
            }
         }
         else{
             request()->session()->flash('error','Order can not found');
+            return redirect()->back();
+        }
+    }
+
+    public function userOrderCancel(Request $request, $id)
+    {
+        $order=Order::find($id);
+        if($order){
+            if($order->status=='delivered' || $order->status=='cancel'){
+                return redirect()->back()->with('error','You cannot cancel this order now');
+            }
+            else{
+                $order['status']='cancelled';
+                $status=$order->save();
+                DeliveryWork::where('order_id',$order->id)->delete();
+                //return $work;
+                if($status){
+                    request()->session()->flash('success','Order Successfully cancelled');
+                }
+                else{
+                    request()->session()->flash('error','Order cannot cancel');
+                }
+                return redirect()->route('user.order.index');
+            }
+        }
+        else{
+            request()->session()->flash('error','Order cannot found');
+            return redirect()->back();
+        }
+    }
+
+    public function userOrderReturn(Request $request, $id)
+    {
+        $cart=Cart::find($id);
+        //return $cart;
+        if($cart){
+            if($cart->status=='returned'){
+                return redirect()->back()->with('error','Product already returned');
+            }
+            else{
+                $cart['status']='process';
+                $status=$cart->save();
+                if($status){
+                    request()->session()->flash('success','Product return applied successfully');
+                }
+                else{
+                    request()->session()->flash('error','Product cannot return. Try again!!!');
+                }
+                return redirect()->route('user.order.index');
+            }
+        }
+        else{
+            request()->session()->flash('error','Product cannot found in ordered list');
             return redirect()->back();
         }
     }

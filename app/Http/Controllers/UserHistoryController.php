@@ -27,4 +27,10 @@ class UserHistoryController extends Controller
         //return $products;
         return view('backend.shophistory.products')->with('products',$products);
     }
+
+    public function report(){
+        $order=Order::get();
+        //return $order;
+        return view('backend.shophistory.report')->with('order',$order);
+    }
 }

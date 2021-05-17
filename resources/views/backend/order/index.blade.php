@@ -10,6 +10,7 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
+      <a href="{{route('order.return')}}" class=" btn btn-sm btn-primary shadow-sm float-right"> Return Orders</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">

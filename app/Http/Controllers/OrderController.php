@@ -207,7 +207,7 @@ class OrderController extends Controller
         ]);
         $data=$request->all();
         // return $request->status;
-        if($request->status=='process'){
+        if ($request->status=='process'){
             foreach($order->cart as $cart){
                 $product=$cart->product;
                 // return $product;
@@ -243,7 +243,9 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         if($order){
+            Cart::where('order_id',$order->id)->delete();
             $status=$order->delete();
+            Cart::where('order_id',$order->id)->get();
             if($status){
                 request()->session()->flash('success','Order Successfully deleted');
             }
@@ -294,4 +296,11 @@ class OrderController extends Controller
         }
         return $data;
     }
+
+    public function return(){
+        return view('backend.order.return');
+    }
+
 }
+
+
