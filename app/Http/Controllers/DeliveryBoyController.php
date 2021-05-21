@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DeliveryBoy;
+use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +16,7 @@ class DeliveryBoyController extends Controller
      */
     public function index()
     {
-        $boy=DeliveryBoy::orderBy('created_at','DESC')->paginate(10);
+        $boy=User::where('role','db')->orderBy('created_at','DESC')->paginate(10);
         return view('backend.deliveryboy.index')->with('boy',$boy);
     }
 
@@ -44,8 +44,8 @@ class DeliveryBoyController extends Controller
             'name'=>'required|alpha_dash|max:30',
             'place'=>'required|alpha|min:2',
             'address'=>'required|min:2',
-            'email'=>'required|email|unique:delivery_boys,email',
-            'number'=>'required|numeric|digits:10|unique:delivery_boys,number',
+            'email'=>'required|email|unique:users,email',
+            'number'=>'required|numeric|digits:10|unique:users,number',
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',
@@ -55,7 +55,8 @@ class DeliveryBoyController extends Controller
 
         $data=$request->all();
         $data['password']=Hash::make($request->password);
-        $status=DeliveryBoy::create($data);
+        $data['role']='db';
+        $status=User::create($data);
         if($status){
             request()->session()->flash('success','successfully added delivery boy');
         }
@@ -73,7 +74,7 @@ class DeliveryBoyController extends Controller
      */
     public function show($id)
     {
-        $boy=DeliveryBoy::find($id);
+        $boy=User::find($id);
         return view('backend.deliveryboy.show')->with('boy',$boy);
     }
 
@@ -85,7 +86,7 @@ class DeliveryBoyController extends Controller
      */
     public function edit($id)
     {
-        $boy=DeliveryBoy::findOrFail($id);
+        $boy=User::findOrFail($id);
         return view('backend.deliveryboy.edit')->with('boy',$boy);
     }
 
@@ -98,7 +99,7 @@ class DeliveryBoyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $boy=DeliveryBoy::findOrFail($id);
+        $boy=User::findOrFail($id);
         $this->validate($request,
         [
 
@@ -110,7 +111,7 @@ class DeliveryBoyController extends Controller
             'post'=>'required|alpha|min:2',
             'pin'=>'required|numeric|digits:6',
             'status'=>'required|in:active,inactive',
-            'photo'=>'nullable|string'
+            'photo'=>'nullable|string',
         ]);
         $data=$request->all();
         //return $data;
@@ -141,5 +142,9 @@ class DeliveryBoyController extends Controller
             request()->session()->flash('error','Error occurred while deleting delivery boy');
         }
         return redirect()->route('deliveryboys.index');
+    }
+
+    public function dbhome(){
+        return view('deliveryboy.index');
     }
 }

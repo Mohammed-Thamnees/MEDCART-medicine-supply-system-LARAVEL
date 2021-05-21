@@ -330,17 +330,21 @@ class FrontendController extends Controller
         ]);
 
         $data= $request->all();
-        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
+        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active','role'=>'admin'])){
             Session::put('user',$data['email']);
+            request()->session()->flash('success','Successfully login');
+            return redirect()->route('admin');}
 
-            if(Session::get('user')=='admin@gmail.com'){
-                request()->session()->flash('success','Successfully login');
-                return redirect()->route('admin');
+        elseif(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active','role'=>'user'])){
+             Session::put('user',$data['email']);
+             request()->session()->flash('success','Successfully login');
+             return redirect()->route('home');
             }
-            else{
-                request()->session()->flash('success','Successfully login');
-                return redirect()->route('home');
-        }}
+        elseif(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active','role'=>'db'])){
+            Session::put('user',$data['email']);
+            request()->session()->flash('success','Successfully login');
+            return redirect()->route('db.home');
+        }
         else{
             request()->session()->flash('error','Invalid email and password please try again!');
             return redirect()->back();

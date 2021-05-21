@@ -10,7 +10,6 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
-      <a href="{{route('order.return')}}" class=" btn btn-sm btn-primary shadow-sm float-right"> Return Orders</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -24,6 +23,7 @@
               <th>Total Amount</th>
               <th>Order date</th>
               <th>Status</th>
+              <th>Returned Product</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -46,6 +46,25 @@
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>
+                        @endif
+                    </td>
+                    <td align="center">
+                        @if($order->status=='cancelled')
+                            Order Cancelled By User
+                        @elseif($order->status=='process' || $order->status=='new')
+                            Order Under Process
+                        @elseif($order->status=='delivered')
+                            @php
+                            $cart=DB::table('carts')->join('orders','carts.order_id','=','orders.id')
+                                    ->select('carts.status')->where('carts.order_id',$order->id)
+                                    ->distinct()->get();             /* you can use either groupBy() or distinct()
+                                                                        to remove duplicate columns */
+                            @endphp
+                            @foreach($cart as $cart)
+                                @if($cart->status!='new')
+                                    <a href="{{route('order.return',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm">Returned Products</a>
+                                @endif
+                            @endforeach
                         @endif
                     </td>
                     <td>

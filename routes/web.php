@@ -204,3 +204,10 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+//Delivery boy section
+Route::group(['middleware'=>['user']],function() {
+
+    Route::get('db/home','DeliveryBoyController@dbhome')->name('db.home');
+
+});

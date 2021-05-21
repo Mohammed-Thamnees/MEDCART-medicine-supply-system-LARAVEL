@@ -32,6 +32,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::orderBy('created_at','DESC')->paginate(10);
+        //return $orders;
         return view('backend.order.index')->with('orders',$orders);
     }
 
@@ -297,8 +298,10 @@ class OrderController extends Controller
         return $data;
     }
 
-    public function return(){
-        return view('backend.order.return');
+    public function return($id){
+        $cart=Order::find($id);
+        return $cart;
+        return view('backend.order.return')->with('cart',$cart);
     }
 
 }
