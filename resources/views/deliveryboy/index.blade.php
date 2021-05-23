@@ -1,125 +1,100 @@
 @extends('deliveryboy.layouts.master')
 @section('title','MEDCART || HOME PAGE')
 @section('main-content')
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Works</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @if(count($work)>0)
+                    <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S.N.</th>
+                            <th>Order Number</th>
+                            <th>Shop Name</th>
+                            <th>Shop Place</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
 
-
+                        <tbody>
+                        @foreach($work as $work)
+                            <tr>
+                                <td>{{$loop->index +1}}</td>
+                                <td>{{$work->order_number}}</td>
+                                <td>{{$work->shop_name}}</td>
+                                <td>{{$work->place}}</td>
+                                <td>RS {{number_format($work->total_amount,2)}}</td>
+                                <td>
+                                    @if($work->status=='progress')
+                                        <span class="badge badge-warning">{{$work->status}}</span>
+                                    @elseif($work->status=='delivered')
+                                        <span class="badge badge-success">{{$work->status}}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('db.order',$work->id) }}" class="btn-sm btn-warning shadow-sm">Details</a>
+                                    @if($work->status=='progress')
+                                        <a href="{{route('db.status',$work->id)}}" class=" btn-sm btn-primary shadow-sm">Delivered</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <h6 class="text-center">No works found at the moment!!!</h6>
+                @endif
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('styles')
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
-    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons' async='async'></script>
+    <link href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <style>
-        /* Banner Sliding */
-        #Gslider .carousel-inner {
-            background: #000000;
-            color:black;
-        }
-
-        #Gslider .carousel-inner{
-            height: 550px;
-        }
-        #Gslider .carousel-inner img{
-            width: 100% !important;
-            opacity: .8;
-        }
-
-        #Gslider .carousel-inner .carousel-caption {
-            bottom: 60%;
-        }
-
-        #Gslider .carousel-inner .carousel-caption h1 {
-            font-size: 50px;
-            font-weight: bold;
-            line-height: 100%;
-            color: #F7941D;
-        }
-
-        #Gslider .carousel-inner .carousel-caption p {
-            font-size: 18px;
-            color: black;
-            margin: 28px 0 28px 0;
-        }
-
-        #Gslider .carousel-indicators {
-            bottom: 70px;
+        div.dataTables_wrapper div.dataTables_paginate{
+            display: none;
         }
     </style>
 @endpush
 
 @push('scripts')
+
+    <!-- Page level plugins -->
+    <script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-
+    <!-- Page level custom scripts -->
+    <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
     <script>
 
-        /*==================================================================
-        [ Isotope ]*/
-        var $topeContainer = $('.isotope-grid');
-        var $filter = $('.filter-tope-group');
-
-        // filter items on button click
-        $filter.each(function () {
-            $filter.on('click', 'button', function () {
-                var filterValue = $(this).attr('data-filter');
-                $topeContainer.isotope({filter: filterValue});
-            });
-
-        });
-
-        // init Isotope
-        $(window).on('load', function () {
-            var $grid = $topeContainer.each(function () {
-                $(this).isotope({
-                    itemSelector: '.isotope-item',
-                    layoutMode: 'fitRows',
-                    percentPosition: true,
-                    animationEngine : 'best-available',
-                    masonry: {
-                        columnWidth: '.isotope-item'
-                    }
-                });
-            });
-        });
-
-        var isotopeButton = $('.filter-tope-group button');
-
-        $(isotopeButton).each(function(){
-            $(this).on('click', function(){
-                for(var i=0; i<isotopeButton.length; i++) {
-                    $(isotopeButton[i]).removeClass('how-active1');
+        $('#order-dataTable').DataTable( {
+            "columnDefs":[
+                {
+                    "orderable":false,
+                    "targets":[6]
                 }
+            ]
+        } );
 
-                $(this).addClass('how-active1');
-            });
-        });
+        // Sweet alert
+
     </script>
     <script>
-        function cancelFullScreen(el) {
-            var requestMethod = el.cancelFullScreen||el.webkitCancelFullScreen||el.mozCancelFullScreen||el.exitFullscreen;
-            if (requestMethod) { // cancel full screen.
-                requestMethod.call(el);
-            } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
-                var wscript = new ActiveXObject("WScript.Shell");
-                if (wscript !== null) {
-                    wscript.SendKeys("{F11}");
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
-        }
-
-        function requestFullScreen(el) {
-            // Supports most browsers and their versions.
-            var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-
-            if (requestMethod) { // Native full screen.
-                requestMethod.call(el);
-            } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
-                var wscript = new ActiveXObject("WScript.Shell");
-                if (wscript !== null) {
-                    wscript.SendKeys("{F11}");
-                }
-            }
-            return false
-        }
+            });
+        })
     </script>
-
 @endpush

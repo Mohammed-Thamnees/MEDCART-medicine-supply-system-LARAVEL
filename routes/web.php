@@ -119,6 +119,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::resource('/deliveryboys','DeliveryBoyController');
     //delivery work
     Route::resource('/deliveryworks','DeliveryWorkController');
+    Route::get('/deliveryworks/assign/{id}/{oid}','DeliveryWorkController@assign')->name('assign');
+    Route::get('/deliveryworks/works','DeliveryWorkController@work')->name('work');
     //Shops purchase history
     Route::get('/shopview','UserHistoryController@index')->name('userhistory');
     Route::get('/shoporder/{id}','UserHistoryController@orders')->name('userorders');
@@ -209,5 +211,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::group(['middleware'=>['user']],function() {
 
     Route::get('db/home','DeliveryBoyController@dbhome')->name('db.home');
+    Route::get('db/product/{id}','DeliveryBoyController@order')->name('db.order');
+    Route::get('db/status/{id}','DeliveryBoyController@status')->name('db.status');
 
 });

@@ -9,40 +9,36 @@
             </div>
         </div>
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Work Details</h6>
-            {{-- <a href="{{ route('work') }}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-sm text-white-50"></i> View Delivery Work List</a> --}}
+            <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Work List</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                @if(count($order)>0)
+                @if(count($work)>0)
                     <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>S.N.</th>
                             <th>Order Number</th>
                             <th>Shop Name</th>
-                            <th>Shop Owner</th>
-                            <th>Shop Address</th>
-                            <th>Place</th>
-                            <th>Order Date</th>
-                            <th>Action</th>
+                            <th>Shop Place</th>
+                            <th>Delivery Boy Name</th>
+                            <th>Delivery Boy Number</th>
+                            <th>Work Assigned Date</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($order as $order)
-                             <tr>
+                        @foreach($work as $work)
+                            <tr>
                                 <td>{{ $loop->index +1 }}</td>
-                                <td>{{ $order->order_number }}</td>
-                                <td>{{ $order->shop_name }}</td>
-                                <td>{{ $order->owner_name }}</td>
-                                <td> Post : {{ $order->post }} <br>Pin : {{ $order->pin }} <br>Land Mark : {{ $order->mark }}</td>
-
-                                <td>{{ $order->place }}</td>
-                                <td>{{$order->created_at}}</td>
-                                <td>
-                                    <a href="{{route('deliveryworks.show',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm">Delivery Boy Assign</a>
-                                </td>
+                                <td>{{ $work->order_number }}</td>
+                                <td>{{ $work->shop_name }}</td>
+                                <td>{{ $work->place }}</td>
+                                <td>{{ $work->name }}</td>
+                                <td>{{ $work->number }}</td>
+                                <td>{{ $work->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $work->status }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -81,7 +77,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[4,5,6]
+                    "targets":[5,6,7]
                 }
             ]
         } );

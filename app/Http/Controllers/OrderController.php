@@ -62,6 +62,7 @@ class OrderController extends Controller
             'post'=>'required|string',
             'pin'=>'required|numeric|digits:6',
             'mark'=>'required|string',
+            'place'=>'required|string',
             'email'=>'required|email'
         ]);
          //return $request->all();
@@ -215,13 +216,6 @@ class OrderController extends Controller
                 $product->stock -=$cart->quantity;
                 $product->save();
             }
-
-            //automatically assign a random delivery boy
-            $boy=DeliveryBoy::where('status','active')->inRandomOrder()->first();
-            $work['boy_id']=$boy->id;
-            $work['order_id']=$order->id;
-            $insert=DeliveryWork::create($work);
-
         }
 
         $status=$order->fill($data)->save();

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeliveryWork;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -145,6 +148,34 @@ class DeliveryBoyController extends Controller
     }
 
     public function dbhome(){
-        return view('deliveryboy.index');
+        $work=DB::table('delivery_works')->join('orders','delivery_works.order_id','=','orders.id')
+                    ->select('orders.*','delivery_works.status')->where('boy_id',Auth::id())->orderBy('created_at','DESC')
+                    ->paginate(10);
+        //return $work;
+        return view('deliveryboy.index')->with('work',$work);
+    }
+
+    public function order($id){
+        $order=Order::getAllOrder($id);
+        //return $order;
+        return view('deliveryboy.pages.work')->with('order',$order);
+    }
+
+    public function status(Request $request, $id){
+        $order=Order::find($id);
+        //$work=DeliveryWork::update(['status'=>'delivered'])->where('order_id',$id);
+        //return $order;
+        $data['status']='delivered';
+        $data['payment_status']='paid';
+        $status=$order->fill($data)->save();
+        DB::table('delivery_works')->where('order_id',$id)->update(['status'=>'delivered']);
+
+        if($status){
+            request()->session()->flash('success','Successfully updated order status');
+        }
+        else{
+            request()->session()->flash('error','Error while updating order status');
+        }
+        return redirect()->route('db.home');
     }
 }

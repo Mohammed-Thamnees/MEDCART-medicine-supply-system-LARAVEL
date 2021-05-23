@@ -18,7 +18,7 @@ class CreateDeliveryWorksTable extends Migration
             $table->unsignedBigInteger('boy_id')->nullable();
             $table->unsignedBigInteger('order_id')->nullable();
             $table->enum('status',['progress','delivered'])->default('progress');
-            $table->foreign('boy_id')->references('id')->on('delivery_boys')->onDelete('SET NULL');
+            $table->foreign('boy_id')->references('id')->on('users')->onDelete('SET NULL');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('SET NULL');
             $table->timestamps();
         });

@@ -33,6 +33,7 @@ class CreateOrdersTable extends Migration
             $table->string('number');
             $table->string('post');
             $table->integer('pin');
+            $table->string('place');
             $table->text('mark');
             $table->timestamps();
         });

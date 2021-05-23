@@ -90,6 +90,15 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
+                                            <label>Place<span>*</span></label>
+                                            <input type="text" name="place" placeholder="" value="{{$user->place}}">
+                                            @error('place')
+                                            <span class='text-danger'>{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <div class="form-group">
                                             <label>Land Mark<span>*</span></label>
                                             <input type="text" name="mark" placeholder="" value="{{$user->mark}}">
                                             @error('mark')
