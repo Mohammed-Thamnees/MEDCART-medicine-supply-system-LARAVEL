@@ -113,6 +113,13 @@
         </a>
     </li>
 
+    <!-- delivery work -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('deliveryworks.index')}}">
+            <i class="fas fa-briefcase"></i>
+            <span>Delivery work Assign</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -164,13 +171,6 @@
       <a class="nav-link" href="{{route('deliveryboys.index')}}">
           <i class="fas fa-truck"></i>
           <span>Delivery Boy</span></a>
-    </li>
-
-    <!-- delivery work -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('deliveryworks.index')}}">
-            <i class="fas fa-briefcase"></i>
-            <span>Delivery work</span></a>
     </li>
 
 

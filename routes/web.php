@@ -146,7 +146,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
 
     // Order
     Route::resource('/order','OrderController');
-    Route::get('/order/return','OrderController@return')->name('order.return');
+    Route::get('/order/return/{id}','OrderController@return')->name('order.return');
     // Shipping
     Route::resource('/shipping','ShippingController');
     // Coupon

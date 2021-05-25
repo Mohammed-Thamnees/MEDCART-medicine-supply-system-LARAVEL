@@ -71,8 +71,6 @@
                                     <div class="nav-inner">
                                         <ul class="nav main-menu menu navbar-nav">
                                             <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('db.home')}}">Home</a></li>
-                                            <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Posts</a></li>
-                                            <li class="{{Request::path()=='orders' ? 'active' : ''}}"><a href="{{route('user.order.index')}}">Your Orders</a></li>
                                         </ul>
                                     </div>
                                 </div>

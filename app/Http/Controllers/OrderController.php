@@ -293,8 +293,11 @@ class OrderController extends Controller
     }
 
     public function return($id){
-        $cart=Order::find($id);
-        return $cart;
+        //$cart=Cart::where([['order_id',$id],['status','process']])->get();
+        $cart=DB::table('products')->join('carts','products.id','=','carts.product_id')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status')
+                    ->where([['carts.order_id',$id],['carts.status','process']])->get();
+        //return $cart;
         return view('backend.order.return')->with('cart',$cart);
     }
 
