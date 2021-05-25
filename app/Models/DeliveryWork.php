@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class DeliveryWork extends Model
 {
     protected $fillable=[
-        'boy_id','order_id','status'
+        'boy_id','order_id','status','type'
     ];
 }

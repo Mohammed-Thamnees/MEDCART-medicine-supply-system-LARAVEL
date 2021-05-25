@@ -1,10 +1,10 @@
 @extends('deliveryboy.layouts.master')
-@section('title','MEDCART || HOME PAGE')
+@section('title','MEDCART || pickup work')
 @section('main-content')
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Works</h6>
+            <h6 class="m-0 font-weight-bold text-primary float-left">Pickup Works</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -16,7 +16,6 @@
                             <th>Order Number</th>
                             <th>Shop Name</th>
                             <th>Shop Place</th>
-                            <th>Total Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -29,18 +28,17 @@
                                 <td>{{$work->order_number}}</td>
                                 <td>{{$work->shop_name}}</td>
                                 <td>{{$work->place}}</td>
-                                <td>RS {{number_format($work->total_amount,2)}}</td>
                                 <td>
                                     @if($work->status=='progress')
                                         <span class="badge badge-warning">{{$work->status}}</span>
-                                    @elseif($work->status=='delivered')
+                                    @elseif($work->status=='completed')
                                         <span class="badge badge-success">{{$work->status}}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('db.order',$work->id) }}" class="btn-sm btn-warning shadow-sm">Details</a>
+                                    <a href="{{ route('db.return.order',$work->id) }}" class="btn-sm btn-warning shadow-sm">Details</a>
                                     @if($work->status=='progress')
-                                        <a href="{{route('db.status',$work->id)}}" class=" btn-sm btn-primary shadow-sm">Delivered</a>
+                                        <a href="{{route('db.return.status',$work->id)}}" class=" btn-sm btn-primary shadow-sm">Returned</a>
                                     @endif
                                 </td>
                             </tr>

@@ -102,6 +102,7 @@ class DeliveryWorkController extends Controller
         //return $order;
         $data['boy_id']=$boy->id;
         $data['order_id']=$order->id;
+        $data['type']='delivery';
         $status=DeliveryWork::create($data);
 
         if($status){

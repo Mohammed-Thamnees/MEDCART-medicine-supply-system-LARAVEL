@@ -37,6 +37,15 @@
                             <td>RS {{number_format($cart->amount,2)}}</td>
                         </tr>
                     @endforeach
+                        <tr>
+                            <td colspan="6" align="center">
+                                @if(!$boy)
+                                    <a href="{{ route('return.boys',$cart->order_id) }}" class="btn btn-sm btn-success shadow-sm" style="height:35px; width:180px;"><h5>Arrange Pickup</h5></a>
+                                @else
+                                    <h5 class="btn-danger">Pickup already assigned |OR| Order already returned</h5>
+                                @endif
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             @else

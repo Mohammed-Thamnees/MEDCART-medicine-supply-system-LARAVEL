@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliveryWork;
 use App\Models\Order;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -149,10 +150,18 @@ class DeliveryBoyController extends Controller
 
     public function dbhome(){
         $work=DB::table('delivery_works')->join('orders','delivery_works.order_id','=','orders.id')
-                    ->select('orders.*','delivery_works.status')->where('boy_id',Auth::id())->orderBy('created_at','DESC')
+                    ->select('orders.*','delivery_works.status')->where([['boy_id',Auth::id()],['type','delivery']])->orderBy('created_at','DESC')
                     ->paginate(10);
         //return $work;
-        return view('deliveryboy.index')->with('work',$work);
+        return view('deliveryboy.pages.index')->with('work',$work);
+    }
+
+    public function pickup(){
+        $work=DB::table('delivery_works')->join('orders','delivery_works.order_id','=','orders.id')
+            ->select('orders.*','delivery_works.status')->where([['boy_id',Auth::id()],['type','pickup']])->orderBy('created_at','DESC')
+            ->paginate(10);
+        //return $work;
+        return view('deliveryboy.pages.pickup')->with('work',$work);
     }
 
     public function order($id){
@@ -163,12 +172,10 @@ class DeliveryBoyController extends Controller
 
     public function status(Request $request, $id){
         $order=Order::find($id);
-        //$work=DeliveryWork::update(['status'=>'delivered'])->where('order_id',$id);
-        //return $order;
         $data['status']='delivered';
         $data['payment_status']='paid';
         $status=$order->fill($data)->save();
-        DB::table('delivery_works')->where('order_id',$id)->update(['status'=>'delivered']);
+        DB::table('delivery_works')->where([['order_id',$id],['type','delivery']])->update(['status'=>'completed']);
 
         if($status){
             request()->session()->flash('success','Successfully updated order status');
@@ -177,5 +184,24 @@ class DeliveryBoyController extends Controller
             request()->session()->flash('error','Error while updating order status');
         }
         return redirect()->route('db.home');
+    }
+
+    public function returnstatus(Request $request, $id){
+        $status=DB::table('carts')->where([['order_id',$id],['status','process']])->update(['status'=>'returned']);
+        DB::table('delivery_works')->where([['order_id',$id],['type','pickup']])->update(['status'=>'completed']);
+
+        if($status){
+            request()->session()->flash('success','Successfully updated return status');
+        }
+        else{
+            request()->session()->flash('error','Error while updating return status');
+        }
+        return redirect()->route('db.pickup');
+    }
+
+    public function returnorder($id){
+        $order=Order::getAllOrder($id);
+        //return $order;
+        return view('deliveryboy.pages.return')->with('order',$order);
     }
 }

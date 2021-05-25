@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Delivery Work Assign</h6>
+            <h6 class="m-0 font-weight-bold text-primary float-left">Pickup Work Assign</h6>
 
         </div>
         <div class="card-body">
@@ -36,7 +36,7 @@
                                 <td>{{ $boy->number }}</td>
                                 <td>{{ $boy->place }}</td>
                                 <td>
-                                    <a href="{{route('assign',[ $boy->id, $order->id ])}}" class=" btn btn-sm btn-success shadow-sm">Assign</a>
+                                    <a href="{{route('return.assign',[ $boy->id, $order->id ])}}" class=" btn btn-sm btn-primary shadow-sm">Assign</a>
                                 </td>
                             </tr>
                         @endforeach

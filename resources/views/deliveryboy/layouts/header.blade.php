@@ -70,7 +70,8 @@
                                 <div class="navbar-collapse">
                                     <div class="nav-inner">
                                         <ul class="nav main-menu menu navbar-nav">
-                                            <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('db.home')}}">Home</a></li>
+                                            <li class="{{Request::path()=='Delivery Work' ? 'active' : ''}}"><a href="{{route('db.home')}}">Delivery Work</a></li>
+                                            <li class="{{Request::path()=='Pickup Work' ? 'active' : ''}}"><a href="{{route('db.pickup')}}">Pickup Work</a></li>
                                         </ul>
                                     </div>
                                 </div>

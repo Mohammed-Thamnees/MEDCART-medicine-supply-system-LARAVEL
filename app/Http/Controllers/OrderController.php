@@ -255,16 +255,6 @@ class OrderController extends Controller
         }
     }
 
-
-    // PDF generate
-    public function pdf(Request $request){
-        $order=Order::getAllOrder($request->id);
-        //return $order;
-        $file_name=$order->order_number.'-'.$order->shop_name.'.pdf';
-        // return $file_name;
-        $pdf=PDF::loadview('backend.order.pdf',compact('order'));
-        return $pdf->download($file_name);
-    }
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;
@@ -293,12 +283,40 @@ class OrderController extends Controller
     }
 
     public function return($id){
-        //$cart=Cart::where([['order_id',$id],['status','process']])->get();
+        $boy=DeliveryWork::select('order_id')->where([['type','pickup'],['order_id',$id]])->get();
+        //return $boy;
         $cart=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status')
-                    ->where([['carts.order_id',$id],['carts.status','process']])->get();
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.order_id')
+                    ->where([['carts.order_id',$id],['carts.status','!=','new']])->get();
         //return $cart;
-        return view('backend.order.return')->with('cart',$cart);
+        return view('backend.order.return')->with('cart',$cart)->with('boy',$boy);
+    }
+
+    public function boys($id){
+        $order=Order::find($id);
+        $boy=User::where('role','db')->orderBy('created_at','DESC')->paginate(10);
+        return view('backend.order.boys')->with('boy',$boy)->with('order',$order);
+    }
+
+    public function assign(Request $request, $id,$oid)
+    {
+        $boy=User::find($id);
+        //return $boy;
+        $order=Order::find($oid);
+        //return $order;
+        $data['boy_id']=$boy->id;
+        $data['order_id']=$order->id;
+        $data['type']='pickup';
+        $status=DeliveryWork::create($data);
+
+        if($status){
+            request()->session()->flash('success','successfully assigned delivery boy');
+        }
+        else{
+            request()->session()->flash('error','Error occurred while assigning delivery boy');
+        }
+        return redirect()->route('order.index');
+
     }
 
 }

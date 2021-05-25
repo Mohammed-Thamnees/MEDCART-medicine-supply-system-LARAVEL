@@ -147,6 +147,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     // Order
     Route::resource('/order','OrderController');
     Route::get('/order/return/{id}','OrderController@return')->name('order.return');
+    Route::get('/order/return/db/{id}','OrderController@boys')->name('return.boys');
+    Route::get('/order/return/assign/{id}/{oid}','OrderController@assign')->name('return.assign');
     // Shipping
     Route::resource('/shipping','ShippingController');
     // Coupon
@@ -210,8 +212,11 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 //Delivery boy section
 Route::group(['middleware'=>['user']],function() {
 
-    Route::get('db/home','DeliveryBoyController@dbhome')->name('db.home');
+    Route::get('db/delivery','DeliveryBoyController@dbhome')->name('db.home');
+    Route::get('db/pickup','DeliveryBoyController@pickup')->name('db.pickup');
     Route::get('db/product/{id}','DeliveryBoyController@order')->name('db.order');
     Route::get('db/status/{id}','DeliveryBoyController@status')->name('db.status');
+    Route::get('db/return/product/{id}','DeliveryBoyController@returnorder')->name('db.return.order');
+    Route::get('db/return/status/{id}','DeliveryBoyController@returnstatus')->name('db.return.status');
 
 });
