@@ -364,14 +364,14 @@ class FrontendController extends Controller
     public function registerSubmit(Request $request){
         // return $request->all();
         $this->validate($request,[
-            'name'=>'required|alpha_dash|min:2',
-            'owner_name'=>'required|alpha|min:2',
-            'place'=>'required|alpha|min:2',
+            'name'=>'required|string|min:2',
+            'owner_name'=>'required|string|min:2',
+            'place'=>'required|string|min:2',
             'email'=>'required|email|unique:users,email',
             'number'=>'required|numeric|digits:10|unique:users,number',
-            'post'=>'required|alpha|min:2',
+            'post'=>'required|string|min:2',
             'pin'=>'required|numeric|digits:6',
-            'mark'=>'required|alpha_dash|min:3',
+            'mark'=>'required|string|min:3',
             'password'=>'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|confirmed',
         ]);
         $data=$request->all();

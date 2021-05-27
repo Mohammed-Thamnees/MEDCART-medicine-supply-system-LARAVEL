@@ -56,7 +56,7 @@ Route::group(['middleware'=>['user']],function() {
     Route::get('/cart', function () {
         return view('frontend.pages.cart');
     })->name('cart');
-    Route::get('/checkout', 'CartController@checkout')->name('checkout')->middleware('user');
+    Route::get('/checkout', 'CartController@checkout')->name('checkout');
 
 
 //razorpay
