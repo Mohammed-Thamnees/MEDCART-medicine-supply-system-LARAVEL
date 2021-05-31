@@ -6,7 +6,8 @@
     @if($message)
         @php
             $user=DB::table('messages')->join('users','messages.user_id','=','users.id')
-                            ->select('users.name','users.owner_name','users.number','users.place','users.email')->where('messages.id',$message->id)->get();
+                            ->select('users.name','users.owner_name','users.number','users.place','users.email','messages.created_at','messages.updated_at')
+                            ->where('messages.id',$message->id)->get();
         @endphp
       @foreach($user as $user)
           <div class="py-4"><h5>From Address</h5><br>
@@ -14,7 +15,8 @@
               <b>Owner Name       :    </b>{{$user->owner_name}}<br>
               <b>Email            :    </b>{{$user->email}}<br>
               <b>Phone            :    </b>{{$user->number}}<br>
-              <b>Place            :    </b>{{$user->place}}
+              <b>Place            :    </b>{{$user->place}}<br>
+              <b>Date            :    </b>{{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}}
         </div>
         <hr/>
       @endforeach
@@ -24,7 +26,7 @@
 
 
       @if($message->reply)
-        <br><br><br><h4>Replied Message</h4>
+              <br><br><br><u><h5> Message Replied On {{ $message->updated_at->format('d/m/Y') }}</h5></u>
           <p>{{$message->reply}}</p>
       @else
         <div class="form-group mb-3">

@@ -18,7 +18,9 @@
                         <thead>
                         <tr align="center">
                             <th>S.N.</th>
+                            <th>Message Date</th>
                             <th>Message</th>
+                            <th>Reply Date</th>
                             <th>Reply Message</th>
                         </tr>
                         </thead>
@@ -26,8 +28,10 @@
                         <tbody>
                         @foreach($reply as $reply)
                             <tr>
-                                <td>{{$loop->index +1}}</td>
-                                <td align="center">{{$reply->message}}</td>
+                                <td align="center">{{$loop->index +1}}</td>
+                                <td>{{$reply->created_at->format('d/m/Y')}}</td>
+                                <td>{{$reply->message}}</td>
+                                <td>{{\Carbon\Carbon::parse($reply->read_at)->format('d/m/Y')}}</td>
                                 <td>{{$reply->reply}}</td>
                             </tr>
                         @endforeach

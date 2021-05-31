@@ -21,6 +21,7 @@
                         <th>Order Date</th>
                         <th>Total product Quantity</th>
                         <th>Total Amount</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -33,6 +34,17 @@
                         <td>{{ $order->created_at->format('d/m/Y') }}</td>
                         <td>{{ $order->quantity }}</td>
                         <td>{{ $order->total_amount }}</td>
+                        <td>
+                            @if($order->status=='new')
+                                <span class="badge badge-primary">{{$order->status}}</span>
+                            @elseif($order->status=='process')
+                                <span class="badge badge-warning">{{$order->status}}</span>
+                            @elseif($order->status=='delivered')
+                                <span class="badge badge-success">{{$order->status}}</span>
+                            @else
+                                <span class="badge badge-danger">{{$order->status}}</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('userproducts',$order->id) }}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
                         </td>

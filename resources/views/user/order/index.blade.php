@@ -12,6 +12,7 @@
         <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th>S.N.</th>
               <th>Order No.</th>
               <th>Total quantity of products</th>
               <th>Total Amount</th>
@@ -27,6 +28,7 @@
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
             @endphp
                 <tr>
+                    <td>{{$loop->index +1}}</td>
                     <td>{{$order->order_number}}</td>
                     <td align="center">{{$order->quantity}}</td>
                     <td>RS {{number_format($order->total_amount,2)}}</td>

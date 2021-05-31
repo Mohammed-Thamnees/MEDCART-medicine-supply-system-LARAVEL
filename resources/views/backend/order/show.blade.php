@@ -169,9 +169,9 @@
         @php
         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
                     ->select('products.title','carts.quantity','carts.price','carts.amount')
-                    ->where('carts.order_id','=',$order->id)->get();
+                    ->where([['carts.status','new'],['carts.order_id',$order->id]])->get();
     @endphp
-    @foreach ($product as $product)
+      @foreach ($product as $product)
         <tr>
 
             <td>{{$product->title}}</td>
@@ -188,11 +188,9 @@
             <td>RS {{number_format($product->amount,2)}}</td>
 
         </tr>
-      @endforeach
+      @endforeach          
       </tbody>
     </table>
-
-
 
     @endif
 

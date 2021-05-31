@@ -283,7 +283,7 @@ class OrderController extends Controller
     }
 
     public function return($id){
-        $boy=DeliveryWork::select('order_id')->where([['type','pickup'],['order_id',$id]])->get();
+        $boy=DeliveryWork::select('order_id')->where([['type','pickup'],['order_id',$id]])->first();
         //return $boy;
         $cart=DB::table('products')->join('carts','products.id','=','carts.product_id')
                     ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.order_id')

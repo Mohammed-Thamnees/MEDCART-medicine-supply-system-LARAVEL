@@ -129,7 +129,7 @@ class MessageController extends Controller
     }
 
     public function reply(){
-        $reply=Message::where('id',Auth()->user()->id)->get();
+        $reply=Message::where('user_id',Auth()->user()->id)->orderBy('created_at','DESC')->paginate(10);
         //return $reply;
         return view('frontend.pages.view-reply')->with('reply',$reply);
     }
