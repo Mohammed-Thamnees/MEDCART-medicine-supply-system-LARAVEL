@@ -45,12 +45,12 @@ class DeliveryBoyController extends Controller
         $this->validate($request,
         [
 
-            'name'=>'required|alpha_dash|max:30',
-            'place'=>'required|alpha|min:2',
+            'name'=>'required|string|max:30',
+            'place'=>'required|string|min:2',
             'address'=>'required|min:2',
             'email'=>'required|email|unique:users,email',
             'number'=>'required|numeric|digits:10|unique:users,number',
-            'post'=>'required|alpha|min:2',
+            'post'=>'required|string|min:2',
             'pin'=>'required|numeric|digits:6',
             'password'=>'required|string',
             'status'=>'required|in:active,inactive',
@@ -107,12 +107,12 @@ class DeliveryBoyController extends Controller
         $this->validate($request,
         [
 
-            'name'=>'required|alpha_dash|max:30',
-            'place'=>'required|alpha|min:2',
+            'name'=>'required|string|max:30',
+            'place'=>'required|string|min:2',
             'address'=>'required|min:2',
             'email'=>'required|email',
             'number'=>'required|numeric|digits:10',
-            'post'=>'required|alpha|min:2',
+            'post'=>'required|string|min:2',
             'pin'=>'required|numeric|digits:6',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
@@ -137,7 +137,7 @@ class DeliveryBoyController extends Controller
      */
     public function destroy($id)
     {
-        $delete=DeliveryBoy::findorFail($id);
+        $delete=User::findorFail($id);
         $status=$delete->delete();
         if($status){
             request()->session()->flash('success','successfully deleted delivery boy');

@@ -39,7 +39,7 @@
                                 <td> Post : {{ $order->post }} <br>Pin : {{ $order->pin }} <br>Land Mark : {{ $order->mark }}</td>
 
                                 <td>{{ $order->place }}</td>
-                                <td>{{$order->created_at}}</td>
+                                <td>{{Carbon\Carbon::parse($order->created_at)->format('d/m/Y')}}</td>
                                 <td>
                                     <a href="{{route('deliveryworks.show',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm">Delivery Boy Assign</a>
                                 </td>

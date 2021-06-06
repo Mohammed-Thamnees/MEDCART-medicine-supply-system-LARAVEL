@@ -39,7 +39,7 @@
                 <form class="border px-4 pt-2 pb-3" method="POST" action="{{route('profile-update',$profile->id)}}">
                     @csrf
                     <div class="form-group">
-                        <label for="inputTitle" class="col-form-label">Name</label>
+                        <label for="inputTitle" class="col-form-label">Name<span class="text-danger">*</span></label>
                       <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{$profile->name}}" class="form-control">
                       @error('name')
                       <span class="text-danger">{{$message}}</span>
@@ -47,7 +47,7 @@
                       </div>
 
                       <div class="form-group">
-                          <label for="inputEmail" class="col-form-label">Email</label>
+                          <label for="inputEmail" class="col-form-label">Email<span class="text-danger">*</span></label>
                         <input id="inputEmail" type="email" name="email" placeholder="Enter email"  value="{{$profile->email}}" class="form-control">
                         @error('email')
                         <span class="text-danger">{{$message}}</span>

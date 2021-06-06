@@ -32,6 +32,9 @@
                   <option value='{{$data->id}}' {{(($data->id==$post->post_cat_id)? 'selected' : '')}}>{{$data->title}}</option>
               @endforeach
           </select>
+          @error('post_cat_id')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
         </div>
         {{-- {{$post->tags}} --}}
 

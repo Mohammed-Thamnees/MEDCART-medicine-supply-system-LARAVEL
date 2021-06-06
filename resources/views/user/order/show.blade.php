@@ -19,7 +19,9 @@
             <th>Total quantity of products</th>
             <th>Total Amount</th>
             <th>Status</th>
+            @if($order->status=='new' || $order->status=='process')
             <th>Order Cancel</th>
+            @endif
         </tr>
       </thead>
       <tbody>
@@ -44,16 +46,14 @@
                   <span class="badge badge-danger">{{$order->status}}</span>
                 @endif
             </td>
+            @if($order->status=='new' || $order->status=='process')
             <td>
-                @if($order->status=='new' || $order->status=='process')
                     <form method="post" action="{{ route('user.order.cancel',$order->id) }}">
                         @csrf
                     <button class="btn-danger btn-sm float-left mr-1" >Order Cancel</button>
                     </form>
-                @else
-                    No Options Available
-                @endif
             </td>
+            @endif
         </tr>
       </tbody>
     </table>
@@ -137,8 +137,15 @@
     <br><br>
 
     <h3 class="text-center pb-4"><u>Ordered Product Information</u></h3>
-    <table class="table table-striped table-hover">
+    <table class="table table-hover">
+      @php
+        $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
+                    ->where([['carts.status','new'],['carts.order_id',$order->id]])->get();
 
+        $status=DB::table('carts')->select('status')->where([['status','returned'],['order_id',$order->id]])->first();
+        //dd($status);
+        @endphp    
       <thead>
         <tr>
 
@@ -148,16 +155,12 @@
             <th>CGST</th>
             <th>SGST</th>
             <th>Sub Total</th>
-            <th>Return Product</th>
+            
         </tr>
       </thead>
+      @foreach ($product as $product)
+      
       <tbody>
-        @php
-        $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
-                    ->where('carts.order_id','=',$order->id)->get();
-        @endphp
-    @foreach ($product as $product)
         <tr>
 
             <td>{{$product->title}}</td>
@@ -172,23 +175,63 @@
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($product->amount,2)}}</td>
-
+            
+            @if(empty($status) && $order->status=='delivered')
             <td>
-                @if($product->status=='new' && $order->status=='delivered')
                     <form method="post" action="{{ route('user.order.return',$product->id) }}">
                         @csrf
                         <button class="btn-primary btn-sm float-left mr-1" >Return Product</button>
                     </form>
-                @else
-                    Product Returned
-                @endif
             </td>
-
+            @endif
+            
         </tr>
-      @endforeach
       </tbody>
+      
+      @endforeach
     </table>
 
+              <!--Returned product listing-->
+
+        @php
+        $product1=DB::table('products')->join('carts','products.id','=','carts.product_id')
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
+                    ->where([['carts.status','returned'],['carts.order_id',$order->id]])->get();
+        @endphp 
+    @foreach ($product1 as $product1)
+    @if ($product1)
+    <h3 class="text-center pb-4"><u>Returned Product Information</u></h3>
+    <table class="table table-hover">   
+      <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>Sub Total</th>
+            
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>{{$product1->title}}</td>
+            <td>{{ $product1->quantity }}</td>
+            <td>RS {{number_format($product1->price,2)}}</td>
+                  @php
+                    $amount=$product1->amount;
+                    $gst=$amount*(6/100);
+                    //$gst_total=2*$gst;
+                    //$total_pay=$gst_total+$amount;
+                  @endphp
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($gst,2)}}</td>
+            <td>RS {{number_format($product1->amount,2)}}</td>
+        </tr>
+      </tbody> 
+    </table>
+    @endif
+    @endforeach
     @endif
 
   </div>

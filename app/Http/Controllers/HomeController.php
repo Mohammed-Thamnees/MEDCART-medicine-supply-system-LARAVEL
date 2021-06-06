@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\ProductReview;
 use App\Models\PostComment;
 use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\DB;
 use Hash;
 
 class HomeController extends Controller
@@ -44,6 +45,15 @@ class HomeController extends Controller
     public function profileUpdate(Request $request,$id){
         // return $request->all();
         $user=User::findOrFail($id);
+        $this->validate($request,[
+            'name'=>'required|string|min:2',
+            'owner_name'=>'required|string|min:2',
+            'place'=>'required|string|min:2',
+            'number'=>'required|numeric|digits:10',
+            'post'=>'required|string|min:2',
+            'pin'=>'required|numeric|digits:6',
+            'mark'=>'required|string|min:3',
+        ]);
         $data=$request->all();
         $status=$user->fill($data)->save();
         if($status){
@@ -272,7 +282,7 @@ class HomeController extends Controller
     {
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
+            'new_password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'new_confirm_password' => ['same:new_password'],
         ]);
 

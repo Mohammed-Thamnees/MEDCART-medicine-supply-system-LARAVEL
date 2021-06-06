@@ -31,6 +31,9 @@
                   <option value='{{$data->id}}'>{{$data->title}}</option>
               @endforeach
           </select>
+          @error('post_cat_id')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
         </div>
 
         <div class="form-group">

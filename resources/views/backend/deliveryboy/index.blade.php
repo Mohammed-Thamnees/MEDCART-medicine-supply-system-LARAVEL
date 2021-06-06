@@ -38,7 +38,7 @@
                     <td>{{$boy->place}}</td>
                     <td>{{$boy->email}}</td>
                     <td>{{$boy->number}}</td>
-                    <td>{{(($boy->created_at)? $boy->created_at->diffForHumans() : '')}}</td>
+                    <td>{{ $boy->created_at->format('d/m/Y') }}</td>
                     <td>
                         @if($boy->status=='active')
                             <span class="badge badge-success">{{$boy->status}}</span>

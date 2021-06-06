@@ -35,6 +35,10 @@ class AdminController extends Controller
     public function profileUpdate(Request $request,$id){
         // return $request->all();
         $user=User::findOrFail($id);
+        $request->validate([
+            'name'=>'required|min:2',
+            'email'=>'email',
+        ]);
         $data=$request->all();
         $status=$user->fill($data)->save();
         if($status){
@@ -83,7 +87,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
+            'new_password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'new_confirm_password' => ['same:new_password'],
         ]);
    

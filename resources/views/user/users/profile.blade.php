@@ -29,8 +29,8 @@
             <div class="col-md-8">
                 <form class="border px-4 pt-2 pb-3" method="POST" action="{{route('user-profile-update',$profile->id)}}">
                     @csrf
-                    <div class="form-group">
-                        <label for="inputTitle" class="col-form-label">Name</label>
+                      <div class="form-group">
+                        <label for="inputTitle" class="col-form-label">Shop Name<span class="text-danger">*</span></label>
                       <input id="inputTitle" type="text" name="name" placeholder="Enter name"  value="{{$profile->name}}" class="form-control">
                       @error('name')
                       <span class="text-danger">{{$message}}</span>
@@ -38,7 +38,15 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="inputPlace" class="col-form-label">Place</label>
+                        <label for="inputTitle" class="col-form-label">Owner Name<span class="text-danger">*</span></label>
+                      <input id="inputTitle" type="text" name="owner_name" placeholder="Enter owner name"  value="{{$profile->owner_name}}" class="form-control">
+                      @error('owner_name')
+                      <span class="text-danger">{{$message}}</span>
+                      @enderror
+                      </div>
+
+                      <div class="form-group">
+                        <label for="inputPlace" class="col-form-label">Place<span class="text-danger">*</span></label>
                       <input id="inputPlace" type="text" name="place" placeholder="Enter place"  value="{{$profile->place}}" class="form-control">
                       @error('place')
                       <span class="text-danger">{{$message}}</span>
@@ -46,7 +54,7 @@
                       </div>
 
                       <div class="form-group">
-                          <label for="inputEmail" class="col-form-label">Email</label>
+                          <label for="inputEmail" class="col-form-label">Email<span class="text-danger">*</span></label>
                         <input id="inputEmail" disabled type="email" name="email" placeholder="Enter email"  value="{{$profile->email}}" class="form-control">
                         @error('email')
                         <span class="text-danger">{{$message}}</span>
@@ -54,7 +62,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="inputNumber" class="col-form-label">Phone Number</label>
+                        <label for="inputNumber" class="col-form-label">Phone Number<span class="text-danger">*</span></label>
                       <input id="inputNumber" type="number" name="number" placeholder="Enter phone number"  value="{{$profile->number}}" class="form-control">
                       @error('number')
                       <span class="text-danger">{{$message}}</span>
@@ -62,7 +70,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="inputPost" class="col-form-label">Post Office</label>
+                        <label for="inputPost" class="col-form-label">Post Office<span class="text-danger">*</span></label>
                       <input id="inputPost" type="text" name="post" placeholder="Enter post office"  value="{{$profile->post}}" class="form-control">
                       @error('post')
                       <span class="text-danger">{{$message}}</span>
@@ -70,7 +78,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="inputPin" class="col-form-label">Pin</label>
+                        <label for="inputPin" class="col-form-label">Pin<span class="text-danger">*</span></label>
                       <input id="inputPin" type="number" name="pin" placeholder="Enter pin"  value="{{$profile->pin}}" class="form-control">
                       @error('pin')
                       <span class="text-danger">{{$message}}</span>
@@ -78,7 +86,7 @@
                       </div>
 
                       <div class="form-group">
-                        <label for="inputMark" class="col-form-label">Land Mark</label>
+                        <label for="inputMark" class="col-form-label">Land Mark<span class="text-danger">*</span></label>
                       <input id="inputMark" type="text" name="mark" placeholder="Enter land mark"  value="{{$profile->mark}}" class="form-control">
                       @error('mark')
                       <span class="text-danger">{{$message}}</span>

@@ -37,7 +37,7 @@ class CouponController extends Controller
     {
         // return $request->all();
         $this->validate($request,[
-            'code'=>'required|string',
+            'code'=>'required|string|unique:coupons,code',
             'type'=>'required|in:fixed,percent',
             'value'=>'required|numeric',
             'status'=>'required|in:active,inactive'

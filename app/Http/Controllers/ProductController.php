@@ -30,10 +30,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //$brand=Brand::get();
         $category=Category::where('is_parent',1)->get();
         // return $category;
-        //return view('backend.product.create')->with('categories',$category)->with('brands',$brand);
         return view('backend.product.create')->with('categories',$category);
     }
 
@@ -98,13 +96,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $brand=Brand::get();
         $product=Product::findOrFail($id);
         $category=Category::where('is_parent',1)->get();
         $items=Product::where('id',$id)->get();
         // return $items;
         return view('backend.product.edit')->with('product',$product)
-                    ->with('brands',$brand)
                     ->with('categories',$category)->with('items',$items);
     }
 

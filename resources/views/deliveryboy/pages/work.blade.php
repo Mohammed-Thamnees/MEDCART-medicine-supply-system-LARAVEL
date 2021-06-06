@@ -12,7 +12,6 @@
                         <th>Shop Name</th>
                         <th>Owner Name</th>
                         <th>Email</th>
-                        <th>Total quantity of products</th>
                         <th>Total Amount</th>
                         <th>Payment Status</th>
                         <th>Status</th>
@@ -25,7 +24,6 @@
                         <td>{{$order->shop_name}}</td>
                         <td>{{$order->owner_name}}</td>
                         <td>{{$order->email}}</td>
-                        <td align="center">{{$order->quantity}}</td>
                         <td>RS {{number_format($order->total_amount,2)}}</td>
                         <td>
                             @if($order->payment_status=='paid')
@@ -157,7 +155,7 @@
                     @php
                         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
                                     ->select('products.title','carts.quantity','carts.price','carts.amount')
-                                    ->where('carts.order_id','=',$order->id)->get();
+                                    ->where([['carts.order_id',$order->id],['carts.status','new']])->get();
                     @endphp
                     @foreach ($product as $product)
                         <tr>

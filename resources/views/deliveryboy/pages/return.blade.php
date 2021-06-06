@@ -93,7 +93,7 @@
                     @php
                         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
                                     ->select('products.title','carts.quantity','carts.price','carts.amount')
-                                    ->where([['carts.order_id',$order->id],['carts.status','returned']])->get();
+                                    ->where([['carts.order_id',$order->id],['carts.status','<>','new']])->get();
                     @endphp
                     @foreach ($product as $product)
                         <tr>
