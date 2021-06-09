@@ -16,8 +16,8 @@
             <th>Shop Name</th>
             <th>Owner Name</th>
             <th>Email</th>
-            <th>Total quantity of products</th>
-            <th>Total Amount</th>
+            <th>Total Order Quantity</th>
+            <th>Total Order Amount</th>
             <th>Status</th>
             @if($order->status=='new' || $order->status=='process')
             <th>Order Cancel</th>
@@ -33,8 +33,8 @@
             <td>{{$order->shop_name}}</td>
             <td>{{$order->owner_name}}</td>
             <td>{{$order->email}}</td>
-            <td align="center">{{$order->quantity}}</td>
-            <td>RS {{number_format($order->total_amount,2)}}</td>
+            <td align="center">{{$order->quantity - $order->r_quantity}}</td>
+            <td>RS {{number_format($order->total_amount - $order->r_total_amount,2)}}</td>
             <td>
                 @if($order->status=='new')
                   <span class="badge badge-primary">{{$order->status}}</span>
@@ -74,19 +74,25 @@
                         <td> : {{$order->created_at->format('D d M, Y')}} at {{$order->created_at->format('g : i a')}} </td>
                     </tr>
                     <tr>
-                        <td>Total quantity of products</td>
-                        <td> : {{$order->quantity}}</td>
+                        <td>Total quantity of ordered products</td>
+                        <td> : {{$order->quantity - $order->r_quantity}}</td>
                     </tr>
                     <tr>
-                        <td>Order Status</td>
-                        <td> : {{$order->status}}</td>
+                      <td>Total quantity of returned products</td>
+                      <td> : {{$order->r_quantity}}</td>
                     </tr>
-
                     <tr>
-                        <td>Total Amount</td>
-                        <td> : RS {{number_format($order->total_amount,2)}}</td>
+                        <td>Total Order Amount</td>
+                        <td> : RS {{number_format($order->total_amount - $order->r_total_amount,2)}}</td>
                     </tr>
-
+                    <tr>
+                      <td>Total Return Amount</td>
+                      <td> : RS {{number_format($order->r_total_amount,2)}}</td>
+                  </tr>
+                    <tr>
+                      <td>Order Status</td>
+                      <td> : {{$order->status}}</td>
+                  </tr>
                     <tr>
                         <td>Payment Status</td>
                         <td> : {{$order->payment_status}}</td>
@@ -127,6 +133,10 @@
                         <td>Land Mark</td>
                         <td> : {{$order->mark}}</td>
                     </tr>
+                    <tr>
+                      <td>Shipping Charge</td>
+                      <td> : Free</td>
+                  </tr>
               </table>
             </div>
           </div>
@@ -140,8 +150,8 @@
     <table class="table table-hover">
       @php
         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
-                    ->where([['carts.status','new'],['carts.order_id',$order->id]])->get();
+                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.r_amount','carts.r_quantity','carts.status','carts.id')
+                    ->where('carts.order_id',$order->id)->whereRaw('(carts.quantity - carts.r_quantity)>0')->get();
 
         $status=DB::table('carts')->select('status')->where([['status','returned'],['order_id',$order->id]])->first();
         //dd($status);
@@ -164,25 +174,33 @@
         <tr>
 
             <td>{{$product->title}}</td>
-            <td>{{ $product->quantity }}</td>
+            <td>{{ $product->quantity - $product->r_quantity }}</td>
             <td>RS {{number_format($product->price,2)}}</td>
                   @php
-                    $amount=$product->amount;
+                    $amount=$product->amount - $product->r_amount;
                     $gst=$amount*(6/100);
                     //$gst_total=2*$gst;
                     //$total_pay=$gst_total+$amount;
                   @endphp
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
-            <td>RS {{number_format($product->amount,2)}}</td>
+            <td>RS {{number_format($amount,2)}}</td>
             
             @if(empty($status) && $order->status=='delivered')
-            <td>
                     <form method="post" action="{{ route('user.order.return',$product->id) }}">
                         @csrf
+                        <td>
+                        <div class="form-group">
+                          <input name="r_quantity" type="number" min="1" size="9" placeholder="Enter Quantity">
+                        </div>
+                        @error('r_quantity')
+                          <span class="text-danger">{{$message}}</span>
+                        @enderror
+                        </td>
+                        <td>
                         <button class="btn-primary btn-sm float-left mr-1" >Return Product</button>
+                        </td>
                     </form>
-            </td>
             @endif
             
         </tr>
@@ -195,11 +213,10 @@
 
         @php
         $product1=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.id')
+                    ->select('products.title','carts.r_quantity','carts.price','carts.r_amount','carts.status','carts.id')
                     ->where([['carts.status','returned'],['carts.order_id',$order->id]])->get();
         @endphp 
-    @foreach ($product1 as $product1)
-    @if ($product1)
+    @if (count($product1)>0)
     <h3 class="text-center pb-4"><u>Returned Product Information</u></h3>
     <table class="table table-hover">   
       <thead>
@@ -209,31 +226,30 @@
             <th>Unit Price</th>
             <th>CGST</th>
             <th>SGST</th>
-            <th>Sub Total</th>
-            
+            <th>Sub Total</th> 
         </tr>
       </thead>
       <tbody>
+        @foreach ($product1 as $product1)
         <tr>
             <td>{{$product1->title}}</td>
-            <td>{{ $product1->quantity }}</td>
+            <td>{{ $product1->r_quantity }}</td>
             <td>RS {{number_format($product1->price,2)}}</td>
                   @php
-                    $amount=$product1->amount;
+                    $amount=$product1->r_amount;
                     $gst=$amount*(6/100);
                     //$gst_total=2*$gst;
                     //$total_pay=$gst_total+$amount;
                   @endphp
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
-            <td>RS {{number_format($product1->amount,2)}}</td>
+            <td>RS {{number_format($amount,2)}}</td>
         </tr>
+        @endforeach
       </tbody> 
     </table>
     @endif
-    @endforeach
     @endif
-
   </div>
 </div>
 @endsection

@@ -16,6 +16,8 @@
                             <th>Order Number</th>
                             <th>Shop Name</th>
                             <th>Shop Place</th>
+                            <th>Total Quantity</th>
+                            <th>Total Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -28,6 +30,8 @@
                                 <td>{{$work->order_number}}</td>
                                 <td>{{$work->shop_name}}</td>
                                 <td>{{$work->place}}</td>
+                                <td>{{$work->r_quantity}}</td>
+                                <td>RS {{number_format($work->r_total_amount,2)}}</td>
                                 <td>
                                     @if($work->status=='progress')
                                         <span class="badge badge-warning">{{$work->status}}</span>

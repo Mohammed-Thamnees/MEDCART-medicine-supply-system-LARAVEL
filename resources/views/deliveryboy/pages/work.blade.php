@@ -24,7 +24,7 @@
                         <td>{{$order->shop_name}}</td>
                         <td>{{$order->owner_name}}</td>
                         <td>{{$order->email}}</td>
-                        <td>RS {{number_format($order->total_amount,2)}}</td>
+                        <td>RS {{number_format($order->total_amount - $order->r_total_amount,2)}}</td>
                         <td>
                             @if($order->payment_status=='paid')
                                 <span class="badge badge-success">{{$order->payment_status}}</span>
@@ -72,7 +72,7 @@
                                         </tr>
                                         <tr>
                                             <td>Total quantity of products</td>
-                                            <td> : {{$order->quantity}}</td>
+                                            <td> : {{$order->quantity - $order->r_quantity}}</td>
                                         </tr>
                                         <tr>
                                             <td>Coupon</td>
@@ -80,7 +80,7 @@
                                         </tr>
                                         <tr>
                                             <td>Total Amount</td>
-                                            <td> : RS {{number_format($order->total_amount,2)}}</td>
+                                            <td> : RS {{number_format($order->total_amount - $order->r_total_amount,2)}}</td>
                                         </tr>
 
                                         <tr>
@@ -154,24 +154,24 @@
                     <tbody>
                     @php
                         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                                    ->select('products.title','carts.quantity','carts.price','carts.amount')
-                                    ->where([['carts.order_id',$order->id],['carts.status','new']])->get();
+                                    ->select('products.title','carts.quantity','carts.r_quantity','carts.r_amount','carts.price','carts.amount')
+                                    ->where('carts.order_id',$order->id)->whereRaw('(carts.quantity - carts.r_quantity)>0')->get();
                     @endphp
                     @foreach ($product as $product)
                         <tr>
 
                             <td>{{$product->title}}</td>
-                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->quantity - $product->r_quantity }}</td>
                             <td>RS {{number_format($product->price,2)}}</td>
                             @php
-                                $amount=$product->amount;
+                                $amount=$product->amount - $product->r_amount;
                                 $gst=$amount*(6/100);
                                 //$gst_total=2*$gst;
                                 //$total_pay=$gst_total+$amount;
                             @endphp
                             <td>RS {{number_format($gst,2)}}</td>
                             <td>RS {{number_format($gst,2)}}</td>
-                            <td>RS {{number_format($product->amount,2)}}</td>
+                            <td>RS {{number_format($amount,2)}}</td>
 
                         </tr>
                     @endforeach

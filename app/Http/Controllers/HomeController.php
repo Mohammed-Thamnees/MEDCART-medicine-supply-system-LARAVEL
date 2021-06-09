@@ -98,7 +98,7 @@ class HomeController extends Controller
     {
         $order=Order::find($id);
         if($order){
-            if($order->status=='delivered' || $order->status=='cancel'){
+            if($order->status=='delivered' || $order->status=='cancelled'){
                 return redirect()->back()->with('error','You cannot cancel this order now');
             }
             else{
@@ -124,26 +124,45 @@ class HomeController extends Controller
     public function userOrderReturn(Request $request, $id)
     {
         $cart=Cart::find($id);
+        $order=Order::where('id',$cart->order_id)->first();
         //return $cart;
         if($cart){
             if($cart->status=='returned'){
                 return redirect()->back()->with('error','Product already returned');
             }
             else{
-                $cart['status']='process';
-                $status=$cart->save();
+                $this->validate($request,[
+                    'r_quantity'=>'required|numeric',
+                ]);
+                $data['r_quantity']=$cart->r_quantity + $request->r_quantity;
+                $data['r_amount']=$data['r_quantity'] * $cart->price;
+                $data['status']='process';
+                if($request->r_quantity > ($cart->quantity - $cart->r_quantity)){
+                    request()->session()->flash('error','Return quantity do not exceeds purchased quantity');
+                    return redirect()->back()->with('order',$order);
+                }
+                else{
+                //return $data;
+                $status=$cart->fill($data)->save();
+                $r_qty_sum=Cart::where('order_id',$order->id)->sum('r_quantity');
+                $r_amt_sum=Cart::where('order_id',$order->id)->sum('r_amount');
+                $gst=$r_amt_sum + ($r_amt_sum * 12/100);
+                $order['r_quantity']=$r_qty_sum;
+                $order['r_total_amount']=$gst;
+                $order->save();
                 if($status){
                     request()->session()->flash('success','Product return applied successfully');
                 }
                 else{
                     request()->session()->flash('error','Product cannot return. Try again!!!');
                 }
-                return redirect()->route('user.order.index');
+                return redirect()->back()->with('order',$order);
+                }
             }
         }
         else{
             request()->session()->flash('error','Product cannot found in ordered list');
-            return redirect()->back();
+            return redirect()->back()->with('order',$order);
         }
     }
 

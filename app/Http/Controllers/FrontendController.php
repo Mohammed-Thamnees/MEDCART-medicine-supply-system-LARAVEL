@@ -376,10 +376,9 @@ class FrontendController extends Controller
         // dd($data);
 
         $check=$this->create($data);
-        Session::put('user',$data['email']);
         if($check){
             request()->session()->flash('success','Successfully registered');
-            return redirect()->route('home');
+            return redirect()->route('login.form');
         }
         else{
             request()->session()->flash('error','Please try again!');

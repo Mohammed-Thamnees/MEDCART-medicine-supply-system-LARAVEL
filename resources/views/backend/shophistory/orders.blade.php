@@ -32,8 +32,8 @@
                         <td>{{ $loop->index +1 }}</td>
                         <td>{{ $order->order_number }}</td>
                         <td>{{ $order->created_at->format('d/m/Y') }}</td>
-                        <td>{{ $order->quantity }}</td>
-                        <td>{{ $order->total_amount }}</td>
+                        <td align="center">{{ $order->quantity }}</td>
+                        <td>RS {{ number_format($order->total_amount,2) }}</td>
                         <td>
                             @if($order->status=='new')
                                 <span class="badge badge-primary">{{$order->status}}</span>

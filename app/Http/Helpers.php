@@ -80,7 +80,7 @@ class Helper{
         }
         return PostCategory::has('posts')->orderBy('id','DESC')->get();
     }
-    // Cart Count
+    // Cart order Count 
     public static function cartCount($user_id=''){
        
         if(Auth::check()){

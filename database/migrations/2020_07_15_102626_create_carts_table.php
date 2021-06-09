@@ -22,6 +22,8 @@ class CreateCartsTable extends Migration
             $table->enum('status',['new','process','returned'])->default('new');
             $table->integer('quantity');
             $table->float('amount');
+            $table->integer('r_quantity')->nullable()->default('0');
+            $table->float('r_amount')->nullable()->default('0.00');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('SET NULL');

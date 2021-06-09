@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <label for="inputTitle" class="col-form-label">Value <span class="text-danger">*</span></label>
-            <input id="inputTitle" type="number" name="value" placeholder="Enter Coupon value"  value="{{old('value')}}" class="form-control">
+            <input id="inputTitle" type="number" name="value" min="0" placeholder="Enter Coupon value"  value="{{old('value')}}" class="form-control">
             @error('value')
             <span class="text-danger">{{$message}}</span>
             @enderror

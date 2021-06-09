@@ -19,7 +19,7 @@
             <th>Shop Name</th>
             <th>Owner Name</th>
             <th>Email</th>
-            <th>Total quantity of products</th>
+            <th>Total quantity</th>
             <th>Total Amount</th>
             <th>Payment Status</th>
             <th>Status</th>
@@ -85,26 +85,28 @@
                         <td> : {{$order->created_at->format('D d M, Y')}} at {{$order->created_at->format('g : i a')}} </td>
                     </tr>
                     <tr>
-                        <td>Total quantity of products</td>
-                        <td> : {{$order->quantity}}</td>
+                        <td>Total Ordered Quantity</td>
+                        <td> : {{$order->quantity - $order->r_quantity}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Returned Quantity</td>
+                      <td> : {{$order->r_quantity}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Ordered Amount</td>
+                        <td> : RS {{number_format($order->total_amount - $order->r_total_amount,2)}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Returned Amount</td>
+                      <td> : RS {{number_format($order->r_total_amount,2)}}</td>
                     </tr>
                     <tr>
                       <td>Coupon</td>
                       <td> : RS {{number_format($order->coupon,2)}}</td>
                     </tr>
                     <tr>
-                        <td>Total Amount</td>
-                        <td> : RS {{number_format($order->total_amount,2)}}</td>
-                    </tr>
-
-                    <tr>
                       <td>Order Status</td>
                       <td> : {{$order->status}}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Payment Status</td>
-                        <td> : {{$order->payment_status}}</td>
                     </tr>
               </table>
             </div>
@@ -142,6 +144,10 @@
                         <td>Land Mark</td>
                         <td> : {{$order->mark}}</td>
                     </tr>
+                    <tr>
+                      <td>Shipping Charge</td>
+                      <td> : Free</td>
+                  </tr>
               </table>
             </div>
           </div>
@@ -168,24 +174,24 @@
       <tbody>
         @php
         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount')
-                    ->where([['carts.status','new'],['carts.order_id',$order->id]])->get();
+                    ->select('products.title','carts.quantity','carts.r_quantity','carts.r_amount','carts.price','carts.amount')
+                    ->where('carts.order_id',$order->id)->whereRaw('(carts.quantity - carts.r_quantity)>0')->get();
     @endphp
       @foreach ($product as $product)
         <tr>
 
             <td>{{$product->title}}</td>
-            <td>{{ $product->quantity }}</td>
+            <td>{{ $product->quantity - $product->r_quantity }}</td>
             <td>RS {{number_format($product->price,2)}}</td>
                   @php
-                    $amount=$product->amount;
+                    $amount=$product->amount - $product->r_amount;
                     $gst=$amount*(6/100);
                     //$gst_total=2*$gst;
                     //$total_pay=$gst_total+$amount;
                   @endphp
             <td>RS {{number_format($gst,2)}}</td>
             <td>RS {{number_format($gst,2)}}</td>
-            <td>RS {{number_format($product->amount,2)}}</td>
+            <td>RS {{number_format($amount,2)}}</td>
 
         </tr>
       @endforeach          

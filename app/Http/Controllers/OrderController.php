@@ -239,8 +239,8 @@ class OrderController extends Controller
         $order=Order::find($id);
         if($order){
             Cart::where('order_id',$order->id)->delete();
+            DeliveryWork::where('order_id',$order->id)->delete();
             $status=$order->delete();
-            Cart::where('order_id',$order->id)->get();
             if($status){
                 request()->session()->flash('success','Order Successfully deleted');
             }
@@ -286,7 +286,7 @@ class OrderController extends Controller
         $boy=DeliveryWork::select('order_id')->where([['type','pickup'],['order_id',$id]])->first();
         //return $boy;
         $cart=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                    ->select('products.title','carts.quantity','carts.price','carts.amount','carts.status','carts.order_id')
+                    ->select('products.title','carts.r_quantity','carts.price','carts.r_amount','carts.status','carts.order_id')
                     ->where([['carts.order_id',$id],['carts.status','!=','new']])->get();
         //return $cart;
         return view('backend.order.return')->with('cart',$cart)->with('boy',$boy);

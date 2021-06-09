@@ -27,7 +27,7 @@
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
                         <h2>Registration Form</h2>
-                        <p>New retailers can register here for becoming our part</p>
+                        <p>New retailers can register here for becoming our partner</p>
                         <!-- Form -->
                         <form class="form" method="post" action="{{route('register.submit')}}" enctype="multipart/form-data">
                             @csrf
@@ -72,7 +72,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Phone Number<span>*</span></label>
-                                        <input type="number" name="number" placeholder="" value="{{old('number')}}">
+                                        <input type="number" name="number" placeholder="" min="0" value="{{old('number')}}">
                                         @error('number')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
@@ -90,7 +90,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Pin Code<span>*</span></label>
-                                        <input type="number" name="pin" placeholder="" value="{{old('pin')}}">
+                                        <input type="number" name="pin" min="0" placeholder="" value="{{old('pin')}}">
                                         @error('pin')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror

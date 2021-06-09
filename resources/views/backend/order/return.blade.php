@@ -24,17 +24,17 @@
                         <tr>
 
                             <td>{{$cart->title}}</td>
-                            <td>{{ $cart->quantity }}</td>
+                            <td>{{ $cart->r_quantity }}</td>
                             <td>RS {{number_format($cart->price,2)}}</td>
                             @php
-                                $amount=$cart->amount;
+                                $amount=$cart->r_amount;
                                 $gst=$amount*(6/100);
                                 //$gst_total=2*$gst;
                                 //$total_pay=$gst_total+$amount;
                             @endphp
                             <td>RS {{number_format($gst,2)}}</td>
                             <td>RS {{number_format($gst,2)}}</td>
-                            <td>RS {{number_format($cart->amount,2)}}</td>
+                            <td>RS {{number_format($amount,2)}}</td>
                         </tr>
                     @endforeach
                         <tr>

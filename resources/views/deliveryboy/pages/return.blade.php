@@ -22,6 +22,16 @@
                                         </tr>
 
                                         <tr>
+                                            <td>Total Quantity</td>
+                                            <td> : {{$order->r_quantity}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Total Amount</td>
+                                            <td> : {{$order->r_total_amount}}</td>
+                                        </tr>
+
+                                        <tr>
                                             <td>Order Status</td>
                                             <td> : {{$order->status}}</td>
                                         </tr>
@@ -92,24 +102,24 @@
                     <tbody>
                     @php
                         $product=DB::table('products')->join('carts','products.id','=','carts.product_id')
-                                    ->select('products.title','carts.quantity','carts.price','carts.amount')
+                                    ->select('products.title','carts.r_quantity','carts.price','carts.r_amount')
                                     ->where([['carts.order_id',$order->id],['carts.status','<>','new']])->get();
                     @endphp
                     @foreach ($product as $product)
                         <tr>
 
                             <td>{{$product->title}}</td>
-                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->r_quantity }}</td>
                             <td>RS {{number_format($product->price,2)}}</td>
                             @php
-                                $amount=$product->amount;
+                                $amount=$product->r_amount;
                                 $gst=$amount*(6/100);
                                 //$gst_total=2*$gst;
                                 //$total_pay=$gst_total+$amount;
                             @endphp
                             <td>RS {{number_format($gst,2)}}</td>
                             <td>RS {{number_format($gst,2)}}</td>
-                            <td>RS {{number_format($product->amount,2)}}</td>
+                            <td>RS {{number_format($amount,2)}}</td>
 
                         </tr>
                     @endforeach

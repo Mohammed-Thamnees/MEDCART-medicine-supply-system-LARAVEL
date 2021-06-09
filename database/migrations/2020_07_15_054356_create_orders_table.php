@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->float('coupon')->nullable();
             $table->float('total_amount');
             $table->integer('quantity');
+            $table->float('r_total_amount')->nullable()->default('0.00');
+            $table->integer('r_quantity')->nullable()->default('0');
             $table->string('razorpay_id')->nullable();
             $table->enum('payment_status',['paid','unpaid'])->default('unpaid');
             $table->enum('status',['new','process','delivered','cancelled'])->default('new');
