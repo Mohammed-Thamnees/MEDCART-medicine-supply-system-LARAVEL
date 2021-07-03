@@ -25,3 +25,62 @@ How to settup the project in your local system, follow the steps:-
 	    use virtual host
 	11) Visit localhost:8000 in your browser
 	12) For access to admin panel enter the admin username and password and for user enter user's too.
+	
+	
+=======================================================================================================================
+							*** NOTE ***
+=======================================================================================================================
+
+ If you get an error like below while running the command "php artisan storage link" please do as follow instruction.
+ 
+ 
+------------------------------------------------------------------------------------------------------------------------ 
+ 			ERROR MESSAGE
+ -----------------------------------------------------------------------------------------------------------------------
+ 
+ ErrorException  : symlink(): No such file or directory
+
+  at /var/www/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:263
+    259|      */
+    260|     public function link($target, $link)
+    261|     {
+    262|         if (! windows_os()) {
+  > 263|             return symlink($target, $link);
+    264|         }
+    265|
+    266|         $mode = $this->isDirectory($target) ? 'J' : 'H';
+    267|
+
+  Exception trace:
+
+  1   symlink()
+      /var/www/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:263
+
+  2   Illuminate\Filesystem\Filesystem::link()
+      /var/www/vendor/laravel/framework/src/Illuminate/Foundation/Console/StorageLinkCommand.php:35
+
+  Please use the argument -v to see more details.
+  
+  
+  
+ ------------------------------------------------------------------------------------------------------------------------------
+  				SOLLUTION
+ ------------------------------------------------------------------------------------------------------------------------------
+ 
+ 
+
+   1) Go to /public directory and run:
+
+    		rm storage
+
+   2) Go to Laravel root directory and run:
+
+    		php artisan storage:link
+    		
+    		
+===============================================================================================================================
+
+
+
+
+
